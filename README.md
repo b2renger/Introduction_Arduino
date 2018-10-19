@@ -89,7 +89,7 @@ Code for a creative coding class with arduino for designers.
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 #### Ultra-son
-<img src="assets/08_read_from_ultraonic_distance.gif" width="480" height="270" /><br>
+<img src="assets/08_read_from_ultrasonic_distance.gif" width="480" height="270" /><br>
 <img src="08_read_from_UltraSonic_Distance/08_read_from_ultrasonic_distance.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
