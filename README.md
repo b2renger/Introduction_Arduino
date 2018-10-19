@@ -64,19 +64,19 @@ Code for a creative coding class with arduino for designers.
 
 ### FSR 
 <img src="assets/04_read_from_fsr.gif" width="480" height="270" /><br>
-<img src="04_read_from_fsr/04_read_from_fsr.png" width="480" height="360" /><br>
+<img src="04_read_from_FSR/04_read_from_FSR.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 ### Flex
 <img src="assets/05_read_from_flex.gif" width="480" height="270" /><br>
-<img src="05_read_from_flex/05_read_from_flex.png" width="480" height="360" /><br>
+<img src="05_read_from_flex/05_read_from_Flex.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 ### PIR
 <img src="assets/06_read_from_pir.gif" width="480" height="270" /><br>
-<img src="06_read_from_pir/06_read_from_pir.png" width="480" height="360" /><br>
+<img src="06_read_from_PIR/06_read_from_pir.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
@@ -89,8 +89,8 @@ Code for a creative coding class with arduino for designers.
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 #### Ultra-son
-<img src="assets/08_read_from_ultrasonic_distance.gif" width="480" height="270" /><br>
-<img src="08_read_from_ultrasonic_distance/08_read_from_ultrasonic_distance.png" width="480" height="360" /><br>
+<img src="assets/08_read_from_ultraonic_distance.gif" width="480" height="270" /><br>
+<img src="08_read_from_UltraSonic_Distance/08_read_from_ultrasonic_distance.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
