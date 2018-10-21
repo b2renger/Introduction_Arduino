@@ -6,37 +6,43 @@ Code for a creative coding class with arduino for designers.
 
 ## CONTENU
 
-* [Connecter des composants et récupérer les valeurs]()<br>
-    * [Potentiomètre]()<br> 
-    * [Micro]()<br>
-    * [Photo-résistance]()<br>
-    * [Tilt]()<br>
-    * [FSR]()<br> 
-    * [Flex]()<br>
-    * [PIR]()<br>
-    * [Capteur de distance]()<br>
-        * [Infra-rouge]()<br>
-        * [Ultra-son]()<br>
-    * [Microswitch]()<br>
-    * [Accéléromètre]()<br>
-    * [Gyroscope]()<br>
+* [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
+    * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
+    * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
+    * [Photo-résistance](https://github.com/b2renger/Introduction_arduino#photo-r%C3%A9sistance)<br>
+    * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>
+    * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br> 
+    * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>
+    * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
+    * [Capteur de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
+        * [Infra-rouge](https://github.com/b2renger/Introduction_arduino#infra-rouge)<br>
+        * [Ultra-son](https://github.com/b2renger/Introduction_arduino#ultra-son)<br>
+    * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
+    * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
+    * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
     
 * [Connecter des actuateurs et activer des périphériques]()<br>
-	* [faire tourner servomoteur]()<br>
-        * [sevomoteur classique]()<br>
-        * [servomoteur à rotation continue]()<br>
-	* [allumer des leds (neopixels)]()<br>
-	* [buzzer]()<br>
+	* [faire tourner servomoteur]<br>
+        * [sevomoteur classique]<br>
+        * [servomoteur à rotation continue]<br>
+        * [servomoteur linéaire]<br>
+	* [allumer des leds (neopixels)]<br>
+        * [RGB]<br>
+        * [HSB]<br>
+    * [utiliser un afficheur à digits]<br>
+	* [produire du son avec un buzzer]<br>
+    * [produire du son en lisant un mp3]<br>
 
 * [Controler un actuateur avec un capteur]()<br>
-    * [Utiliser la fonction map()]()<br>
-    * [Potentiomètre vers servo classique]()<br>
-    * [Micro vers servo continu]()<br>
-    * [Flex vers neopixels]()<br>
-    * [Accéléromètre vers buzzer]()<br>
+    * [Utiliser la fonction map()]<br>
+    * [Microswitch vers servo classique]<br>
+    * [Micro vers servo continu]<br>
+    * [Gyro ver neopixels RGB]<br>
+    * [Flex vers neopixels HSB]<br>
+    * [Distance vers buzzer]<br>
 	
 
-## Connecter des composants et récupérer les valeurs
+## Connecter des capteurs et récupérer les valeurs
 
 ### Potentiomètre 
 <img src="assets/00_read_from_pot.gif" width="480" height="270" /><br>
@@ -70,7 +76,7 @@ Code for a creative coding class with arduino for designers.
 
 ### Flex
 <img src="assets/05_read_from_flex.gif" width="480" height="270" /><br>
-<img src="05_read_from_flex/05_read_from_Flex.png" width="480" height="360" /><br>
+<img src="05_read_from_flex/05_read_from_Flex.png" width="480" height="480" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
