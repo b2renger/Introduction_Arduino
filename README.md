@@ -118,4 +118,27 @@ Code for a creative coding class with arduino for designers.
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
+## Connecter des actuateurs et activer des périphériques
+
+### Servomoteurs
+D'une manière générale tous les servomoteurs se branchent de le même façon :
+
+<img src="set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
+
+Le code est aussi le même on envoit une valeur :
+- 90 pour la position de repos
+- 0 pour un des deux comportements / position extême
+- 180 pour l'autre
+
+#### Servomoteur classique
+<img src="assets/set_servo_position.gif" width="480" height="270" /><br>
+
+#### Servomoteur à rotatoin continue
+<img src="assets/set_servo_rotation.gif" width="480" height="270" /><br>
+
+#### Servomoteur linéaire
+<img src="assets/set_servo_linear_position.gif" width="480" height="270" /><br>
+
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
