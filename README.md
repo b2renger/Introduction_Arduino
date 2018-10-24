@@ -3,7 +3,6 @@
 Code for a creative coding class with arduino for designers.
 
 
-
 ## CONTENU
 
 * [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
@@ -30,17 +29,17 @@ Code for a creative coding class with arduino for designers.
         * [RGB]<br>
         * [HSB]<br>
     * [utiliser un afficheur à digits]<br>
-	* [produire du son avec un buzzer]<br>
-    * [produire du son en lisant un mp3]<br>
-
+	
 * [Controler un actuateur avec un capteur]()<br>
     * [Utiliser la fonction map()]<br>
-    * [Microswitch vers servo classique]<br>
-    * [Micro vers servo continu]<br>
-    * [Gyro ver neopixels RGB]<br>
-    * [Flex vers neopixels HSB]<br>
-    * [Distance vers buzzer]<br>
-	
+    * [Potentiomètre vers servo classique]<br>
+    * [Flex vers servo continu]<br>
+    * [FSR vers neopixels HSB]<br>
+
+* [Utiliser des capteurs pour contrôler du code processing]()<br>
+    * [Controler le playback d'une vidéo avec un capteur de distance]<br>
+    * [Controler une animation avec une photoresistance]<br>
+    * [Controler des leds neopixels avec la souris]<br>
 
 ## Connecter des capteurs et récupérer les valeurs
 
@@ -131,14 +130,86 @@ Le code est aussi le même on envoit une valeur :
 - 180 pour l'autre
 
 #### Servomoteur classique
-<img src="assets/set_servo_position.gif" width="480" height="270" /><br>
+<img src="assets/set_position_servo_classique.gif" width="480" height="270" /><br>
 
 #### Servomoteur à rotatoin continue
-<img src="assets/set_servo_rotation.gif" width="480" height="270" /><br>
+<img src="assets/set_rotation_servo_continu.gif" width="480" height="270" /><br>
 
 #### Servomoteur linéaire
-<img src="assets/set_servo_linear_position.gif" width="480" height="270" /><br>
+<img src="assets/set_position_servo_lineaire.gif" width="480" height="270" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+
+### Alumer des leds (neopixels)
+
+<img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
+
+Nous allons utiliser la bibliothèque Fast-LED.
+
+#### Spécifier la couleur en RGB
+
+<img src="assets/set_neopixels_rgb.gif" width="480" height="270" /><br>
+
+
+#### Spécifier la couleur en HSV
+
+<img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Utiliser un afficheur à 4 digits
+
+<img src="assets/set_four_digit_display.gif" width="480" height="270" /><br>
+<img src="set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
 
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
+
+## Controler un actuateur avec un capteur
+
+### Utiliser la fonction map()
+
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Potentiomètre vers servo classique
+
+<img src="assets/map_potentiometer_to_servo.gif" width="480" height="270" /><br>
+<img src="map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Flex vers servo continu
+
+<img src="assets/map_flex_to_servo_continu.gif" width="480" height="270" /><br>
+<img src="map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### FSR vers neopixels HSB
+
+<img src="assets/map_fsr_to_neopixels.gif" width="480" height="270" /><br>
+<img src="map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+## Utiliser des capteurs pour contrôler du code processing
+
+### Controler le playback d'une vidéo avec un capteur de distance
+
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Controler une animation avec une photoresistance
+
+<img src="assets/serial_photores_to_animation.gif" width="480" height="270" /><br>
+<img src="read_from_photores/read_from_photores.png" width="480" height="270" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Controler des leds neopixels avec la souris
+
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
