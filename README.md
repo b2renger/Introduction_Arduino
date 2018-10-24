@@ -20,25 +20,25 @@ Code for a creative coding class with arduino for designers.
     * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
     * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
     
-* [Connecter des actuateurs et activer des périphériques]()<br>
-	* [faire tourner servomoteur]<br>
-        * [sevomoteur classique]<br>
-        * [servomoteur à rotation continue]<br>
-        * [servomoteur linéaire]<br>
-	* [allumer des leds (neopixels)]<br>
-        * [RGB]<br>
-        * [HSB]<br>
-    * [utiliser un afficheur à digits]<br>
+* [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
+	* [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
+        * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
+        * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
+        * [servomoteur linéaire](https://github.com/b2renger/Introduction_arduino#servomoteur-lin%C3%A9aire)<br>
+	* [allumer des leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels)<br>
+        * [RGB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-rgb)<br>
+        * [HSB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-hsv)<br>
+    * [utiliser un afficheur à digits](https://github.com/b2renger/Introduction_arduino#utiliser-un-afficheur-%C3%A0-4-digits)<br>
 	
-* [Controler un actuateur avec un capteur]()<br>
+* [Controler un actuateur avec un capteur](https://github.com/b2renger/Introduction_arduino#controler-un-actuateur-avec-un-capteur)<br>
     * [Utiliser la fonction map()]<br>
-    * [Potentiomètre vers servo classique]<br>
-    * [Flex vers servo continu]<br>
-    * [FSR vers neopixels HSB]<br>
+    * [Potentiomètre vers servo classique](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique)<br>
+    * [Flex vers servo continu](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu)<br>
+    * [FSR vers neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb)<br>
 
-* [Utiliser des capteurs pour contrôler du code processing]()<br>
+* [Utiliser des capteurs pour contrôler du code processing](https://github.com/b2renger/Introduction_arduino#utiliser-des-capteurs-pour-contr%C3%B4ler-du-code-processing)<br>
     * [Controler le playback d'une vidéo avec un capteur de distance]<br>
-    * [Controler une animation avec une photoresistance]<br>
+    * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
     * [Controler des leds neopixels avec la souris]<br>
 
 ## Connecter des capteurs et récupérer les valeurs
