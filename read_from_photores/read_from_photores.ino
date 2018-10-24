@@ -1,5 +1,4 @@
-// http://wiki.seeedstudio.com/Grove-Sound_Sensor/
-// use the serial plotter
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
