@@ -51,18 +51,13 @@ void draw() {
 void serialEvent (Serial myPort) {
   try {
     while (myPort.available() > 0) {
-
       String inBuffer = myPort.readStringUntil('\n');
-
       if (inBuffer != null) {
         if (inBuffer.substring(0, 1).equals("{")) {
-
           JSONObject json = parseJSONObject(inBuffer);
-
           if (json == null) {
             //println("JSONObject could not be parsed");
           } else {
-
             valueFromArduino    = json.getInt("photores");
           }
         } else {
