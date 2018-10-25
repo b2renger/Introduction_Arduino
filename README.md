@@ -199,6 +199,8 @@ Nous allons utiliser la bibliothèque Fast-LED.
 
 ### Controler le playback d'une vidéo avec un capteur de distance
 
+<img src="assets/serial_distance_to_movie_speed.gif" width="480" height="270" /><br>
+<img src="read_from_IRDistance/read_from_IRDistance.png" width="480" height="270" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
@@ -211,5 +213,7 @@ Nous allons utiliser la bibliothèque Fast-LED.
 
 ### Controler des leds neopixels avec la souris
 
+<img src="assets/serial_mouse_to_neopixels.gif" width="480" height="270" /><br>
+<img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
