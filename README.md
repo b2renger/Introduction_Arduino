@@ -37,9 +37,9 @@ Code for a creative coding class with arduino for designers.
     * [FSR vers neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb)<br>
 
 * [Utiliser des capteurs pour contrôler du code processing](https://github.com/b2renger/Introduction_arduino#utiliser-des-capteurs-pour-contr%C3%B4ler-du-code-processing)<br>
-    * [Controler le playback d'une vidéo avec un capteur de distance]<br>
+    * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
     * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
-    * [Controler des leds neopixels avec la souris]<br>
+    * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
 
 ## Connecter des capteurs et récupérer les valeurs
 
@@ -200,7 +200,7 @@ Nous allons utiliser la bibliothèque Fast-LED.
 ### Controler le playback d'une vidéo avec un capteur de distance
 
 <img src="assets/serial_distance_to_movie_speed.gif" width="480" height="270" /><br>
-<img src="read_from_IRDistance/read_from_IRDistance.png" width="480" height="270" /><br>
+<img src="read_from_IRDistance/read_from_irdistance.png" width="480" height="270" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
