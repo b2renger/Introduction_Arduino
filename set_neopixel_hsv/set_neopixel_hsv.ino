@@ -5,6 +5,8 @@ CRGBArray<NUM_LEDS> leds;
 float  inc = 0;
 
 void setup() {
+
+  Serial.begin(9600);
   FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
 }
 
@@ -14,7 +16,8 @@ void loop() {
   int saturation = (sin(inc) + 1)*122;
   for (int i = 0; i < NUM_LEDS; i++) {
     leds[i] = CHSV(255 - i *50, saturation, 255);
-    FastLED.delay(1);
+    FastLED.show();
   }
 }
+
 
