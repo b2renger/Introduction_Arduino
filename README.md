@@ -9,6 +9,7 @@ Code for a creative coding class with arduino for designers.
     * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
     * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
     * [Photo-résistance](https://github.com/b2renger/Introduction_arduino#photo-r%C3%A9sistance)<br>
+    * [Capteur Piezo](https://github.com/b2renger/Introduction_arduino#capteur-piezo)<br>
     * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>
     * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br> 
     * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>
@@ -58,6 +59,12 @@ Code for a creative coding class with arduino for designers.
 ### Photo-résistance
 <img src="assets/read_from_photores.gif" width="480" height="270" /><br>
 <img src="read_from_photores/read_from_photores.png" width="480" height="360" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Capteur Piezo
+<img src="assets/read_from_piezo.gif" width="480" height="270" /><br>
+<img src="read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
