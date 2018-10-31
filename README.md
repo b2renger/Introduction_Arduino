@@ -4,7 +4,7 @@ Code for a creative coding class with arduino for designers.
 
 
 ## CONTENU
-
+* [Introduction](https://github.com/b2renger/Introduction_arduino#introduction)<br>
 * [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
     * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
     * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
@@ -20,6 +20,7 @@ Code for a creative coding class with arduino for designers.
     * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
     * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
     * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
+    * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
     
 * [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
 	* [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
@@ -41,6 +42,8 @@ Code for a creative coding class with arduino for designers.
     * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
     * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
     * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
+
+## Introduction
 
 ## Connecter des capteurs et récupérer les valeurs
 
@@ -121,6 +124,12 @@ Code for a creative coding class with arduino for designers.
 ### Gyroscope
 <img src="assets/read_from_gyroscope.gif" width="480" height="270" /><br>
 <img src="read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Gesture
+<img src="assets/read_from_gesture.gif" width="480" height="270" /><br>
+<img src="read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
