@@ -19,21 +19,24 @@ Ici nous allons nous concentrer sur comment récupérer des valeurs de différen
 ## CONTENU
 * [Introduction](https://github.com/b2renger/Introduction_arduino#introduction)<br>
 * [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
-    * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
-    * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
-    * [Photo-résistance](https://github.com/b2renger/Introduction_arduino#photo-r%C3%A9sistance)<br>
-    * [Capteur Piezo](https://github.com/b2renger/Introduction_arduino#capteur-piezo)<br>
-    * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>
-    * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br> 
-    * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>
-    * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
-    * [Capteur de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
+    * [les entrées analogiques]()<br>
+        * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
+        * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
+        * [Photo-résistance](https://github.com/b2renger/Introduction_arduino#photo-r%C3%A9sistance)<br>
+        * [Capteur Piezo](https://github.com/b2renger/Introduction_arduino#capteur-piezo)<br>
+        * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>    
+    * [les entrées digitales]()<br>
+        * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
+        * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>
+        * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br> 
+        * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
+    * [Capteurs de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
         * [Infra-rouge](https://github.com/b2renger/Introduction_arduino#infra-rouge)<br>
         * [Ultra-son](https://github.com/b2renger/Introduction_arduino#ultra-son)<br>
-    * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
-    * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
-    * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
-    * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
+    * [Capteurs numériques - entrée SDA et SCL]()<br>
+        * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
+        * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
+        * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
     
 * [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
 	* [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
@@ -58,58 +61,88 @@ Ici nous allons nous concentrer sur comment récupérer des valeurs de différen
 
 ## Introduction
 
+Lorsque l'on dit qu'une carte arduino est une carte d'entrée / sortie cela signifie que cette carte peut mesurer des courants électriques (entrée) ou générer des courants électrique (sortie).
+
+Mesurer des courants permet de brancher des capteurs et de vérifier leur état : par exemple mesurer le courant en sortie d'un capteur de luminosité nous permet d'avoir une estimation de la luminosité ambiante.
+
+Générer des courants permet de brancher des actuateurs et donc de faire tourner un moteur plus ou moins vite ou d'allumer des leds plus ou moins fort.
+
+Une carte arduino ressemble à ceci :
+
+<img src="assets/carte_arduino_uno.png" width="360" height="480" /><br>
+
+Essayez de répérer sur la partie de gauche les **entrées analogiques** numérotées de **A0** jusqu'à **A5**, sur la droite vous pourrez trouver les **pins digitales** numérotées de 0 à 13.
+
+Remarquez que nous parlons d'*entrées* analogiques et de *pins* digitales. Pour résumer A0 jusqu'à A5 sont des entrées et uniquement des entrées; de plus elles sont *analogiques* ce qui signifie que vous pourront y mesurer des valeurs comprises entre 0 et 1023.
+
+Les *pins* digitales peuvent elles être utilisées soit en tant qu'entrées ou en tant que sorties (cela se précise dans le code que nous écrirons) et ne manipulent que des 0 et des 1 (un signal numérique ou digital) - même si cela n'est pas tout à fait vrai car certaines on un petit tilde **~** représenté avant leur numéro, cela signifie que ces *pins* peuvent générer un signal PWM (pulse width modulation) mais c'est une autre histoire et nous en reparlerons ultérieurement.
+
+Il est important de répérer aussi les pins notées **5V** et **GND** celles-ci correspondent au pins d'alimentation. Chaque composant doit être alimenté en électricité et nous les utiliserons donc systématiquement.
+
+Pour simplifier les choses éviter des connecter des capteurs sur les pins digitales D0 et D1 au début.
+
 
 ## Connecter des capteurs et récupérer les valeurs
 
-### Potentiomètre 
+### Entrées Analogiques
+
+#### Potentiomètre 
 <img src="assets/read_from_pot.gif" width="480" height="270" /><br>
 <img src="read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Micro
+#### Micro
 <img src="assets/read_from_grove_mic.gif" width="480" height="270" /><br>
 <img src="read_from_grove_mic/read_from_grove_mic.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Photo-résistance
+#### Photo-résistance
 <img src="assets/read_from_photores.gif" width="480" height="270" /><br>
 <img src="read_from_photores/read_from_photores.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Capteur Piezo
+#### Capteur Piezo
 <img src="assets/read_from_piezo.gif" width="480" height="270" /><br>
 <img src="read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Tilt
-<img src="assets/read_from_tilt.gif" width="480" height="270" /><br>
-<img src="read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
-
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
-
-### FSR 
+#### FSR 
 <img src="assets/read_from_fsr.gif" width="480" height="270" /><br>
 <img src="read_from_FSR/read_from_FSR.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Flex
+#### Flex
 <img src="assets/read_from_flex.gif" width="480" height="270" /><br>
 <img src="read_from_flex/read_from_Flex.png" width="480" height="480" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### PIR
+### Entrées Digitales
+
+#### Tilt
+<img src="assets/read_from_tilt.gif" width="480" height="270" /><br>
+<img src="read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+#### PIR
 <img src="assets/read_from_pir.gif" width="480" height="270" /><br>
 <img src="read_from_PIR/read_from_pir.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Capteur de distance
+### Microswitch
+<img src="assets/read_from_microswitch.gif" width="480" height="270" /><br>
+<img src="read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Capteurs de distance
 
 #### Infra-rouge
 <img src="assets/read_from_irdistance.gif" width="480" height="270" /><br>
@@ -123,29 +156,26 @@ Ici nous allons nous concentrer sur comment récupérer des valeurs de différen
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Microswitch
-<img src="assets/read_from_microswitch.gif" width="480" height="270" /><br>
-<img src="read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
+### Capteurs numériques - SDA et SCL
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
-
-### Accéléromètre
+#### Accéléromètre
 <img src="assets/read_fom_accelerometer.gif" width="480" height="270" /><br>
 <img src="read_from_accelerometer/read_from_3axisAccelerometer.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Gyroscope
+#### Gyroscope
 <img src="assets/read_from_gyroscope.gif" width="480" height="270" /><br>
 <img src="read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Gesture
+#### Gesture
 <img src="assets/read_from_gesture.gif" width="480" height="270" /><br>
 <img src="read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
 
 ## Connecter des actuateurs et activer des périphériques
 
