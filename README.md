@@ -888,23 +888,119 @@ Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
 Nous allons utiliser directement des rubans de leds. Ces rubans présentent des séries de leds RGB dont chacune est contrôllable individuellement en couleur et en intensité.
 
-Ils peuvent être découpés à la longueur souhaités et ne nécessitent que trois cables pour les contrôller : deux pour l'alimentation et un pour la donnée.
+Ils peuvent être découpés à la longueur souhaités et ne nécessitent que trois cables pour les contrôller : deux pour l'alimentation et un pour la donnée. Le schéma de montage sera toujours le même.
 
 <img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
-En fonction du nombre de leds que vous voulez allumer mais aussi en fonction de la couleur ou de l'intensité, il vous faudra une puissance différente. Il peut parfois être nécessaire de faire appel à des alimentations externes. Une led consomera au maximum 60mA (allumée en blanc à l'intensité maximale).
+En fonction du nombre de leds que vous voulez allumer mais aussi en fonction de la couleur ou de l'intensité, il vous faudra une puissance différente. Il peut parfois être nécessaire de faire appel à des alimentations externes - en dessous d'une dizaine de led par entrée une carte arduino devrait pouvoir alimenter sans recours à une source d'énergie externe. Une led consomera au maximum 60mA (allumée en blanc à l'intensité maximale). A des courants plus importants, il pourra être intéressant d'ajouter un condensateur en parallèle sur l'alimentation.
 
 Pour la partie logicielle nous allons utiliser la bibliothèque Fast-LED. Il faut donc l'installer via **le gestionnaire de bibliothèques** (Menu *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*).
+
+Nous allons voir comment spécifier la couleur de chaque led soit avec une couleur RGB soit avec une couleur HSV.
+
+La bibliothèque fast-led nous offre une syntaxe permettant de définir le nombre de led dont on dispose, le type de led et la pin de contrôle utilisée.
+
+Ensuite on peut afficher des couleurs sur les leds en parcourant chaque led de notre ruban à l'aide d'une [**boucle for()**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
 
 
 #### Spécifier la couleur en RGB
 
+Ici nous allons créer une petite animation en faisant varier les composantes rouge et verte de chaque led.
+
 <img src="assets/set_neopixels_rgb.gif" width="480" height="270" /><br>
+
+```c 
+// inclure la bibliothèque fast-led
+#include <FastLED.h>
+#define NUM_LEDS 5 // définir le nombre de leds
+
+CRGBArray<NUM_LEDS> leds; // définir un tableau de données chaque entrée du tableau représentera une led.
+float  inc = 0; // un variable que l'on va utiliser pour créer une animation.
+
+void setup() {
+  // on initialise notre strip de led sur la pin 9
+  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
+}
+
+void loop() {
+
+  inc +=  0.05; // on augmente la valeur de inc
+  // on calcule en fonction de inc un valeur qui va osciller entre 0 et 244.
+  int green = (sin(inc) + 1)*122; // cette valeur est stocké dans une variable nommée "green"
+     
+  // Pour i allant de 0 à 5, on va éxecuter le code entre accolades, 
+  // à chaque fois on augmente la valeur de i de 1
+  for (int i = 0; i < NUM_LEDS; i++) {
+    // on change la valeur de la led 'i' du tableau nommé 'leds" en lui donnant une nouvelle valeur RGB
+    leds[i] = CRGB(255-green, green, 0);
+  }
+  FastLED.show(); // on actualise le ruban de led
+}
+```
+
+Si vous souhaitez donner une couleur précise à chaque led, il vous suffit d'utiliser des appels directs à chaque led sans boucle for : 
+
+```c
+void loop(){
+    leds[0] = CRGB(255, 0, 0); //rouge
+    leds[1] = CRGB(0, 255, 0); // vert
+    leds[2] = CRGB(0, 0, 255); // bleu
+    leds[3] = CRGB(255, 255, 255); // blanc
+    leds[0] = CRGB(0, 0, 0); // noir
+    FastLED.show(); // on actualise le ruban de led
+}
+
+```
 
 
 #### Spécifier la couleur en HSV
 
+Le montage est le même : 
 <img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
+
+Le code est quasiment le même sauf que l'on appelle la fonction **CHSV()** de la bibliothèque Fast-led:
+
+```c
+// inclure la bibliothèque fast-led
+#include <FastLED.h>
+#define NUM_LEDS 5 // définir le nombre de leds
+
+CRGBArray<NUM_LEDS> leds; // définir un tableau de données chaque entrée du tableau représentera une led.
+float  inc = 0;
+
+void setup() {
+  // on initialise notre strip de led sur la pin 9
+  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
+}
+
+void loop() {
+    
+  // on augmente la valeur de inc
+  // on calcul en fonction de inc un valeur qui va osciller entre 0 et 244.
+  inc +=  0.05;
+  int saturation = (sin(inc) + 1)*122; // cette valeur est stocké dans une variable nommée "saturation"
+  // Pour i allant de 0 à 5, on va éxecuter le code entre accolades, 
+  // à chaque fois on augmente la valeur de i de 1
+  for (int i = 0; i < NUM_LEDS; i++) {
+    // on change la valeur de la led 'i' du tableau nommé 'leds" en lui donnant une nouvelle valeur RGB
+    leds[i] = CHSV(255 - i *50, saturation, 255);
+  }
+    FastLED.show();// on actualise le ruban de led
+}
+```
+
+on peut encore une fois appeler directement la fonction **CHSV()**
+```c
+void loop(){
+    leds[0] = CHSV(0, 255, 255); //rouge
+    leds[1] = CHSV(90, 255, 255); // vert
+    leds[2] = CHSV(180, 255, 255); // bleu
+    leds[3] = CHSV(255, 0, 255); // blanc
+    leds[0] = CHSV(0, 0, 0); // noir
+    FastLED.show(); // on actualise le ruban de led
+}
+
+```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
