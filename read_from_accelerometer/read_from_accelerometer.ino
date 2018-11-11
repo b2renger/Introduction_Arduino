@@ -23,7 +23,7 @@ void loop() {
   Serial.print(" , ");
   Serial.println(z);
 
-  // on crée un tableau pour stocker les valeurs provenant du calcul effectué par notre bibliothèques quand on appel getAcceleration()
+  // on crée un tableau pour stocker les valeurs provenant du calcul effectué par notre bibliothèques quand on appelel getAcceleration()
   double xyz[3];
   accel.getAcceleration(xyz); //on lit données de l'accéleromètre et on les stockent dans notre tableau
   // on imprimme le résultat
