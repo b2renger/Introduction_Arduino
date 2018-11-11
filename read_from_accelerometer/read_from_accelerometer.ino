@@ -1,20 +1,21 @@
-
+// prévenir que nous allons avoir besoin de ces bibliothèques
 #include <Wire.h>
 #include <ADXL345.h>
 
 
-ADXL345 accel;
+ADXL345 accel; // on crée un objet qui nous permet de manipuler les données provenant de notre acceleromètre
 
 void setup() {
   Serial.begin(9600);
-  accel.powerOn();
+  accel.powerOn(); // on active notre capteur
 }
 
 void loop() {
 
-
+  // on crée trois variables pour stocker les valeurs brutes de notre acceleromètre.
   int x, y, z;
-  accel.readXYZ(&x, &y, &z); //read the accelerometer raw values
+  accel.readXYZ(&x, &y, &z); //on lit données de l'accéleromètre et on les stockent dans nos variables.
+  // on imprimme le résultat dans le moniteur série
   Serial.print("values of X , Y , Z: ");
   Serial.print(x);
   Serial.print(" , ");
@@ -22,8 +23,10 @@ void loop() {
   Serial.print(" , ");
   Serial.println(z);
 
-  double xyz[3]; // create an array to store values from .getAcceleration()
-  accel.getAcceleration(xyz);
+  // on crée un tableau pour stocker les valeurs provenant du calcul effectué par notre bibliothèques quand on appel getAcceleration()
+  double xyz[3];
+  accel.getAcceleration(xyz); //on lit données de l'accéleromètre et on les stockent dans notre tableau
+  // on imprimme le résultat
   Serial.print("X=");
   Serial.print(xyz[0]);
   Serial.print(" g , ");

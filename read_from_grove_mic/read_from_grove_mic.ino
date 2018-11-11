@@ -1,12 +1,10 @@
 // http://wiki.seeedstudio.com/Grove-Sound_Sensor/
-// use the serial plotter
+
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  int value = analogRead(A0);
+  int value = analogRead(0);
   Serial.println(value);
 }
