@@ -2,7 +2,7 @@
 
 Code for a creative coding class with arduino for designers.
 
-Arduino est une marque de cartes électroniques open hardware : c'est à dire des cartes dont les schémas sont disponibles librement et gratuitement.
+[Arduino](https://www.arduino.cc/) est une marque de cartes électroniques open hardware : c'est à dire des cartes dont les schémas sont disponibles librement et gratuitement.
 
 Arduino est un projet qui a commencé en 2003 à l'Interaction Design Institute Ivrea (maintenant intégré à la Domus Academy - un école privé de design basée à Milan en Italie) comme un projet pédagogique pour les étudiants cherchant à permettre à coût réduit et d'une manière la plus simple possible de créer des objets interagissant avec leur environnement par le biais de capteurs et d'actuateurs.
 
@@ -15,6 +15,8 @@ Ces cartes disposent d'une multitude de composants d'entrées et de sorties, de 
 Il existe différent modèles de cartes comportant plus ou moins d'entrées / sorties, qui nécessitent plus ou moins d'énergie pour fonctionner et dont les processeurs (ou micro-controlleurs) sont plus ou moins rapides. (Mega, Leonardo, Uno etc.)
 
 Ici nous allons nous concentrer sur comment récupérer des valeurs de différents capteurs, comment activer des actuateurs et comment faire communiquer une carte arduino et un programme [processing](https://processing.org/).
+
+Chaque exemple comportera un schéma électrique à réaliser et du code à écrire et téléverser sur une carte.  
 
 ## CONTENU
 * [Introduction](https://github.com/b2renger/Introduction_arduino#introduction)<br>
@@ -65,7 +67,7 @@ Lorsque l'on dit qu'une carte arduino est une carte d'entrée / sortie cela sign
 
 Mesurer des courants permet de brancher des capteurs et de vérifier leur état : par exemple mesurer le courant en sortie d'un capteur de luminosité nous permet d'avoir une estimation de la luminosité ambiante.
 
-Générer des courants permet de brancher des actuateurs et donc de faire tourner un moteur plus ou moins vite ou d'allumer des leds plus ou moins fort.
+Générer des courants permet de brancher des actuateurs et donc de faire tourner un moteur plus ou moins vite ou d'allumer des leds plus ou moins fort. C'est l'écriture de code qui va permettre de prévoir l'interaction et les lien entres nos différents éléments.
 
 Une carte arduino ressemble à ceci :
 
@@ -81,11 +83,66 @@ Il est important de répérer aussi les pins notées **5V** et **GND** celles-ci
 
 Pour simplifier les choses éviter des connecter des capteurs sur les pins digitales D0 et D1 au début.
 
+Lorsque l'on a pu brancher des composants sur notre carte, nous allons utiliser du code pour mesurer des courants : **lire** sur une entrée **digitale** ou sur en entrée **analogique**, ou **écrire** sur une sortie **digitale**.
+
+Le code s'écrit dans l'IDE (Integrated Development Environment) arduino, que vous pourrez trouver et télécharger à cette adresse : https://www.arduino.cc/en/Main/Software
+
+Il faut prendre la version *Desktop* :
+
+<img src="assets/download_arduino.png" width="480" height="240" /><br>
+
+Un fois téléchargé, installé et ouvert vous devrier vous retrouver devant une fenêtre ressemblant à cela :
+
+<img src="assets/arduino_ide.png" width="600" height="740" /><br>
+
+Nous allons donc taper du texte dans cette page pour programmer notre carte électronique.
+
+Les deux premiers boutons en haut à gauche permettent de **vérifier** et de **téléverser** votre code vers la carte, les boutons suivant servent à créer un nouveau programme, ouvrir un programme ou enregistrer un programme, et le bouton tout à droite sert à ouvrir le **moniteur série** (c'est ici que notre programme pourra écrire des informations pour nous informer sur le bon déroulement de la tâche ou pou observer des valeurs brutes de capteurs).
+
+La zone noire correspond à la **console d'erreurs** : le logiciel nous indiquera ici (et souvent en rouge) lorsqu'il y a des erreurs dans le programme que nous avons écrit, ou des problèmes de communication avec la carte.
+
+Finalement la zone blanche est la zone de code. Vous pouvez y voir deux fonctions déjà tappées **setup()** et **loop()**. Ceci est la structure basique de n'importe quel programme arduino. 
+
+Entre les accolades qui délimitent la fonction **setup()** vous écrirez du code qui ne sera exécuté qu'une seul fois au début de votre programme. Par exemple ouvrir une communication série avec notre ordinateur :
+
+```
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+}
+```
+
+Et entre les accolades qui délimitent la fonction **loop()** vous écrirez du code qui sera exécuté en boucle une fois le programme démarré. Par exemple imprimmer dans le moniteur série la valeur lue sur l'entrée analogique 0 :
+
+```
+void loop() {
+  // put your main code here, to run repeatedly:
+  Serial.println(analogRead(0));
+}
+```
+Pensez bien que qu'il faut tapper les instructions exactement comme la carte arduino les attend, la moindre faute de frappe (sur une majuscule, un point virgule ou une parenthèse manquante) fera que votre programme ne fonctionnera pas, car la carte ne sera pas capable de comprendre les instructions qu'elle doit exécuter.
+
+Remarquez qu'il est possible d'écrire des commentaires en langage pour humain : en plaçant **//** devant une ligne celle-ci ne sera pas lue / exécutée par la carte.
+
+Une fois le programme écrit il faut le **téléverser** sur la carte mais avant il faut préciser sur quelle **type de carte** on veut téléverser le programme et dire précisément la carte ou le **port** sur laquelle on veut téléverser - car on pourrait très bien avoir plusieurs cartes connectées à notre ordinateur.
+
+Pour cela il faut aller dans le menu *Outils* puis sélectionner *Arduino / Genuino Uno* pour le **type de carte** et choisir la bonne carte dans le menu **Port** (il faut bien sûr à ce stade que votre carte soit branchée à un port usb de votre ordinateur) :
+
+<img src="assets/arduino_ide_selection_carte.png" width="900" height="640" /><br>
+
+Une fois cela fait vous pouvez **vérifier** votre programme puis le **téléverser**.
+
+Lorsque l'on réalise un circuit notre carte doit être déconnectée de notre ordinateur, au moment où l'on code il est préférable de la garder connectée.
+
+
 
 ## Connecter des capteurs et récupérer les valeurs
 
 ### Entrées Analogiques
 
+```
+
+```
 #### Potentiomètre 
 <img src="assets/read_from_pot.gif" width="480" height="270" /><br>
 <img src="read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
