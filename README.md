@@ -754,33 +754,148 @@ void loop() {
 
 ## Connecter des actuateurs et activer des périphériques
 
+Nous avons vu que les entrées digitales permettait de mesurer des courants *HIGH* ou *LOW*, elles permettent aussi deux générer ces deux types de courants comme dans le cas de notre capteur de distance à ultra-son. Une autre possibilité est de générer un signal [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion): en envoyant des impulsions électriques très rapides et dont la durée varie on peut encoder des valeurs plus complexes et donc contrôler l'intensité et la couleur de leds ou la vitesse / sens de rotation de moteurs.
+
+
 ### Servomoteurs
 D'une manière générale tous les servomoteurs se branchent de le même façon :
 
 <img src="set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
 
-Le code est aussi le même on envoit une valeur :
+Le cable foncé est la masse (GND), le cable rouge est l'alimentation (5V), le dernier est généralement jaune ou orange on le relie à une sortie digitale d'une carte arduino, mais attention à une sortie PWM.
+
+On utilise la bibliothèque [**Servo**](https://www.arduino.cc/en/Reference/Servo) qui est inclue par défaut dans l'IDE vous n'avez donc rien de particulier à installer logiciellement pour faire fonctionner des servomoteurs.
+
+Le code est aussi le même on envoit une valeur à l'aide de la fonction [**.write()**](https://www.arduino.cc/en/Reference/ServoWrite) :
 - 90 pour la position de repos
 - 0 pour un des deux comportements / position extême
 - 180 pour l'autre
 
+Les servos moteurs existe en une multitude de taille, de vitesse, et de puissance. En fonction de leur caractéristiques ils peuvent nécessiter plus ou moins d'énergie ou couter plus ou moins cher.
+
 #### Servomoteur classique
+
+Un servo classique va accepter comme paramètre un angle, les valeurs maximales et minimum peuvent varier en fonction des moteurs, de même que la vitesse qui leur permettra d'atteindre cet angle.
+
 <img src="assets/set_position_servo_classique.gif" width="480" height="270" /><br>
 
-#### Servomoteur à rotatoin continue
+Notre code va nous permettre de tester simplement le comportement du servomoteur, en le faisant changer d'état toutes les 1.5 secondes.
+
+```c
+// inclure la bibliothèque servo
+#include <Servo.h>
+
+// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
+// des informations à notre servo moteur
+Servo myservo;
+
+void setup() {
+  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
+  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
+}
+
+void loop() {
+  myservo.write(90); // mettre le servo en position de repos
+  delay(1500); // attendre 1.5 sec
+  myservo.write(0); // mettre le servo en buté à gauche
+  delay(1500);
+  myservo.write(90);// mettre le servo en position de repos
+  delay(1500);
+  myservo.write(180); // mettre le servo en buté à droite
+  delay(1500);
+}
+```
+Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
+
+
+
+#### Servomoteur à rotation continue
+
+Un servomoteur à rotation continue va accepter comme paramètre dans sa fonction **.write()** une vitesse de rotation comprise entre 0 et 180.
+
+- 0 le fera tourner à vitesse maximum dans le sens des aiguilles d'une montre.
+- 180 le fera tourner à vitesse maximum dans le sens inverse des aiguilles d'une montre.
+- 90 le fera s'arreter.
+
+Des valeurs autour de 90 le feront donc tourner plus ou moins vite dans un sens ou dans l'autre.
+
 <img src="assets/set_rotation_servo_continu.gif" width="480" height="270" /><br>
 
+```c
+// inclure la bibliothèque servo
+#include <Servo.h>
+
+// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
+// des informations à notre servo moteur
+Servo myservo;
+
+void setup() {
+  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
+  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
+}
+
+void loop() {
+  myservo.write(90); // mettre le servo en position de repos
+  delay(1500); // attendre 1.5 sec
+  myservo.write(0); // faire tourner le servo le plus vite possible dans le sens des aiguilles d'une montre
+  delay(1500);
+  myservo.write(90);// mettre le servo en position de repos
+  delay(1500);
+  myservo.write(180); // faire tourner le servo le plus vite possible dans le sens inverse des aiguilles d'une montre
+  delay(1500);
+}
+```
+Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
+
+
 #### Servomoteur linéaire
+
+Le servomoteur linéaire va lui effectuer une translation. On précise entre les parenthèse de **write()** sa position.
+
 <img src="assets/set_position_servo_lineaire.gif" width="480" height="270" /><br>
+
+```c
+// inclure la bibliothèque servo
+#include <Servo.h>
+
+// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
+// des informations à notre servo moteur
+Servo myservo;
+
+void setup() {
+  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
+  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
+}
+
+void loop() {
+  myservo.write(90); // au milieu
+  delay(1500); // attendre 1.5 sec
+  myservo.write(0); // à l'opposé
+  delay(1500);
+  myservo.write(90);//au milieu
+  delay(1500);
+  myservo.write(180); // à l'autre opposé
+  delay(1500);
+}
+```
+
+Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 
 ### Alumer des leds (neopixels)
 
+Nous allons utiliser directement des rubans de leds. Ces rubans présentent des séries de leds RGB dont chacune est contrôllable individuellement en couleur et en intensité.
+
+Ils peuvent être découpés à la longueur souhaités et ne nécessitent que trois cables pour les contrôller : deux pour l'alimentation et un pour la donnée.
+
 <img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
-Nous allons utiliser la bibliothèque Fast-LED.
+En fonction du nombre de leds que vous voulez allumer mais aussi en fonction de la couleur ou de l'intensité, il vous faudra une puissance différente. Il peut parfois être nécessaire de faire appel à des alimentations externes. Une led consomera au maximum 60mA (allumée en blanc à l'intensité maximale).
+
+Pour la partie logicielle nous allons utiliser la bibliothèque Fast-LED. Il faut donc l'installer via **le gestionnaire de bibliothèques** (Menu *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*).
+
 
 #### Spécifier la couleur en RGB
 

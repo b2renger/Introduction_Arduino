@@ -1,25 +1,23 @@
-
+// inclure la bibliothèque servo
 #include <Servo.h>
-Servo myservo;
-int deltaT = 1500;
 
+// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
+// des informations à notre servo moteur
+Servo myservo;
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(10, OUTPUT);
-  myservo.attach(10);  // attaches the servo on pin 9 to the servo object
-
+  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
+  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
 }
 
 void loop() {
-
-  myservo.write(90);
-  delay(deltaT);
-  myservo.write(180);
-  delay(deltaT);
-  myservo.write(0);
-  delay(deltaT);
-
-
+  myservo.write(90); // mettre le servo en position de repos
+  delay(1500); // attendre 1.5 sec
+  myservo.write(0); // faire tourner le servo le plus vite possible dans le sens des aiguilles d'une montre
+  delay(1500);
+  myservo.write(90);// mettre le servo en position de repos
+  delay(1500);
+  myservo.write(180); // faire tourner le servo le plus vite possible dans le sens inverse des aiguilles d'une montre
+  delay(1500);
 }
 
