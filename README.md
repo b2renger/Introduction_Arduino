@@ -958,7 +958,8 @@ void loop(){
 Le montage est le même : 
 <img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
 
-Le code est quasiment le même sauf que l'on appelle la fonction **CHSV()** de la bibliothèque Fast-led:
+Le code est quasiment le même sauf que l'on appelle la fonction **CHSV()** de la bibliothèque Fast-led. Même si dans la plupart des logiciels la teinte est représentée par une valeur entre 0 et 360 et la saturation ainsi que le luminosité sont représentées par des valeurs comprises entre 0 et 100, ici chacune des trois valeurs doit être comprise entre 0 et 255.
+
 
 ```c
 // inclure la bibliothèque fast-led
@@ -1006,14 +1007,66 @@ void loop(){
 
 ### Utiliser un afficheur à 4 digits
 
+Un afficheur à 4 digits permet d'afficher des chiffres et des lettres (de A à F) sur des digits (ensemble de 7 segments). Il y a 4 digits disponnibles pour afficher des chiffres.
+
 <img src="assets/set_four_digit_display.gif" width="480" height="270" /><br>
+
+La page de documentation du fabricant du composant est disponnible ici : http://wiki.seeedstudio.com/Grove-4-Digit_Display/
+
+Le cablage est un cablage classique pour ce genre de périphérique.
+
 <img src="set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
+
+D'un point de vue logiciel il va vous falloir télécharger le bibliothèque **TM1637** /**Grove 4-digit display**.
+
+```c
+// inclure la bibliothèque dédiée à l'afficheur 4 digit
+#include "TM1637.h"
+// définir les pins de connexion pour la clock et la donnée
+#define CLK 8
+#define DIO 9
+TM1637 tm1637(CLK, DIO); // attacher de manière effective nos pin et notre écran
+
+// définir les caractères disponnibles
+int8_t NumTab[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}; //0~9,A,b,C,d,E,F
+// définir une variable que l'on va augmenter petit à petit pour calculer en temps
+int num = 0;
+
+void setup() {
+  // initialiser notre écran et spécifier sa luminosité
+  tm1637.init();
+  tm1637.set(BRIGHTEST);//BRIGHT_TYPICAL = 2,BRIGHT_DARKEST = 0,BRIGHTEST = 7;
+}
+
+void loop(){
+
+  // calculer le chiffre à afficher pour chaque colone du tableau de numération
+  // car même si notre chiffre à moins de 4 valeurs (0 pour les milliers, centaines et dizaines)
+  // on veut afficher les zéros précédent notre valeur.
+  int milles = int((num /1000)%10);
+  int cents = int ((num /100)%10);
+  int dizaines = int((num/10)%10);
+  int unites = int(num%10);
+  
+  tm1637.display(0, NumTab[milles]); // afficher le chiffre des milliers sur l'ensemble de segment le plus à gauche
+  tm1637.display(1, NumTab[cents]);
+  tm1637.display(2, NumTab[dizaines]);
+  tm1637.display(3, NumTab[unites]); // afficher le chiffre des unités sur l'ensemble de segment le plus à droite
+    
+  delay(10); // attendre un peu
+  
+  num +=1 ; // augmenter la valeur de num de 1
+}
+```
+Remarquez bien qu'ici on mesure des dizaines de millisecondes : le *delay(10)* fait que le programme se met en pause une dizaine de millisecondes avant de boucler.
 
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 
 ## Controler un actuateur avec un capteur
+
+
 
 ### Utiliser la fonction map()
 
