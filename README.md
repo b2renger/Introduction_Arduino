@@ -1066,10 +1066,21 @@ Remarquez bien qu'ici on mesure des dizaines de millisecondes : le *delay(10)* f
 
 ## Controler un actuateur avec un capteur
 
+Dans cette partie nous allons nous attacher à créer des montages un peu plus complexes, et aussi à écrire du code un peu plus complexe.
 
+L'objectif est de controller un actuateur (par exemple un moteur) avec un capteur (par exemple une photorésistance). L'actuateur a besoin de recevoir certaines valeurs (comprises entre 0 et 180 pour un moteur par exemple) et nos capteurs peuvent fournir tout type de plages de valeurs (entre 0 et 1023 pour une photorésistance).
+
+Il va donc falloir récupérer les valeurs de notre capteur et les transformer dans un intervalle utile pour notre actuateur. Il s'agit en réalité unique de réaliser un produit en croix - mais une fonction dédiée est prévue dans le langage de programation arduino.
 
 ### Utiliser la fonction map()
 
+La fonction [**map()**](https://www.arduino.cc/reference/en/language/functions/math/map/) permet de transformer une valeur qui est dans un intervalle que l'on connait vers un nouvel intervalle qui nous sera utile.
+
+Par exemple :
+```c
+int val = analogRead(0); // lire une valeur sur A0 - celle ci sera comprise entre 0 et 1023
+int newval = map(val, 0, 1023, 0, 180); // notre valeur est comprise entre 0 et 1023, on veut une valeur entre 0 et 180
+```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
