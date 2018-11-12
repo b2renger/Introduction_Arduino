@@ -1086,8 +1086,42 @@ int newval = map(val, 0, 1023, 0, 180); // notre valeur est comprise entre 0 et 
 
 ### Potentiomètre vers servo classique
 
+Comment controller un servomoteur avec un potentiomètre ?
+
 <img src="assets/map_potentiometer_to_servo.gif" width="480" height="270" /><br>
+
+Le montage est la réunion de deux montages déjà vu précédement : on branche un potentiomètre sur l'entrée analogique *A0*, et on branche un moteur sur la sortie digitale *D6*.
+
 <img src="map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
+
+Le code va aussi réunir deux bouts de code déjà existant, on va juste utiliser la fonction map pour faire le lien entre notre mesure de la valeur du potentiomètre et l'information que l'on va envoyer au servomoteur.
+
+```c
+// inclure la bibliothèque pour les servomoteurs
+#include <Servo.h>
+Servo myservo; // créer un objet permettant de manipuler un servomoteur
+
+
+void setup() {
+  Serial.begin(9600); // ouvrir une connexion série
+    
+  pinMode(6, OUTPUT);// préciser que l'on va utiliser la pin 6 comme une sortie.
+  myservo.attach(6);// attacher notre servomoteur à cette pin 6
+    
+}
+
+void loop() {
+
+  int potValue = analogRead(0); // on lit notre valeur sur l'entrée analogique 0
+  Serial.println(potValue); // on imprimme la valeur de notre potentiomètre dans le moniteur série
+  
+  // on va calculer une position pour notre servomoteur, une position qui dépendra de la valeur de notre potentiomètre
+  int servoPos = map(potValue, 0, 1023, 0, 180); // on map la valeur de notre potentiomètre qui est comprise entre 0 et 1023, vers un intervalle compris entre 0 et 180?.
+  myservo.write(servoPos); // écrire la position calculée sur le servomoteur
+}
+```
+
+
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
