@@ -1198,16 +1198,217 @@ void loop() {
   FastLED.show();// on actualise le ruban de led
 }
 ```
-```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 ## Utiliser des capteurs pour contrôler du code processing
 
+Dans cette partie nous allons nous concenter sur l'utilisation du port série et nous allons depuis un programme arduino écrire des valeurs de capteurs dans un port série que nous pourrons alors récupérer dans un programme processing.
+
+Nous pourrons faire de même dans l'autre sens : c'est à dire envoyer des informations de processing vers arduino.
+
+Pour info USB signifie Universal Serial Bus, le port série est donc bien le port usb on programme donc une manière de faire transiter d'un appareil à l'autre des information via une connexion usb.
+
 ### Controler le playback d'une vidéo avec un capteur de distance
 
+Le premier programme va utiliser un capteur de distance et la distance détectée par notre capteur servira à régler la vitesse de défilement d'une vidéo lue par un programme processing : 
+
 <img src="assets/serial_distance_to_movie_speed.gif" width="480" height="270" /><br>
+
+Pour rappel le cablage du capteur de distance ce fait comme ceci :
+
 <img src="read_from_IRDistance/read_from_irdistance.png" width="480" height="270" /><br>
+
+Nous allons utiliser l'exemple de code fournit dans la bibliothèque vidéo de processing. Disponible dans le navigateur d'exemples : *Exemples* -> *Libraries* -> *Video* -> *Movie* -> *Speed*
+
+Je vous conseille de l'ouvrir depuis processing (comme ça vous aurez déjà la vidéo et le code), mais le code ressemble à cela avec quelques commentaires en français.
+
+```java
+/**
+ * Speed. 
+ * Use the Movie.speed() method to change
+ * the playback speed.
+ */
+
+import processing.video.*; // importer la bibliothèqe video
+Movie mov; // créer un objet Movie appelé mov afin de pouvoir charger un film et le lire.
+
+void setup() {
+  size(640, 360);
+  background(0);
+  mov = new Movie(this, "transit.mov"); // charger le film "transit.mov" qui se trouve dans le dossier data de votre sketch
+  mov.loop(); //lancer la lecture du film en boucle
+}
+
+void draw() {    
+  image(mov, 0, 0); // afficher une frame du film
+             
+  // calculer une variable que l'on utilisera pour controller la vitesse de défilement du film
+  // cette variable dépendera de la souris dont la position horizontale est comprise entre 0 et 'width'
+  // et nous voulons obtenir des valeurs entre 0.1 et 2
+  float newSpeed = map(mouseX, 0, width, 0.1, 2);
+  mov.speed(newSpeed); // utiliser notre variable pour chager la vitesse de lecture du film
+  
+  // afficher la valeur de la vitesse en haut à gauche
+  fill(255);
+  text(nfc(newSpeed, 2) + "X", 10, 30); 
+}  
+
+// fonction nécessaire pour déclencher la lecture du film
+void movieEvent(Movie movie) {
+  mov.read();  
+}
+
+```
+
+Dans ce code on fait dépendre la vitesse de la position de la souris, nous allons donc remplacer la variable *mouseX* à la ligne :
+
+```java
+float newSpeed = map(mouseX, 0, width, 0.1, 2);
+```
+par la valeur que nous allons capter via notre capteur de distance et notre carte arduino. Pour cela dans notre code arduino nous allons écrire une chaîne de caractère au format [**JSON**](https://fr.wikipedia.org/wiki/JavaScript_Object_Notation) dans laquelle nous allons insérer une valeur lue sur notre entrée analogique.
+
+Notre chaîne de caractère devra ressembler à cela
+```json
+{
+    "distance" : valeur_actuelle_de_la_distance
+}
+```
+
+Ce code arduino permet de faire cela avec la concaténation de chaîne de caractères.
+
+```c
+String json;
+  json = "{\"distance\":";
+  json = json + analogRead(0);
+  json = json + "}";
+```
+
+Il ne nous reste plus qu'à poster cette chaîne de caractère sur le port série à l'aide de **Serial.println()** comme d'habitude. Voici donc l'ensemble du code arduino :
+
+```c
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+  int value = analogRead(00);
+
+  String json;
+  json = "{\"distance\":";
+  json = json + value;
+  json = json + "}";
+
+  Serial.println(json);
+}
+```
+
+Du côté processing il faut maintenant s'atteler à recevoir cette chaîne de caractères, extraire la donnée de distance et l'utiliser.
+
+Il va nous falloir utiliser la bibliothèque [**Serial**](https://processing.org/reference/libraries/serial/index.html), il n'est pas nécessaire de l'installer car elle est integrée par défaut dans processing.
+
+Il faut donc commencer par importer la bibliothèqe en tapant tout en haut du sketch que nous utilisons pour lire notre film :
+```java
+import processing.serial.*;
+Serial myPort;  // Créer un objet serial pour pouvoir lire les information postées sur le port série
+```
+nous en profiterons créer une variable destinée à stocker l'information reçue par arduino
+
+```java
+int valueFromArduino = 50;
+int movieSpeed = 0;
+```
+
+Ensuite nous devons ajouter quelques lignes au **setup()** : il faut au démarrage du programme initialiser la connexion série avec notre carte arduino.
+
+```java
+// initialisation de la communication via usb depuis arduino
+// ATTENTION à bien utiliser le port adapté
+printArray(Serial.list()); // imprimmer la liste des appreils connectés au port série
+String portName = Serial.list()[3]; // ma carte arduino est la troisième dans la liste imprimmée dans la console
+myPort = new Serial(this, portName, 9600); // on ouvre la communication
+myPort.bufferUntil('\n');
+```
+
+Maitenant il nous faut exécuter du code à chaque fois qu'une information est postée sur le port série, cela se fait en l'écrivant dans une fonction : 
+```java
+void serialEvent (Serial myPort) {
+  
+}
+```
+
+Le code ci-dessous est un peu barbare, mais il n'est pas nécessaire de tout comprendre. En gros on va essayer de lire les données arrivant sur le port série, si celui-ci est ouvert, puis on va décrotiquer la chaine de caractère :
+
+```java
+void serialEvent (Serial myPort) {
+  try { // on essaye de faire qqchose mais on ne plante pas si on y arrive pas
+    while (myPort.available() > 0) {
+      String inBuffer = myPort.readStringUntil('\n'); // lire la chaine de caractère du port série jusqu'au retour charriot
+      if (inBuffer != null) { // si ce n'est pas nul
+        if (inBuffer.substring(0, 1).equals("{")) { // et si ça ressemble à du json
+          JSONObject json = parseJSONObject(inBuffer); // on essaye de le lire comme du json
+          // C'est à partir de là qu'il faut comprendre !!
+          if (json == null) { // si ce n'est pas du json on fait rien
+            
+          }
+          else { // sinon on récupère la valeur portant le nom 'distance' et on la stocke dans une variable !
+            if (abs(json.getInt("distance")-valueFromArduino)> 50) {
+              valueFromArduino    = json.getInt("distance");
+              // on map la valeur et on la stocke dans notre variable movie speed créée tout au début
+              movieSpeed = map(valueFromArduino, 50, 650, 2, 0);
+              movieSpeed = constrain(movieSpeed, 0, 2); // on maintient cette valeur dans un intervalle cohérent des fois que notre capteur renvoit des valeurs trop grandes ou trop petites
+            }
+          }
+        // il ne nous reste plus qu'à fermer toutes nos accolades ^^
+        } 
+        else {
+        }
+      }
+    }
+  } 
+  catch (Exception e) {
+  }
+}
+```
+Il y a pas mal de tests de sécurité pour éviter que notre programme plante si notre chaîne est nulle ou si la donnée que l'on cherche n'est pas disponible.
+
+Mais il ne nous reste plus qu'à utiliser *movieSpeed* pour réellement controller la vitesse de lecture du film.
+
+```java
+mov.speed(movieSpeed);
+```
+
+Voici donc le code processing permettant de récupérer la valeur de distance depuis arduino et l'utiliser pour controller la vitesser de lecture d'un film :
+
+```java
+void serialEvent (Serial myPort) {
+  try {
+    while (myPort.available() > 0) {
+      String inBuffer = myPort.readStringUntil('\n');
+      if (inBuffer != null) {
+        if (inBuffer.substring(0, 1).equals("{")) {
+          JSONObject json = parseJSONObject(inBuffer);
+          if (json == null) {
+            //println("JSONObject could not be parsed");
+          } else {
+            if (abs(json.getInt("distance")-valueFromArduino)> 50) {
+              valueFromArduino    = json.getInt("distance");
+              movieSpeed = map(valueFromArduino, 50, 650, 2, 0);
+              movieSpeed = constrain(movieSpeed, 0, 2);
+            }
+          }
+        } else {
+        }
+      }
+    }
+  } 
+  catch (Exception e) {
+  }
+}
+```
+
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 

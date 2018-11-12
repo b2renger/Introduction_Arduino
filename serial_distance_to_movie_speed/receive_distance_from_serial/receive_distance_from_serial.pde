@@ -4,7 +4,7 @@ Movie mov;
 
 
 import processing.serial.*;
-Serial myPort;  // Create object from Serial class
+Serial myPort;  
 
 int valueFromArduino = 50;
 float movieSpeed = 2;
@@ -48,8 +48,8 @@ void serialEvent (Serial myPort) {
           if (json == null) {
             //println("JSONObject could not be parsed");
           } else {
-            if (abs(json.getInt("photores")-valueFromArduino)> 50) {
-              valueFromArduino    = json.getInt("photores");
+            if (abs(json.getInt("distance")-valueFromArduino)> 50) {
+              valueFromArduino    = json.getInt("distance");
               movieSpeed = map(valueFromArduino, 50, 650, 2, 0);
               movieSpeed = constrain(movieSpeed, 0, 2);
             }
