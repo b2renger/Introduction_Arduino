@@ -1383,6 +1383,46 @@ mov.speed(movieSpeed);
 Voici donc le code processing permettant de récupérer la valeur de distance depuis arduino et l'utiliser pour controller la vitesser de lecture d'un film :
 
 ```java
+
+import processing.video.*;
+Movie mov;
+
+
+import processing.serial.*;
+Serial myPort;  
+
+int valueFromArduino = 50;
+float movieSpeed = 2;
+
+void setup() {
+  size(800, 500);
+  background(0);
+
+  mov = new Movie(this, "transit.mov");
+  mov.loop();
+
+  // initialisation de la communication via usb depuis arduino
+  // ATTENTION à bien utiliser le port adapté
+  printArray(Serial.list());
+  String portName = Serial.list()[3];
+  myPort = new Serial(this, portName, 9600);
+  myPort.bufferUntil('\n');
+}
+
+void movieEvent(Movie movie) {
+  mov.read();
+}
+
+void draw() {    
+  image(mov, 0, 0,width,height);
+
+  
+  mov.speed(movieSpeed);
+
+  fill(255);
+  text(nfc(movieSpeed, 2) + "X", 10, 30);
+}  
+
 void serialEvent (Serial myPort) {
   try {
     while (myPort.available() > 0) {
@@ -1407,8 +1447,8 @@ void serialEvent (Serial myPort) {
   catch (Exception e) {
   }
 }
-```
 
+```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
