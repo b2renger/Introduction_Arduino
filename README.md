@@ -1165,8 +1165,19 @@ void loop() {
 
 ### FSR vers neopixels HSB
 
+Ici nous allons utiliser un capteur pour fixer la teinte de la lumière produite par un strip de leds rgb.
+
 <img src="assets/map_fsr_to_neopixels.gif" width="480" height="270" /><br>
+
+Le cablage comporte un capteur de force avec un résistance 47kOhms branché sur l'entrée analogique A0, et un strip de led branché sur la pin digitale D6.
+
 <img src="map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
+
+Comme d'habitude nous allons récupérer une valeur analogique comprise entre 0 et 1023 et nous allons transformer les valeurs obtenues en valeurs comprises entre 0 et 255 pour pouvoir controller la teinte de nos leds.
+
+ ```c
+
+```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
