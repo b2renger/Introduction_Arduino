@@ -18,6 +18,6 @@ void loop() {
   Serial.println(potValue); // on imprimme la valeur de notre potentiomètre dans le moniteur série
 
   // on va calculer une position pour notre servomoteur, une position qui dépendra de la valeur de notre potentiomètre
-  int servoPos = map(potValue, 0, 1023, 0, 180); // on map la valeur de notre potentiomètre qui est comprise entre 0 et 1023, vers un intervalle compris entre 0 et 180?.
+  int servoPos = map(potValue, 0, 1023, 0, 180); // on map la valeur de notre potentiomètre qui est comprise entre 0 et 1023, vers un intervalle compris entre 0 et 180
   myservo.write(servoPos); // écrire la position calculée sur le servomoteur
 }

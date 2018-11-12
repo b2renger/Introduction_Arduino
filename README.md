@@ -1121,14 +1121,45 @@ void loop() {
 }
 ```
 
-
-
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 ### Flex vers servo continu
 
+L'objectif ici va être de contrôller la vitesse et le sens de rotation d'un servomoteur à l'aide d'un capteur de flexion :
+
 <img src="assets/map_flex_to_servo_continu.gif" width="480" height="270" /><br>
+
+De la même manière que précédement, ce montage est la combinaison du montage permettant de récupérer l'information d'un capteur de flexion et du montage permettant de controller un servomoteur à rotation continue.
+
 <img src="map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
+
+Le code va reprendre le code permettant de mesurer la valeur d'un capteur de flexion et va le combiner avec le code permettant de faire tourner un moteur à rotation continue en mappant les valeur provenant du capteur de flexion vers des valeurs utiles pour faire tourner un moteur à rotation continu.
+
+```c
+// inclure la bibliothèque pour controller des servomoteurs
+#include <Servo.h>
+Servo myservo; // créer un objet qui nous permettra de manipuler notre servomoteur.
+
+
+void setup() {
+  Serial.begin(9600); // ouvrir une connexion série pour pouvoir imprimmer des valeurs dans le moniteur série
+  pinMode(6, OUTPUT); // on précise que l'on utilise la pin 6 comme une sortie
+  myservo.attach(6); // on précise que notre servo est connecté sur la pin 6
+
+
+}
+
+void loop() {
+  // on lit la valeur provenant de notre capteur de flexion qui est branché sur la pin A0
+  int flexion = analogRead(0);
+  Serial.println(flexion);// on imprime la valeur dans le moniteur série
+  // on va calculer une vitesse de rotation pour notre servomoteur qui dépendera de la valeur mesurée par
+  // notre capteur de flexion. En observant les valeurs imprimmées dans le moniteur série, on se rend compte que 
+  // les valeurs de notre capteur sont a peu près comprises entre 200 et 700.
+  int servoRotation = map(flexion, 200, 700, 0, 180); // on mappe donc notre valeur de flexion qui est comprise entre 200 et 700 vers de valeurs comprises entre 0 et 180
+  myservo.write(servoRotation); // on envoit ces nouvelles valeurs vers notre servomoteur pour le faire tourner.
+}
+```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
