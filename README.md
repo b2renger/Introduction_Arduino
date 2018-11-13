@@ -1354,7 +1354,7 @@ void serialEvent (Serial myPort) {
             
           }
           else { // sinon on récupère la valeur portant le nom 'distance' et on la stocke dans une variable !
-            if (abs(json.getInt("distance")-valueFromArduino)> 50) {
+            if (abs(json.getInt("distance")-valueFromArduino)> 50) { // vérifier que la valeur a suffisament changé
               valueFromArduino    = json.getInt("distance");
               // on map la valeur et on la stocke dans notre variable movie speed créée tout au début
               movieSpeed = map(valueFromArduino, 50, 650, 2, 0);
@@ -1454,8 +1454,229 @@ void serialEvent (Serial myPort) {
 
 ### Controler une animation avec une photoresistance
 
+La logique de cette animation est très similaire à la précédente. Nous allons remplacer le capteur de distance par une photorésistance et nous allons utiliser un exemple différent :
+
 <img src="assets/serial_photores_to_animation.gif" width="480" height="270" /><br>
+
+Le cablage est celui d'une photorésistance classique branchée sur A0.
 <img src="read_from_photores/read_from_photores.png" width="480" height="270" /><br>
+
+Le code arduino est quasiment le même, on va juste adapter l'identifiant dans notre json qui va stocker notre valeur :
+
+```c
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(A0);
+  String json;
+  json = "{\"photores\":";
+  json = json + value;
+  json = json + "}";
+
+  Serial.println(json);
+}
+```
+
+D'un point de vue processing nous allons encore une fois utiliser un exemple disponible avec le logiciel : *Exemples* -> *Topics* -> *Fractals and L-Systems* -> *Tree*
+
+```java
+/**
+ * Recursive Tree
+ * by Daniel Shiffman.  
+ * 
+ * Renders a simple tree-like structure via recursion. 
+ * The branching angle is calculated as a function of 
+ * the horizontal mouse location. Move the mouse left
+ * and right to change the angle.
+ */
+ 
+float theta;   
+
+void setup() {
+  size(640, 360);
+}
+
+void draw() {
+  background(0);
+  frameRate(30);
+  stroke(255);
+  // Let's pick an angle 0 to 90 degrees based on the mouse position
+  float a = (mouseX / (float) width) * 90f;
+  // Convert it to radians
+  theta = radians(a);
+  // Start the tree from the bottom of the screen
+  translate(width/2,height);
+  // Draw a line 120 pixels
+  line(0,0,0,-120);
+  // Move to the end of that line
+  translate(0,-120);
+  // Start the recursive branching!
+  branch(120);
+
+}
+
+void branch(float h) {
+  // Each branch will be 2/3rds the size of the previous one
+  h *= 0.66;
+  
+  // All recursive functions must have an exit condition!!!!
+  // Here, ours is when the length of the branch is 2 pixels or less
+  if (h > 2) {
+    pushMatrix();    // Save the current state of transformation (i.e. where are we now)
+    rotate(theta);   // Rotate by theta
+    line(0, 0, 0, -h);  // Draw the branch
+    translate(0, -h); // Move to the end of the branch
+    branch(h);       // Ok, now call myself to draw two new branches!!
+    popMatrix();     // Whenever we get back here, we "pop" in order to restore the previous matrix state
+    
+    // Repeat the same thing, only branch off to the "left" this time!
+    pushMatrix();
+    rotate(-theta);
+    line(0, 0, 0, -h);
+    translate(0, -h);
+    branch(h);
+    popMatrix();
+  }
+}
+```
+
+D'une manière assez similaire à précédement, on peut identifier la ligne pertinente pour l'interaction :
+```java
+// Let's pick an angle 0 to 90 degrees based on the mouse position
+  float a = (mouseX / (float) width) * 90f;
+```
+
+On va donc supprimer cett ligne et 'remplacer' *mouseX* par une valeur provenant de la photorésistance... D'abord adaptons la fonction *serialEvent()* utilisé précédement pour récupérer la valeur provenant de notre programme arduino :
+
+- Définissons d'abord une variable globale qui permettera de stocker notre valeur :
+```java
+float valueFromArduino = 0;
+```
+
+- Puis adaptons la fonction *serialEvent()* pour ranger dans *valueFromArduino* la valeur de la photorésistance en utilisant la bonne clé, soit celle que nous avons définit dans notre programme arduino (ie 'photores') :
+```java
+void serialEvent (Serial myPort) {
+  try {
+    while (myPort.available() > 0) {
+      String inBuffer = myPort.readStringUntil('\n');
+      if (inBuffer != null) {
+        if (inBuffer.substring(0, 1).equals("{")) {
+          JSONObject json = parseJSONObject(inBuffer);
+          if (json == null) {
+            //println("JSONObject could not be parsed");
+          } else {
+            valueFromArduino    = json.getInt("photores");
+          }
+        } else {
+        }
+      }
+    }
+  } 
+  catch (Exception e) {
+  }
+}
+```
+Il ne nous reste plus qu'à utiliser cette valeur en la mappant à un intervalle de valeur visuellement pertinent
+```java
+theta = map(valueFromArduino, 15, 250, 0, PI);
+```
+Voici donc finalement le programme processing en integralité :
+
+```java
+/**
+ * hacked from
+ * Recursive Tree
+ * by Daniel Shiffman.  
+ * 
+ * and acousteauphone-prototype from lesporteslogiques
+ * by Pierre Commenge
+ */
+
+import processing.serial.*;
+Serial myPort;  // Create object from Serial class
+
+float valueFromArduino = 0;
+float theta;   
+
+void setup() {
+  size(640, 360);
+
+  // initialisation de la communication via usb depuis arduino
+  // ATTENTION à bien utiliser le port adapté
+  printArray(Serial.list());
+  String portName = Serial.list()[3];
+  myPort = new Serial(this, portName, 9600);
+  myPort.bufferUntil('\n');
+}
+
+void draw() {
+  background(0);
+  frameRate(30);
+  stroke(255);
+
+
+  // Convert it to radians
+  theta = map(valueFromArduino, 15, 250, 0, PI);
+  // Start the tree from the bottom of the screen
+  translate(width/2, height);
+  // Draw a line 120 pixels
+  line(0, 0, 0, -120);
+  // Move to the end of that line
+  translate(0, -120);
+  // Start the recursive branching!
+  branch(120);
+}
+
+void serialEvent (Serial myPort) {
+  try {
+    while (myPort.available() > 0) {
+      String inBuffer = myPort.readStringUntil('\n');
+      if (inBuffer != null) {
+        if (inBuffer.substring(0, 1).equals("{")) {
+          JSONObject json = parseJSONObject(inBuffer);
+          if (json == null) {
+            //println("JSONObject could not be parsed");
+          } else {
+            valueFromArduino    = json.getInt("photores");
+          }
+        } else {
+        }
+      }
+    }
+  } 
+  catch (Exception e) {
+  }
+}
+
+void branch(float h) {
+  // Each branch will be 2/3rds the size of the previous one
+  h *= 0.66;
+
+  // All recursive functions must have an exit condition!!!!
+  // Here, ours is when the length of the branch is 2 pixels or less
+  if (h > 2) {
+    pushMatrix();    // Save the current state of transformation (i.e. where are we now)
+    rotate(theta);   // Rotate by theta
+    line(0, 0, 0, -h);  // Draw the branch
+    translate(0, -h); // Move to the end of the branch
+    branch(h);       // Ok, now call myself to draw two new branches!!
+    popMatrix();     // Whenever we get back here, we "pop" in order to restore the previous matrix state
+
+    // Repeat the same thing, only branch off to the "left" this time!
+    pushMatrix();
+    rotate(-theta);
+    line(0, 0, 0, -h);
+    translate(0, -h);
+    branch(h);
+    popMatrix();
+  }
+}
+```
+
+
+
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
