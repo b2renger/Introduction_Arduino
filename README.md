@@ -1674,15 +1674,120 @@ void branch(float h) {
   }
 }
 ```
-
-
-
-
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 ### Controler des leds neopixels avec la souris
 
+Ce troisième exemple va illustrer la communication inverse : nous allons envoyer des données de processing à arduino. En fonction de la position de la souris la couleur de la fenêtre sera affectée et ces positions de souris seront aussi envoyées à arduino pour controller l'allumage de leds.
+
 <img src="assets/serial_mouse_to_neopixels.gif" width="480" height="270" /><br>
+
+Le schéma électrique est simple : il s'agit de brancher un ruban de leds sur une carte arduino :
+
 <img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
+
+Le programme processing va utiliser le mode HSB pour ajuster le teinte en fonction de la position en abscisses de la souris, la saturation en fonction de la position en ordonnées de la souris et la luminosité en fonction de l'état de la souris (est-ce qu'on appuie sur le bouton ou non ?) Ces données seront mappées dans processing puis écrites sur le port série pour pouvoir les réutiliser dans arduino. Nous allons donc envoyer 3 valeurs, ces valeurs seront séparées par des virgules et nous utiliserons un point virgule pour marquer la fin d'un paquet de données.
+
+```java
+import processing.serial.*;
+
+Serial myPort;  
+
+void setup() {
+  size(600, 600); 
+  colorMode(HSB,255,255,255);
+  //initialisation de la bibliothèque série
+  println(Serial.list());
+  String portName = Serial.list()[3]; //attention à bien utiliser le bon port
+  myPort = new Serial(this, portName, 9600);
+}
+
+void draw() {
+  int pressed = 0;
+  if (mousePressed == true) {    
+    pressed = 1;         
+  } else {                         
+    pressed = 0; 
+  }  
+  int x =int( map(mouseX, 0, width, 0, 255));
+  int y =int( map(mouseY, 0, height, 0, 255));
+             
+  background(x, y, pressed*255);
+             
+  String s = pressed+","+x+","+y+";"
+  println(s);
+  myPort.write(s);
+}
+```
+
+Le code arduino lui va être nettement plus complexe que d'habitude, mais il n'est pas nécessaire de tout comprendre. Vous pouvez vous référer au [post original](http://www.esologic.com/parsing-serial-data-sent-to-arduino/) si vous le souhaitez.
+
+La partie que nous allons manipuler est située à l'intérieur du *else* dans la fonction loop
+
+```c
+// from http://www.esologic.com/parsing-serial-data-sent-to-arduino/
+
+// code nécessaire à la réception et à l'extraction de données provenant de processing
+const char EOPmarker = ';'; //This is the end of packet marker
+char serialbuf[32]; //This gives the incoming serial some room. Change it if you want a longer incoming.
+#include <string.h> // we'll need this for subString
+#define MAX_STRING_LEN 20 // like 3 lines above, change as needed.
+
+// code nécessaire au fonctionne ment des leds
+#include <FastLED.h>
+#define NUM_LEDS 5
+CRGBArray<NUM_LEDS> leds;
+
+void setup() {
+ 
+  Serial.begin(9600);
+  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
+}
+
+void loop() {
+    
+  if (Serial.available() > 0) { //makes sure something is ready to be read
+    // cette partie de code permet de recomposer le message provenant de processing
+    static int bufpos = 0; //starts the buffer back at the first position in the incoming serial.read
+    char inchar = Serial.read(); //assigns one byte (as serial.read()'s only input one byte at a time
+    if (inchar != EOPmarker) { //if the incoming character is not the byte that is the incoming package ender
+      serialbuf[bufpos] = inchar; //the buffer position in the array get assigned to the current read
+      bufpos++; //once that has happend the buffer advances, doing this over and over again until the end of package marker is read.
+    }
+    
+    // à l'intérieur de ce else nous pouvons récupérer nos valeurs et les utiliser
+    else { //once the end of package marker has been read
+      serialbuf[bufpos] = 0; //restart the buff
+      bufpos = 0; //restart the position of the buff
+
+      int pressed = atoi(subStr(serialbuf, ",", 1)); // récupérer la première valeur et la stocker dans une variable
+      int x = atoi(subStr(serialbuf, ",", 2)); // récupérer la deuxième ...
+      int y = atoi(subStr(serialbuf, ",", 3)); // récupérer la troisième...
+        
+      // allumer les leds en fonction de nos valeurs
+      for (int i = 0; i < NUM_LEDS; i++) {
+        leds[i] = CHSV(x, y, pressed *255);
+      }
+      FastLED.show();
+
+    }
+  }
+}
+
+// cette fonction est nécessaire pour permettre de découper la chaine de caractère provenant de processing
+char* subStr (char* input_string, char *separator, int segment_number) {
+  char *act, *sub, *ptr;
+  static char copy[MAX_STRING_LEN];
+  int i;
+  strcpy(copy, input_string);
+  for (i = 1, act = copy; i <= segment_number; i++, act = NULL) {
+    sub = strtok_r(act, separator, &ptr);
+    if (sub == NULL) break;
+  }
+  return sub;
+}
+```
+
+
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>

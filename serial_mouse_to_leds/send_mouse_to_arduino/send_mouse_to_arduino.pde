@@ -2,8 +2,6 @@ import processing.serial.*;
 
 Serial myPort;  // Create object from Serial class
 
-
-
 void setup() {
   size(600, 600); 
   colorMode(HSB,255,255,255);
@@ -14,11 +12,10 @@ void setup() {
 
 void draw() {
   int pressed = 0;
-  if (mousePressed == true) {                           //if we clicked in the window
-    pressed = 1;         //send a 1
-    // println("1");
-  } else {                           //otherwise
-    pressed = 0;      //send a 0
+  if (mousePressed == true) {    
+    pressed = 1;         
+  } else {                         
+    pressed = 0; 
   }  
 
   int x =int( map(mouseX, 0, width, 0, 255));
