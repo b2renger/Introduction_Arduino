@@ -51,7 +51,7 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
     * [utiliser un afficheur à digits](https://github.com/b2renger/Introduction_arduino#utiliser-un-afficheur-%C3%A0-4-digits)<br>
 	
 * [Controler un actuateur avec un capteur](https://github.com/b2renger/Introduction_arduino#controler-un-actuateur-avec-un-capteur)<br>
-    * [Utiliser la fonction map()]<br>
+    * [Utiliser la fonction map()](https://github.com/b2renger/Introduction_arduino#utiliser-la-fonction-map)<br>
     * [Potentiomètre vers servo classique](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique)<br>
     * [Flex vers servo continu](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu)<br>
     * [FSR vers neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb)<br>
