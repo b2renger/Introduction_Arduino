@@ -1714,7 +1714,7 @@ void draw() {
              
   background(x, y, pressed*255);
              
-  String s = pressed+","+x+","+y+";"
+  String s = pressed+","+x+","+y+";";
   println(s);
   myPort.write(s);
 }
