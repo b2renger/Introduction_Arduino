@@ -580,7 +580,7 @@ Le principe de mesure de ces deux capteurs est le même et les résultats obtenu
 
 Le circuit ressemble à un circuit classique avec les composants grove :
 
-<img src="read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="360" /><br>
+<img src="read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="480" /><br>
 
 Le code nécessite d'installer une bibliothèque. Vous pouvez avoir accès au gestionnaire de bibliothèques d'arduino en cliquant sur le menu : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*. Il faut alors rechercher et installer la bibliothèque **Grove Ultrasonic ranger**.
 
@@ -600,6 +600,8 @@ void loop() {
   delay(100); // attendre un peu entre deux mesures.
 }
 ```
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 
 #### Hc-sr04
