@@ -36,6 +36,8 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
     * [Capteurs de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
         * [Infra-rouge](https://github.com/b2renger/Introduction_arduino#infra-rouge)<br>
         * [Ultra-son](https://github.com/b2renger/Introduction_arduino#ultra-son)<br>
+          * [Ultra-son grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove)<br>
+          * [Ultra-son hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04)<br>
     * [Capteurs numériques - entrée SDA et SCL]()<br>
         * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
         * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
@@ -561,11 +563,48 @@ void loop() {
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
+
 #### Ultra-son
 
-Le capteur à [*ultra-son*](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) est un peu plus précis et permet d'avoir une portée plus importante : jusqu'à quelques mètres.
+Il existe différents types de capteurs à ultra-son pour mesurer les distances qui est un peu plus précis et permet d'avoir une portée plus importante (jusqu'à quelques mètres)
+- le classique [HC-SR04](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) qui nécessite un branchement à 4 fils.
+- le [module grove](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm) qui dispose de la connectique grove est d'une bibliothèque associée. Il est donc relativement plus simple à utiliser.
 
+Le principe de mesure de ces deux capteurs est le même et les résultats obtenus sont donc très similaires :
 <img src="assets/read_from_ultrasonic_distance.gif" width="480" height="270" /><br>
+
+
+#### Ultra-son-grove
+
+[*module grove*](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm)
+
+Le circuit ressemble à un circuit classique avec les composants grove :
+
+<img src="read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="360" /><br>
+
+Le code nécessite d'installer une bibliothèque. Vous pouvez avoir accès au gestionnaire de bibliothèques d'arduino en cliquant sur le menu : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*. Il faut alors rechercher et installer la bibliothèque **Grove Ultrasonic ranger**.
+
+Cette bibliothèque va faire abstraction de toute la procédure qui est décrite plus bas pour le Hc-sr04 et nous permettre donc de manipuler un code minimaliste ressemblant beaucoup à ce que nous avons déjà vu jusqu'à présent.
+
+```c
+#include "Ultrasonic.h" // importer la bibliothèque
+Ultrasonic ultrasonic(2); // la broche "sig" du capteur est branchée sur "D2" de l'arduino
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  long RangeInCentimeters = ultrasonic.MeasureInCentimeters(); // mesurer la distance en cm
+  Serial.println(RangeInCentimeters);//0~400cm
+  delay(100); // attendre un peu entre deux mesures.
+}
+```
+
+
+#### Hc-sr04
+
+[*HC-SR04*](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) 
 
 Le branchement est un peu différent de ce que nous avons vu jusqu'à présent. Deux pattes vont servir à l'alimentation **GND** et **5V** ou **VCC**.
 
