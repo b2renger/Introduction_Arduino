@@ -25,6 +25,7 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
         * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
         * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>     
         * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
+        * [Bouton](https://github.com/b2renger/Introduction_arduino#bouton)<br>
     * [les entrées analogiques]()<br>
         * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
         * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
@@ -259,6 +260,113 @@ void loop() {
   Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
 }
 ```
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Bouton
+
+Les boutons peuvent apparaitrent aux premiers abords comme le composant le plus simple à utiliser, mais ce n'est pas réellement le cas - il est conseillé de commencer par utiliser le microswitch avant de passer au bouton. Le montage peut s'avérer compliqué (surtout lorsque l'on souhaite en avoir plusieurs) et le code n'est pas forcément le plus simple - nous sommes habitués naturellement à avoir différents types d'interactions avec un bouton qui demandent parfois un peu d'expertise.
+
+Les boutons existent de différentes tailles et de différentes formes, ils peuvent avoir 2, 3 ou 4 pattes mais le principe est toujours le même : lorsque l'on appuie sur le bouton, le circuit se ferme et donc le courant peut passer. En mesurant ce courant sur une broche digitale on obtient soit un 0 (circuit ouvert = pas de courant) ou un 1 (circuit fermé = le courant passe). Il est possible d'obtenir des comportement plus complexes que cette simple lecture et de "reconnaitre" des doubles clicks, appuis longs etc. à l'aide d'une bibliothèque.
+
+<img src="assets/differents_boutons.jpg" width="480" height="360" /><br>
+
+Le bouton d'arcade dispose de 3 broches, le petit bouton en bas à droite de 4 et le bouton en bas à gauche dispose de 3 broches aussi (il s'agit d'un bouton capacitif). 
+
+Le circuit électronique est sensiblement le même pour tous les boutons : il est préférable de faire un montage en branchant le bouton avec 3 fils : 2 pour l'alimentation (noir et rouge) avec une résistance de 10kohms sur la masse, et un fil (jaune) pour la lecture de la valeur. Le bouton capacitif grove est déjà monté sur une petite carte disposant d'une résistance intégrée.
+
+#### Circuits
+
+##### Le bouton capacitif
+
+<img src="read_from_button/read_from_button_grove.png" width="480" height="360" /><br>
+
+##### Le bouton "classique"
+
+<img src="read_from_button/read_from_button_classic.png" width="480" height="360" /><br>
+
+##### Le bouton d'arcade
+
+<img src="read_from_button/read_from_button_arcade.png" width="480" height="360" /><br>
+
+
+#### Code
+Contrairement aux composants précédents il y aura deux exemples de code pour deux comportements distincts. 
+- Le premier se contentera de lire les données sur la broche 2. La valeur lue vaudra donc 0 si le bouton n'est pas appuyé et 1 s'il l'est.
+- Le second manipulera une variable afin de la faire changer d'état. Ainsi à chaque fois que nous cliquerons sur le bouton (cela signifie ici appuyer et relacher), une variable changera d'état pour valoir soit 0 soit 1.
+
+<img src="assets/read_from_buttons.gif" width="480" height="360" /><br>
+
+#### Lire la valeur d'un bouton
+
+```c
+void setup() {
+  Serial.begin(9600); // ouvrir la connection série
+  pinMode(2, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+}
+
+void loop() {
+  int value = digitalRead(2); // lire la valeur sur la pin 7 et la stocker dans une variable entière
+  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+}
+```
+
+
+#### Utiliser le click pour changer un état
+Le code ici est un peu plus complexe : il fait appel à une fonction écrite sur mesure qui permet de changer l'état d'une variable en fonction du click et de la valeur précédente de la variable : il s'agit de la fonction définie en bas appelée **button_change()**.  Cette fonction attend 3 paramètres :
+- la broche sur laquelle le bouton est branché.
+- une variable booléenne (vrai ou faux) permettant de stocker l'état actuel du bouton.
+- une variable booléenne permettant de stocker l'état précédent du bouton.
+
+
+```c
+bool b1pval = false; // valeur prédente du bouton
+bool b1val = false; // valeur actuelle du bouton
+
+void setup() {
+  Serial.begin(9600); // ouvrir la connection série
+  pinMode(2, INPUT); // préciser que la pin 2 va être utilisée comme une entrée
+}
+
+void loop() {
+  // appeler la fonction sur la pin 2
+  // avec comme valeur précédente du bouton la variable b1pval
+  // et comme valeur courante du bouton la variable b1val
+  button_change(2, &b1pval, &b1val); 
+  Serial.println(b1val);
+}
+
+void button_change(int pin, bool *pval, bool *val) {
+  if (digitalRead(pin) == 1) {
+    if (*val == *pval) {
+      *val = !*val;
+    }
+  }
+  else {
+    *pval = *val;
+  }
+}
+```
+Dans ce code vous pouvez remarquer l'apparition des caractères * et & qui sont propres au langages de la famille C et qui sont utilisés dans la manipulation des pointeurs.
+
+C'est une notion qui peut s'avérer complexe à comprendre, mais pour simplifier cela signifie que nous pouvons manipuler directement les espaces mémoire d'un ordinateur ou d'une carte électronique. Ici cela est utile pour pouvoir manipuler des variables dynamique à l'intérieur d'une fonction en passant comme paramètre l'espace mémoire à manipuler.
+
+Pour en savoir plus :
+- https://www.arduino.cc/reference/en/language/structure/pointer-access-operators/reference/
+
+- https://www.arduino.cc/reference/en/language/structure/pointer-access-operators/dereference/
+
+- https://en.wikipedia.org/wiki/Pointer_%28computer_programming%29
+
+Il existe aussi des bibliothèques pour utiliser les boutons. Vous pouvez avoir accès au gestionnaire de bibliothèques d'arduino en cliquant sur le menu : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*.
+Vous pouvez rechercher deux bibliothèques :
+- EasyButton
+- OneButton
+Une fois installées, des exemples d'utilisation seront disponibles dans le menu : *Fichier* -> *Exemples*
+
+
+
+
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
