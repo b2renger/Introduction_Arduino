@@ -2,128 +2,127 @@
 
 Code for a creative coding class with arduino for designers.
 
-[Arduino](https://www.arduino.cc/) est une marque de cartes électroniques open hardware : c'est à dire des cartes dont les schémas sont disponibles librement et gratuitement.
+[Arduino] (https://www.arduino.cc/) is a brand of open hardware electronic cards: ie cards whose diagrams are freely available and free of charge.
 
-Arduino est un projet qui a commencé en 2003 à l'Interaction Design Institute Ivrea (maintenant intégré à la Domus Academy - un école privé de design basée à Milan en Italie) comme un projet pédagogique pour les étudiants cherchant à permettre à coût réduit et d'une manière la plus simple possible de créer des objets interagissant avec leur environnement par le biais de capteurs et d'actuateurs.
+Arduino is a project that began in 2003 at the Ivrea Interaction Design Institute (now integrated with the Domus Academy - a private design school based in Milan, Italy) as a pedagogical project for students, seeking to enable them at reduced cost and as simply as possible to create objects interacting with their environment through sensors and actuators.
 
-Une carte arduino consiste en une plateforme d'entrées / sorties dirigées par un microcontrolleur pouvant être programmé via le logiciel éponyme. Le projet arduino a été est reste très utilisé dans les domaines du prototypage rapide, lié à la programmation multimédia interactive liée à la création de spectacles ou d'installations artistiques numériques.
+An arduino card consists of a platform of inputs / outputs directed by a microcontroller that can be programmed via the eponymous software. The arduino project has been used extensively in the areas of rapid prototyping, related to interactive multimedia programming related to the creation of shows or digital art installations.
 
-Les projets réalisés avec ce type de cartes peuvent ensuite être autonomes, connectés à internet (IOT), ou peuvent communiquer directement avec un ou plusieurs ordinateurs.
+Projects made with this type of card can then be autonomous, connected to the Internet (IOT), or can communicate directly with one or more computers.
 
-Ces cartes disposent d'une multitude de composants d'entrées et de sorties, de cartes d'extensions et d'une communauté très active. Arduino est une marque cela signifie qu'il existe des clones de cartes arduino qui ont des caractéristiques très similaires. Nous utiliserons par abus le terme arduino pour définir toute l'activité de créer des circuit et programmer les cartes.
+These cards have a multitude of input and output components, expansion cards and a very active community. Arduino is a brand that means there are arduino card clones that have very similar characteristics. We will use by abuse the term arduino to define all the activity of creating circuits and programming cards.
 
-Il existe différent modèles de cartes comportant plus ou moins d'entrées / sorties, qui nécessitent plus ou moins d'énergie pour fonctionner et dont les processeurs (ou micro-controlleurs) sont plus ou moins rapides. (Mega, Leonardo, Uno etc.)
+There are different models of cards with more or fewer inputs / outputs, which require more or less energy to operate and whose processors (or micro-controllers) are more or less fast and or efficient. (Mega, Leonardo, Uno etc.)
 
-Ici nous allons nous concentrer sur comment récupérer des valeurs de différents capteurs, comment activer des actuateurs et comment faire communiquer une carte arduino et un programme [processing](https://processing.org/).
+Here we will focus on how to recover values ​​from different sensors, how to activate actuators and how to make  an arduino card and a  [processing] (https://processing.org/) program to communicate with each other.
 
-Chaque exemple comportera un schéma électrique à réaliser et du code à écrire et téléverser sur une carte. La première partie consiste en un petit inventaire de capteurs, la deuxième présentera quelques actuateurs (moteurs , leds et afficheur à digits), la troisième partie elle consistera à récupérer l'information d'un capteurs pour la transmettre à un actuateur, et finalement la quatrième partie nous amenera à faire communiquer notre ordinateur avec notre carte arduino.
+Each example will include a circuit diagram to make and code to write and upload to a board. The first part consists of a small inventory of sensors, the second will present some actuators (motors, leds and digits display), the third part will recover information from a sensor to transmit it to an actuator, and finally the fourth part will bring us to bridge the gap between a computer and our arduino board.
 
-## CONTENU
-* [Introduction](https://github.com/b2renger/Introduction_arduino#introduction)<br>
+## CONTENT
+* [Introduction] (https://github.com/b2renger/Introduction_arduino#introduction) <br>
 
-* [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
+* [Connect sensors and retrieve values] (https://github.com/b2renger/Introduction_arduino#connecting-captors-and-receiving-values) <br>
 
-    * [les entrées digitales et capteurs logiques]()<br>
-        * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
-        * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>     
-        * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
-        * [Bouton](https://github.com/b2renger/Introduction_arduino#bouton)<br>
+    * [digital inputs and logic sensors] () <br>
+        * [PIR] (https://github.com/b2renger/Introduction_arduino#pir) <br>
+        * [Tilt] (https://github.com/b2renger/Introduction_arduino#tilt) <br>
+        * [Microswitch] (https://github.com/b2renger/Introduction_arduino#microswitch) <br>
+        * [Button] (https://github.com/b2renger/Introduction_arduino#button) <br>
 
-    * [les entrées analogiques]()<br>
-        * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
-        * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
-        * [Photo-résistance](https://github.com/b2renger/Introduction_arduino#photo-r%C3%A9sistance)<br>
-        * [Capteur Piezo](https://github.com/b2renger/Introduction_arduino#capteur-piezo)<br>
-        * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>    
-        * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br>
+    * [analog inputs] () <br>
+        * [Potentiometer] (https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre) <br>
+        * [Micro] (https://github.com/b2renger/Introduction_arduino#micro) <br>
+        * [Photo-resistance] (https://github.com/b2renger/Introduction_arduino#photo-resistance) <br>
+        * [Piezo Sensor] (https://github.com/b2renger/Introduction_arduino#capteur-piezo) <br>
+        * [Flex] (https://github.com/b2renger/Introduction_arduino#flex) <br>
+        * [FSR] (https://github.com/b2renger/Introduction_arduino#fsr) <br>
 
-    * [Capteurs de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
-        * [Infra-rouge](https://github.com/b2renger/Introduction_arduino#infra-rouge)<br>
-        * [Ultra-son](https://github.com/b2renger/Introduction_arduino#ultra-son)<br>
-          * [Ultra-son grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove)<br>
-          * [Ultra-son hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04)<br>
+    * [Distance Sensors] (https://github.com/b2renger/Introduction_arduino#distance sensor) <br>
+        * [Infra-red] (https://github.com/b2renger/Introduction_arduino#infra-red) <br>
+        * [Ultra-sound] (https://github.com/b2renger/Introduction_arduino#ultra-son) <br>
+          * [Ultra-sound grove] (https://github.com/b2renger/Introduction_arduino#ultra-son-grove) <br>
+          * [Ultra-sound hc sr04] (https://github.com/b2renger/Introduction_arduino#hc-sr04) <br>
 
-    * [Capteurs numériques - entrée SDA et SCL]()<br>
-        * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
-        * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
-        * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
-    
-* [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
+    * [Digital sensors - SDA and SCL input] () <br>
+        * [Accelerometer] (https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9romecromancer) <br>
+        * [Gyroscope] (https://github.com/b2renger/Introduction_arduino#gyroscope) <br>
+        * [Gesture] (https://github.com/b2renger/Introduction_arduino#gesture) <br>
+    
+* [Connect actuators and enable devices] (https://github.com/b2renger/Introduction_arduino#connecting-actuators-and-activating-permanent-prizes) <br>
 
-  * [Allumer des leds](https://github.com/b2renger/Introduction_arduino#leds-simples)<br>
-    * [Allumer des leds : blink](https://github.com/b2renger/Introduction_arduino#faire-clignoter-une-led)<br>
-    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#faire-pulser-une-led)<br>
+  * [Turn on leds] (https://github.com/b2renger/Introduction_arduino#leds-simples) <br>
+    * [Turn on leds: blink] (https://github.com/b2renger/Introduction_arduino#make-clink-one-led) <br>
+    * [Turn on leds: pulse] (https://github.com/b2renger/Introduction_arduino#make-pulsed-one-led) <br>
 
-  * [Activer un vibreur](https://github.com/b2renger/Introduction_arduino#moteur-vibreur)<br>
-    * [Activer un vibreur : blink](https://github.com/b2renger/Introduction_arduino#vibreur-on-off)<br>
-    * [Activer un vibreur : pulse](https://github.com/b2renger/Introduction_arduino#vibreur-pulse)<br>
+  * [Activate a vibrator] (https://github.com/b2renger/Introduction_arduino#grader-motor) <br>
+    * [Activate a vibrator: blink] (https://github.com/b2renger/Introduction_arduino#vibreur-on-off) <br>
+    * [Activate a vibrator: pulse] (https://github.com/b2renger/Introduction_arduino#vibreur-pulse) <br>
 
-  * [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
-      * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
-      * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
-      * [servomoteur linéaire](https://github.com/b2renger/Introduction_arduino#servomoteur-lin%C3%A9aire)<br>
+  * [run servomotor] (https://github.com/b2renger/Introduction_arduino#servomotors) <br>
+      * [classic sevomotor] (https://github.com/b2renger/Introduction_arduino#servomoteur-classique) <br>
+      * [servomotor with continuous rotation] (https://github.com/b2renger/Introduction_arduino#servomotor-%C3%A0-rotatoin-continue) <br>
+      * [Linear Servomotor] (https://github.com/b2renger/Introduction_arduino#linear-servomotor) <br>
 
-  * [allumer des leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels)<br>
-        * [RGB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-rgb)<br>
-        * [HSB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-hsv)<br>
-  * [utiliser un afficheur à digits](https://github.com/b2renger/Introduction_arduino#utiliser-un-afficheur-%C3%A0-4-digits)<br>
-	
-* [Controler un actuateur avec un capteur](https://github.com/b2renger/Introduction_arduino#controler-un-actuateur-avec-un-capteur)<br>
-    * [Utiliser la fonction map()](https://github.com/b2renger/Introduction_arduino#utiliser-la-fonction-map)<br>
-    * [Potentiomètre vers servo classique](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique)<br>
-    * [Flex vers servo continu](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu)<br>
-    * [FSR vers neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb)<br>
+  * [light leds (neopixels)] (https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels) <br>
+        * [RGB] (https://github.com/b2renger/Introduction_arduino#specify-color-rgb) <br>
+        * [HSB] (https://github.com/b2renger/Introduction_arduino#specify-color-in-hsv) <br>
+  * [use a digits viewer] (https://github.com/b2renger/Introduction_arduino#using-a-poster-using-a-4-digits) <br>
 
-* [Utiliser des capteurs pour contrôler du code processing](https://github.com/b2renger/Introduction_arduino#utiliser-des-capteurs-pour-contr%C3%B4ler-du-code-processing)<br>
-    * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
-    * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
-    * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
-    * [Enregistrer des données dans un fichier sur votre ordinateur](https://github.com/b2renger/Introduction_arduino#enregistrer-des-donn%C3%A9es-dans-un-fichier)<br>
+* [Control an actuator with a sensor] (https://github.com/b2renger/Introduction_arduino#controler-a-actuateur-with-a-sensor) <br>
+    * [Use the map function ()] (https://github.com/b2renger/Introduction_arduino#use-map-function) <br>
+    * [Potentiometer to conventional servo] (https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique) <br>
+    * [Flex to Continuous Servo] (https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu) <br>
+    * [FSR to neopixels HSB] (https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb) <br>
 
+* [Use sensors to control processing code] (https://github.com/b2renger/Introduction_arduino#use-captors-to-control-contr%C3%B4ler-code-processing) <br>
+    * [Control the playback of a video with a distance sensor] (https://github.com/b2renger/Introduction_arduino#controler-the-playback-of-video-with-a-captor-of- distance) <br>
+    * [Control an animation with photoresistance] (https://github.com/b2renger/Introduction_arduino#controler-a-animation-with-photoresistance) <br>
+    * [Control neopixels leds with the mouse] (https://github.com/b2renger/Introduction_arduino#controler-ed-neopixels-with-mouse) <br>
+    * [Save data to a file on your computer] (https://github.com/b2renger/Introduction_arduino#register-designs-in-a-file) <br>
 
 ## Introduction
 
-Lorsque l'on dit qu'une carte arduino est une carte d'entrée / sortie cela signifie que cette carte peut mesurer des courants électriques (entrée) ou générer des courants électrique (sortie).
+When we say that an arduino card is an input / output board it means that this board can measure electrical currents (input) or generate electrical currents (output).
 
-Mesurer des courants permet de brancher des capteurs et de vérifier leur état : par exemple mesurer le courant en sortie d'un capteur de luminosité nous permet d'avoir une estimation de la luminosité ambiante.
+Measuring currents makes it possible to connect sensors and check their status: for example, measuring the output current of a brightness sensor enables us to estimate the ambient luminosity.
 
-Générer des courants permet de brancher des actuateurs et donc de faire tourner un moteur plus ou moins vite ou d'allumer des leds plus ou moins fort. C'est l'écriture de code qui va permettre de prévoir l'interaction et les lien entres nos différents éléments.
+Generating currents makes it possible to connect actuators and thus to run an engine more or less quickly or to light LEDs more or less. Code will drive the interaction and the link between our different elements.
 
-Une carte arduino ressemble à ceci :
+An arduino card looks like this:
 
 <img src="assets/carte_arduino_uno.png" width="360" height="480" /><br>
 
-Essayez de répérer sur la partie de gauche les **entrées analogiques** numérotées de **A0** jusqu'à **A5**, sur la droite vous pourrez trouver les **pins digitales** numérotées de 0 à 13.
+On the left hand side, try to find the **analog inputs** numbered from **A0** to **A5**, on the right you can find the **digital pins** numbered from 0 to 13.
 
-Remarquez que nous parlons d'*entrées* analogiques et de *pins* digitales. Pour résumer A0 jusqu'à A5 sont des entrées et uniquement des entrées; de plus elles sont *analogiques* ce qui signifie que vous pourront y mesurer des valeurs comprises entre 0 et 1023.
+Note that we are talking about *analog* inputs and digital *pins*. To sum up A0 up to A5 are inputs and only inputs; moreover they are *analog* which means that you will be able to measure values ​​between 0 and 1023.
 
-Les *pins* digitales peuvent elles être utilisées soit en tant qu'entrées ou en tant que sorties (cela se précise dans le code que nous écrirons) et ne manipulent que des 0 et des 1 (un signal numérique ou digital) - même si cela n'est pas tout à fait vrai car certaines on un petit tilde **~** représenté avant leur numéro, cela signifie que ces *pins* peuvent générer un signal PWM (pulse width modulation) mais c'est une autre histoire et nous en reparlerons ultérieurement.
+The digital *pins* can be used either as inputs or as outputs (this is specified in the code we write) and handle only 0 and 1 (a digital or digital signal) - even if this is not quite true because some we have a small tilde **~** represented before their number, it means that these *pins* can generate a pulse width modulation (PWM) signal but that's another story and we will talk about it later.
 
-Il est important de répérer aussi les pins notées **5V** et **GND** celles-ci correspondent au pins d'alimentation. Chaque composant doit être alimenté en électricité et nous les utiliserons donc systématiquement.
+It is important to also note the pins **5V** and **GND** these correspond to the power pins. Each component must be powered by electricity and we will use them systematically.
 
-Pour simplifier les choses éviter des connecter des capteurs sur les pins digitales D0 et D1 au début.
+To simplify things avoid connecting sensors on the digital pins D0 and D1 at the beginning.
 
-Lorsque l'on a pu brancher des composants sur notre carte, nous allons utiliser du code pour mesurer des courants : **lire** sur une entrée **digitale** ou sur en entrée **analogique**, ou **écrire** sur une sortie **digitale**.
+When we have been able to connect components to our board, we will use code to measure currents: **read** on a **digital** input or **analog** input, or **write** on a **digital** output.
 
-Le code s'écrit dans l'IDE (Integrated Development Environment) arduino, que vous pourrez trouver et télécharger à cette adresse : https://www.arduino.cc/en/Main/Software
+The code is written in the Arduino Integrated Development Environment (IDE), which you can find and download at this address: https://www.arduino.cc/en/Main/Software
 
-Il faut prendre la version *Desktop* :
+Take the * Desktop * version:
 
 <img src="assets/download_arduino.png" width="480" height="240" /><br>
 
-Un fois téléchargé, installé et ouvert vous devrier vous retrouver devant une fenêtre ressemblant à cela :
+Once downloaded, installed and opened you should find yourself in front of a window looking like this:
 
 <img src="assets/arduino_ide.png" width="600" height="740" /><br>
 
-Nous allons donc taper du texte dans cette page pour programmer notre carte électronique.
+So we will type text in this page to program our electronic card.
 
-Les deux premiers boutons en haut à gauche permettent de **vérifier** et de **téléverser** votre code vers la carte, les boutons suivant servent à créer un nouveau programme, ouvrir un programme ou enregistrer un programme, et le bouton tout à droite sert à ouvrir le **moniteur série** (c'est ici que notre programme pourra écrire des informations pour nous informer sur le bon déroulement de la tâche ou pou observer des valeurs brutes de capteurs).
+The first two buttons at the top left allow you to **check** and **upload** your code to the card, the following buttons are used to create a new program, open a program or save a program, and the button all on the right is used to open the **serial monitor** (this is where our program can write information to inform us about the smooth running of the task or to observe raw sensor values).
 
-La zone noire correspond à la **console d'erreurs** : le logiciel nous indiquera ici (et souvent en rouge) lorsqu'il y a des erreurs dans le programme que nous avons écrit, ou des problèmes de communication avec la carte.
+The black area corresponds to the **error console**: the software will indicate here (and often in red) when there are errors in the program we have written, or communication problems with the card.
 
-Finalement la zone blanche est la zone de code. Vous pouvez y voir deux fonctions déjà tappées **setup()** et **loop()**. Ceci est la structure basique de n'importe quel programme arduino. 
+Finally the white area is the code area. You can see two functions already named **setup()** and **loop()**. This is the basic structure of any arduino program. 
 
-Entre les accolades qui délimitent la fonction **setup()** vous écrirez du code qui ne sera exécuté qu'une seul fois au début de votre programme. Par exemple ouvrir une communication série avec notre ordinateur :
+In the braces that enclose the **setup()** function you will write code that will only be executed once at the beginning of your program. For example open a serial communication with our computer:
 
 ```c
 void setup() {
@@ -132,7 +131,7 @@ void setup() {
 }
 ```
 
-Et entre les accolades qui délimitent la fonction **loop()** vous écrirez du code qui sera exécuté en boucle une fois le programme démarré. Par exemple imprimmer dans le moniteur série la valeur lue sur l'entrée analogique 0 :
+And between the braces that delimit the **loop()** function you will write code that will be executed in a loop once the program has started. For instance : print in the serial monitor the value read on the analog input 0:
 
 ```c
 void loop() {
@@ -140,90 +139,90 @@ void loop() {
   Serial.println(analogRead(0));
 }
 ```
-Pensez bien que qu'il faut tapper les instructions exactement comme la carte arduino les attend, la moindre faute de frappe (sur une majuscule, un point virgule ou une parenthèse manquante) fera que votre programme ne fonctionnera pas, car la carte ne sera pas capable de comprendre les instructions qu'elle doit exécuter.
+Remember that you must type the instructions exactly as the arduino card is waiting for them, the slightest typo (capital, semicolon or missing parenthesis) will cause your program to not work because the card will not be able to understand the instructions it must perform.
 
-Remarquez qu'il est possible d'écrire des commentaires en langage pour humain : en plaçant **//** devant une ligne celle-ci ne sera pas lue / exécutée par la carte.
+Note that it is possible to write comments in language for a human: by placing **//** in front of a line it will not be read / executed.
 
-Une fois le programme écrit il faut le **téléverser** sur la carte mais avant il faut préciser sur quelle **type de carte** on veut téléverser le programme et dire précisément la carte ou le **port** sur laquelle on veut téléverser - car on pourrait très bien avoir plusieurs cartes connectées à notre ordinateur.
+Once the program written it must be **uploaded** to the board. Beforehand you must specify on what **board type** you want to upload the program and say precisely the board or **port** on which to upload - because we could very well have several cards connected to one computer.
 
-Pour cela il faut aller dans le menu *Outils* puis sélectionner *Arduino / Genuino Uno* pour le **type de carte** et choisir la bonne carte dans le menu **Port** (il faut bien sûr à ce stade que votre carte soit branchée à un port usb de votre ordinateur) :
+To do this you have to go to the *Tools* menu and then select *Arduino / Genuino Uno* as the **board type** and choose the right board from the **Port** menu (of course at this stage you need your card to be connected to a USB port of your computer):
 
 <img src="assets/arduino_ide_selection_carte.png" width="900" height="640" /><br>
 
-Une fois cela fait vous pouvez **vérifier** votre programme puis le **téléverser**.
+Once done, you can **check** your program and **upload** it.
 
-Lorsque l'on réalise un circuit notre carte doit être déconnectée de notre ordinateur, au moment où l'on code il est préférable de la garder connectée.
+When we make a circuit our card must be disconnected from our computer, when we code it is better to keep it connected.
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 
-## Connecter des capteurs et récupérer les valeurs
+## Connect sensors and recover values
 
-Cette première partie consiste en un petit inventaire de capteurs. Vous disposerez à chaque fois d'un montage et de code pour lire la valeur du capteurs et l'imprimer dans le moniteur série.
+This first part consists of a small inventory of sensors. Each time you will have an assembly schematics and code to read the value of the sensors and print it in the serial monitor.
 
-En terme de code nous utiliserons principalement deux fonctions : 
-- [**digitalRead()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalread/) permettant de **lire** une valeur d'une entrée **digitale**.
-- [**analogRead()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/) permettant de **lire** une valeur d'une entrée **analogique**.
+In terms of code we will mainly use two functions: 
+- [**digitalRead()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalread/) to **read** a value from a **digital** pin.
+- [**analogRead()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogread/) to **read** a value of an **analog input**.
 
-Plus les commandes liées au moniteur série :    
-- [**Serial.begin()**](https://www.arduino.cc/en/Serial/Begin) qui permet d'ouvrir une connexion série via le cable USB (pour rappel le sigle usb signifie Universal Serial Bus) pour récuperer des valeurs dans notre ordinateur.
-- [**Serial.println()**](https://www.arduino.cc/reference/en/language/functions/communication/serial/print/) qui permet d'inscrire des valeurs dans le port série.
+And more controls related to the serial monitor:   
+- [**Serial.begin()**](https://www.arduino.cc/en/Serial/Begin) which allows to open a serial connection via the USB cable (to recall the acronym usb means Universal Serial Bus) to retrieve values with our computer.
+- [**Serial.println()**](https://www.arduino.cc/reference/en/language/functions/communication/serial/print/) which allows you to enter values ​​in the serial port.
 
-D'une manière générale le code sera toujours le même et il consistera en :
+In a general way the code will always be the same and it will consist of:
 
-- ouvrir une connexion série pour pouvoir écrire les valeurs du capteurs sur notre ordinateur.
-- lire la valeur reçue depuis une pin précise.
-- l'écrire dans le moniteur série.
+- open a serial connection to write the values ​​of the sensors on our computer.
+- read the value received from a specific pin.
+- write it in the serial monitor.
 
-D'un point de vue électronique, parfois nous allons utiliser des résistances et des fois non. Le principe d'une résistance est de permettre de dissiper un peu le courant qui parcourt notre montage. Il en existe de différentes valeurs de quelques ohms à plusieurs million d'ohms, plus la valeur est grande plus elles vont dissiper le courant car à tension constante : **U = R * I**, il s'agit de la **loi d'ohms**; soit la tension est égale à la résistance fois l'intensité - par conséquent l'intensité est égale à la tension divisée par la résistance.
+From an electronic point of view, sometimes we will use resistors and sometimes not. The principle of a resistance is to allow a little dissipation of the current that runs through our assembly. There are several values ​​from a few ohms to several million ohms, the higher the value, the more they will dissipate the current because at constant voltage: **U = R * I**, this is the **ohms law**; the voltage is equal to the resistance times the intensity - therefore the intensity is equal to the voltage divided by the resistance.
 
-En fonction du courant requis pour un fonctionnement optimal de nos capteurs, nous deverons choisir une résistance adaptée.
+Depending on the current required for optimal operation of our sensors, we will have to choose a suitable resistor.
 
 
-### Entrées Digitales et capteurs logiques
+### Digital Inputs and Logic Sensors
 
-Les entrées digitales sont au nombre de 13. Typiquement une pin digitale ne va mesurer que deux type de courant : soit il y a du courant, soit il n'y en a pas / *HIGH* ou *LOW* / 1 ou 0 / *True* ou *False*.
+We have 14 digital inputs. Typically a digital pin will only measure two types of current: either there is current, or there is none / *HIGH* or *LOW* / 1 or 0 / *True* or *False*.
 
 #### Tilt
 
-Le capteur *tilt* permet de détecter des changement brusques de mouvement ou des changments d'orientation. D'une manière une petite bille va rentrer en contact avec la paroi et ainsi fermer un ciruit et ainsi laisser passer le courant. 
+The * tilt * sensor can detect sudden changes in motion or orientation changes. A small metallic ball will come into contact with the wall and thus close a circuit to let the current flow.
 
-Voici à quoi il ressemble : 
+Here is what it looks like:
 
 <img src="assets/capteurs/tilt.jpg" width="270" height="270" /><br>
 
-Une patte reliée à la masse l'autre va être relié à du courant, si la bille et le corps du capteur rentrent en contact le courant passe et on peut donc le mesurer; on obtient donc soit un 1 soit un 0 en fonction de l'état du capteur.
+One leg connected to ground the other will be connected to current, if the ball and the body of the sensor come into contact : the current passes and can therefore be measured; we thus obtain either a 1 or a 0 depending on the state of the sensor.
 
-Exemple d'utilisation :
+Example of use :
 
 <img src="assets/read_from_tilt.gif" width="480" height="270" /><br>
 
 
-Le circuit à réaliser :
+The circuit to realize:
 
 <img src="read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
 
-Ici nous utilisons un résistance de 10 kilo ohms, pour protéger notre capteur et notre carte : cela nous permet d'abaisser le courant circulant dans nos fils avant de le mesurer. 
+Here we use a resistor of 10 kilo ohms, to protect our sensor and our card: this allows us to lower the current flowing before measuring it.
 
-Le code est très simple, nous devons : 
+The code is very simple, we must:
 
-- ouvrir une connexion série pour pouvoir écrire les valeurs du capteurs.
-- préciser à notre programme que nous utilisons la pin 7 comme une entrée.
-- lire la valeur reçue sur la pin 7.
-- l'écrire dans le moniteur série.
+- open a serial connection to write the sensor values.
+- specify in our program that we use pin 7 as an input.
+- read the value received on pin 7.
+- write it in the serial monitor.
 
-Les deux premières étapes ne peuvent être effectuées qu'une seule fois à la mise sous tension de la carte : elles iront donc dans le **setup()**; les deux étapes suivante doivent être effectuées en boucle pour toujours actualiser la valeur lue sur le capteur  elles iront donc dans le **loop()**.
+The first two steps can only be performed once when the card is turned on: they will go into the **setup()**; the next two steps must be done in a loop to always update the value read on the sensor so they will go into the **loop()**.
 
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
-  pinMode(7, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+  Serial.begin(9600); // open the serial connection
+  pinMode(7, INPUT); // specify that pin 7 will be used as an entry
 }
 
 void loop() {
-  int value = digitalRead(7); // lire la valeur sur la pin 7 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = digitalRead(7); // read the value on pin 7 and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
 
@@ -231,52 +230,51 @@ void loop() {
 
 #### PIR
 
-Le capteur [*PIR*](https://en.wikipedia.org/wiki/Passive_infrared_sensor) est un capteur de Présence à Infra Rouge, il permet de détecter la présence de quelque'un avec un champ de vision qui lui est propre. Ce sont typiquement des capteurs dans tous les lieux publiques dont les lumières s'allument automatiquement.
+The [*PIR*](https://en.wikipedia.org/wiki/Passive_infrared_sensor) sensor is a Presence sensor with Infra Red, it can detect the presence of someone in a specific field of view. These are typically sensors in all public places whose lights turn on automatically.
 
-Ces capteurs renvoient un 1 pendant un temps déterminé (ici 3 secondes) lorsqu'ils détectent une présence et 0 sinon. 
+These sensors return a 1 for a certain time (here 3 seconds) when they detect a presence and 0 otherwise.
 
 <img src="assets/read_from_pir.gif" width="480" height="270" /><br>
 
-Ici au lieu d'ouvir le **moniteur série**, le résultat est affiché dans le **traceur série** disponible via le menu *Outils* -> *Traceur série*.
+Here instead of opening the **serial monitor**, the result is displayed in the **serial plotter** available via the *Tools* -> *Serial Tracer* menu.
 
-Le *PIR* est souvent accompagné d'un petit circuit imprimmé et il n'est donc pas nécessaire d'ajouter de résistance car cela a souvent déjà été fait sur la carte accompagnant le capteur.
+The *PIR* is often accompanied by a small printed circuit and it is therefore not necessary to add resistance because it has already been done on the board accompanying the sensor.
 
 <img src="read_from_PIR/read_from_pir.png" width="480" height="360" /><br>
 
-Le code est identique au code précédent si nous avons bien aussi branché le capteur *PIR* sur l'entrée 7 : 
+The code is identical to the previous code if we have also connected the * PIR * sensor to input 7:
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
-  pinMode(7, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+  Serial.begin(9600); // open the serial connection
+  pinMode(7, INPUT); // specify that pin 7 will be used as an entry
 }
 
 void loop() {
-  int value = digitalRead(7); // lire la valeur sur la pin 7 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = digitalRead(7); // read the value on pin 7 and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
-
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 ### Microswitch
 
-Le microswitch est de la même famille que les interupteurs ou les boutons. Lorsque l'on appuie dessus le circuit est fermé, on peut alors mesurer un 1 - sinon le circuit est ouvert et il n'y a pas de courant qui passe on mesure alors un 0.
+The microswitch is in the same family as the switches or buttons. When we press the circuit is closed, we can then measure a 1 - otherwise the circuit is open and there is no current that passes so we measure a 0.
 
 <img src="assets/read_from_microswitch.gif" width="480" height="270" /><br>
 
 <img src="read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
 
-Encore une fois le code est identique sauf que notre composant est branché pour sur l'entrée digitale 2
+Again the code is identical except that our component is connected to the digital input 2
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
-  pinMode(2, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+  Serial.begin(9600); // open the serial connection
+  pinMode(2, INPUT); // specify that pin 7 will be used as an entry
 }
 
 void loop() {
-  int value = digitalRead(2); // lire la valeur sur la pin 7 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = digitalRead(2); // read the value on pin 7 and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
 
@@ -284,15 +282,15 @@ void loop() {
 
 ### Bouton
 
-Les boutons peuvent apparaitrent aux premiers abords comme le composant le plus simple à utiliser, mais ce n'est pas réellement le cas - il est conseillé de commencer par utiliser le microswitch avant de passer au bouton. Le montage peut s'avérer compliqué (surtout lorsque l'on souhaite en avoir plusieurs) et le code n'est pas forcément le plus simple - nous sommes habitués naturellement à avoir différents types d'interactions avec un bouton qui demandent parfois un peu d'expertise.
+The buttons may appear at first glance as the simplest component to use, but this is not really the case - it is advisable to first use the microswitch before switching to the button. Circuits can be complicated (especially when you want to have many) and the code is not necessarily the simplest - we are used to having different types of button interactions that sometimes require a little bit of expertise.
 
-Les boutons existent de différentes tailles et de différentes formes, ils peuvent avoir 2, 3 ou 4 pattes mais le principe est toujours le même : lorsque l'on appuie sur le bouton, le circuit se ferme et donc le courant peut passer. En mesurant ce courant sur une broche digitale on obtient soit un 0 (circuit ouvert = pas de courant) ou un 1 (circuit fermé = le courant passe). Il est possible d'obtenir des comportement plus complexes que cette simple lecture et de "reconnaitre" des doubles clicks, appuis longs etc. à l'aide d'une bibliothèque.
+Buttons are of different sizes and shapes, they can have 2, 3 or 4 legs but the principle is always the same: when you press the button, the circuit closes and thus the current can pass. By measuring this current on a digital pin one obtains either a 0 (open circuit = no current) or a 1 (closed circuit = the current passes). It is possible to obtain more complex behavior than this simple reading and to "recognize" double clicks, long presses, etc. by using a library.
 
 <img src="assets/differents_boutons.jpg" width="480" height="360" /><br>
 
-Le bouton d'arcade dispose de 3 broches, le petit bouton en bas à droite de 4 et le bouton en bas à gauche dispose de 3 broches aussi (il s'agit d'un bouton capacitif). 
+The arcade button has 3 pins, the small button at the bottom right has 4 and the button at the bottom left has 3 pins too (it is a capacitive button).
 
-Le circuit électronique est sensiblement le même pour tous les boutons : il est préférable de faire un montage en branchant le bouton avec 3 fils : 2 pour l'alimentation (noir et rouge) avec une résistance de 10kohms sur la masse, et un fil (jaune) pour la lecture de la valeur. Le bouton capacitif grove est déjà monté sur une petite carte disposant d'une résistance intégrée.
+The electronic circuit is essentially the same for all the buttons: it is better to plug the button with 3 wires: 2 for the power supply (black and red) with a resistance of 10kohms on the ground, and a wire (yellow) for reading the value. The capacitive button grove is already mounted on a small card with a built-in resistor.
 
 #### Circuits
 
@@ -310,47 +308,47 @@ Le circuit électronique est sensiblement le même pour tous les boutons : il es
 
 
 #### Code
-Contrairement aux composants précédents il y aura deux exemples de code pour deux comportements distincts. 
-- Le premier se contentera de lire les données sur la broche 2. La valeur lue vaudra donc 0 si le bouton n'est pas appuyé et 1 s'il l'est.
-- Le second manipulera une variable afin de la faire changer d'état. Ainsi à chaque fois que nous cliquerons sur le bouton (cela signifie ici appuyer et relacher), une variable changera d'état pour valoir soit 0 soit 1.
+Unlike the previous examples there will be two code examples for two different behaviors.
+- The first will just read the data on pin 2. The value read will therefore be 0 if the button is not pressed and 1 if it is.
+- The second one will manipulate a variable to make it change its state. So every time we click the button (this means press and release), a variable will change its state to be either a 0 or 1.
 
 <img src="assets/read_from_buttons.gif" width="480" height="360" /><br>
 
-#### Lire la valeur d'un bouton
+#### Read the value of a button
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connection série
-  pinMode(2, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+  Serial.begin(9600); // open the serial connection
+  pinMode(2, INPUT); // specify that pin 2 will be used as an entry
 }
 
 void loop() {
-  int value = digitalRead(2); // lire la valeur sur la pin 7 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = digitalRead(2); // read the value on pin 2 and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
 
 
-#### Utiliser le click pour changer un état
-Le code ici est un peu plus complexe : il fait appel à une fonction écrite sur mesure qui permet de changer l'état d'une variable en fonction du click et de la valeur précédente de la variable : il s'agit de la fonction définie en bas appelée **button_change()**.  Cette fonction attend 3 paramètres :
-- la broche sur laquelle le bouton est branché.
-- une variable booléenne (vrai ou faux) permettant de stocker l'état actuel du bouton.
-- une variable booléenne permettant de stocker l'état précédent du bouton.
+#### Use a click to change a state
+The code here is a bit more complex: it uses a custom written function that allows you to change the state of a variable according to the click and the previous value of the variable: it is the defined function at the bottom called **button_change()**. This function expects 3 parameters:
+- the pin on which the button is connected.
+- a boolean variable (true or false) for storing the current state of the button.
+- a boolean variable for storing the previous state of the button.
 
 
 ```c
-bool b1pval = false; // valeur prédente du bouton
-bool b1val = false; // valeur actuelle du bouton
+bool b1pval = false; // previous value of the button
+bool b1val = false; // current value of the button
 
 void setup() {
-  Serial.begin(9600); // ouvrir la connection série
-  pinMode(2, INPUT); // préciser que la pin 2 va être utilisée comme une entrée
+  Serial.begin(9600); // open the serial connection
+  pinMode(2, INPUT); // specify that pin 2 will be used as an entry
 }
 
 void loop() {
-  // appeler la fonction sur la pin 2
-  // avec comme valeur précédente du bouton la variable b1pval
-  // et comme valeur courante du bouton la variable b1val
+  // call the function on pin 2
+  // with as previous value of the button the variable b1pval
+  // and as the current value of the button the variable b1val
   button_change(2, &b1pval, &b1val); 
   Serial.println(b1val);
 }
@@ -366,26 +364,22 @@ void button_change(int pin, bool *pval, bool *val) {
   }
 }
 ```
-Dans ce code vous pouvez remarquer l'apparition des caractères * et & qui sont propres au langages de la famille C et qui sont utilisés dans la manipulation des pointeurs.
+In this code you can notice the appearance of the characters * and & that are specific to the languages ​​of the family C and which are used in the manipulation of the pointers.
 
-C'est une notion qui peut s'avérer complexe à comprendre, mais pour simplifier cela signifie que nous pouvons manipuler directement les espaces mémoire d'un ordinateur ou d'une carte électronique. Ici cela est utile pour pouvoir manipuler des variables dynamique à l'intérieur d'une fonction en passant comme paramètre l'espace mémoire à manipuler.
+This is a concept that can be complex to understand, but for simplicity it means that we can directly manipulate the memory space of a computer or an electronic board. Here it is useful to be able to handle dynamic variables within a function by passing as parameter the memory space to handle.
 
-Pour en savoir plus :
+To know more :
 - https://www.arduino.cc/reference/en/language/structure/pointer-access-operators/reference/
 
 - https://www.arduino.cc/reference/en/language/structure/pointer-access-operators/dereference/
 
 - https://en.wikipedia.org/wiki/Pointer_%28computer_programming%29
 
-Il existe aussi des bibliothèques pour utiliser les boutons. Vous pouvez avoir accès au gestionnaire de bibliothèques d'arduino en cliquant sur le menu : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*.
-Vous pouvez rechercher deux bibliothèques :
+There are also libraries for using the buttons. You can access the arduino library manager by clicking on the menu: *Sketch* -> *Include Library* -> *Manage Libraries*.
+You can search for two libraries:
 - EasyButton
 - OneButton
-Une fois installées, des exemples d'utilisation seront disponibles dans le menu : *Fichier* -> *Exemples*
-
-
-
-
+Once installed, examples of use will be available in the menu: *File* -> *Examples*
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
