@@ -20,12 +20,15 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
 
 ## CONTENU
 * [Introduction](https://github.com/b2renger/Introduction_arduino#introduction)<br>
+
 * [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
+
     * [les entrées digitales et capteurs logiques]()<br>
         * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
         * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>     
         * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
         * [Bouton](https://github.com/b2renger/Introduction_arduino#bouton)<br>
+
     * [les entrées analogiques]()<br>
         * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
         * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
@@ -33,11 +36,13 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
         * [Capteur Piezo](https://github.com/b2renger/Introduction_arduino#capteur-piezo)<br>
         * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>    
         * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br>
+
     * [Capteurs de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
         * [Infra-rouge](https://github.com/b2renger/Introduction_arduino#infra-rouge)<br>
         * [Ultra-son](https://github.com/b2renger/Introduction_arduino#ultra-son)<br>
           * [Ultra-son grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove)<br>
           * [Ultra-son hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04)<br>
+
     * [Capteurs numériques - entrée SDA et SCL]()<br>
         * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
         * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
@@ -48,19 +53,20 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
   * [Allumer des leds](https://github.com/b2renger/Introduction_arduino#leds-simples)<br>
     * [Allumer des leds : blink](https://github.com/b2renger/Introduction_arduino#faire-clignoter-une-led)<br>
     * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#faire-pulser-une-led)<br>
+
   * [Activer un vibreur](https://github.com/b2renger/Introduction_arduino#moteur-vibreur)<br>
-    * [Activer un vibreur : blink](https://github.com/b2renger/Introduction_arduino#vibreurblink)<br>
-    * [Activer un vibreur : pulse](https://github.com/b2renger/Introduction_arduino#vibreurpulse)<br>
+    * [Activer un vibreur : blink](https://github.com/b2renger/Introduction_arduino#vibreur-on-off)<br>
+    * [Activer un vibreur : pulse](https://github.com/b2renger/Introduction_arduino#vibreur-pulse)<br>
 
   * [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
       * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
       * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
       * [servomoteur linéaire](https://github.com/b2renger/Introduction_arduino#servomoteur-lin%C3%A9aire)<br>
 
-	* [allumer des leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels)<br>
+  * [allumer des leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels)<br>
         * [RGB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-rgb)<br>
         * [HSB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-hsv)<br>
-    * [utiliser un afficheur à digits](https://github.com/b2renger/Introduction_arduino#utiliser-un-afficheur-%C3%A0-4-digits)<br>
+  * [utiliser un afficheur à digits](https://github.com/b2renger/Introduction_arduino#utiliser-un-afficheur-%C3%A0-4-digits)<br>
 	
 * [Controler un actuateur avec un capteur](https://github.com/b2renger/Introduction_arduino#controler-un-actuateur-avec-un-capteur)<br>
     * [Utiliser la fonction map()](https://github.com/b2renger/Introduction_arduino#utiliser-la-fonction-map)<br>
@@ -72,6 +78,7 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
     * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
     * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
     * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
+
 
 ## Introduction
 
