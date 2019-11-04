@@ -1,6 +1,6 @@
 # Introduction Arduino
 
-Code for a creative coding class with arduino for designers.
+Code for a creative coding class with arduino for designers. English wip : [here](https://github.com/b2renger/Introduction_Arduino/tree/english)
 
 [Arduino](https://www.arduino.cc/) est une marque de cartes électroniques open hardware : c'est à dire des cartes dont les schémas sont disponibles librement et gratuitement.
 
