@@ -44,16 +44,19 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
         * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
     
 * [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
-  * [Allumer des leds](https://github.com/b2renger/Introduction_arduino#leds)<br>
-    * [Allumer des leds : blink](https://github.com/b2renger/Introduction_arduino#ledsblink)<br>
-    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#ledspulse)<br>
-  * [Activer un vibreur](https://github.com/b2renger/Introduction_arduino#vibreur)<br>
+
+  * [Allumer des leds](https://github.com/b2renger/Introduction_arduino#leds-simples)<br>
+    * [Allumer des leds : blink](https://github.com/b2renger/Introduction_arduino#faire-clignoter-une-led)<br>
+    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#faire-pulser-une-led)<br>
+  * [Activer un vibreur](https://github.com/b2renger/Introduction_arduino#moteur-vibreur)<br>
     * [Activer un vibreur : blink](https://github.com/b2renger/Introduction_arduino#vibreurblink)<br>
-    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#vibreurpulse)<br>
-	* [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
-        * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
-        * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
-        * [servomoteur linéaire](https://github.com/b2renger/Introduction_arduino#servomoteur-lin%C3%A9aire)<br>
+    * [Activer un vibreur : pulse](https://github.com/b2renger/Introduction_arduino#vibreurpulse)<br>
+
+  * [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
+      * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
+      * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
+      * [servomoteur linéaire](https://github.com/b2renger/Introduction_arduino#servomoteur-lin%C3%A9aire)<br>
+
 	* [allumer des leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels)<br>
         * [RGB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-rgb)<br>
         * [HSB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-hsv)<br>
@@ -973,7 +976,49 @@ void loop() {
 
 ### Moteur vibreur
 
+Pour le vibreur la logique est exactement que pour la led, le montage est très similaire :
 
+<img src="set_vibrator_onoff/set_vibrator.png" width="480" height="360" /><br>
+
+Et le code sera aussi similaire ...
+
+#### Vibreur on off
+
+<img src="assets/set_vibrator_blink.gif" width="480" height="360" /><br>
+
+```c
+
+void setup() {
+  pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+}
+
+void loop() {
+  digitalWrite(3, HIGH); // envoyer un courant 'fort' sur la broche 3
+  delay(500); // attendre 500 millisecondes
+  digitalWrite(3, LOW); // envoyer un courant 'faible' sur la broche 3
+  delay(500); // attendre 500 millisecondes
+} 
+
+```
+
+#### Vibreur pulse
+
+<img src="assets/set_vibrator_pulse.gif" width="480" height="360" /><br>
+
+```c
+float t = 0; // une variable pour stocker le temps
+
+void setup() {
+   pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+}
+
+void loop() {
+  t += 0.025; // on augmente la valeur du temps (on peut changer la valeur pour faire pulse + ou - vite)
+  double l = ((sin(t) + 1) /2.0)*255; // on calcule une luminosité l doit être compris entre 0 et 255
+  analogWrite(3, l); // on allume la led avec la luminosité calculée.
+}
+
+```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
