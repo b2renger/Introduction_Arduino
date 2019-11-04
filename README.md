@@ -78,6 +78,7 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
     * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
     * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
     * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
+    * [Enregistrer des données dans un fichier sur votre ordinateur](https://github.com/b2renger/Introduction_arduino#Enregistrer)<br>
 
 
 ## Introduction
@@ -2063,6 +2064,170 @@ char* subStr (char* input_string, char *separator, int segment_number) {
 }
 ```
 
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
+### Enregistrer des données dans un fichier
+
+Dans cet exemple nous allons nous attacher à lire des données provenant de plusieurs capteurs et nous allons les transmettre à processing afin de pouvoir les enregistrer dans un fichier sur notre disque dur.
+
+Cela peut-être utile afin de pouvoir réaliser des représentation de données basées sur des enregistrement de capteurs.
+
+Dans notre cas nous allons enregistrer les données analogiques provenant de deux photorésistances, elles seront côte à côte sur une planche de prototypage, ce qui n'est pas idéal; mais il est facile d'imaginer des situation où les capteurs pourront être positionnés à différents endroits et il serait donc possible de mesurer l'ensoleillement à différents endroits.
+
+#### Circuit
+
+Le circuit est un circuit assez classique :
+
+<img src="serial_enregistrer_des_donnees_dans_un_fichier/read_from_photores_x2.png" width="480" height="360" /><br>
+
+#### Code arduino
+
+Du point de vue du code arduino, il n'y a pas grand chose de nouveau. Comme précédement nous allons écrire une chaîne de caractère au format [**JSON**](https://fr.wikipedia.org/wiki/JavaScript_Object_Notation) dans laquelle nous allons insérer une valeur lue sur notre entrée analogique.
+
+Notre chaîne de caractère devra ressembler à cela
+```json
+{
+    "luminosite" : valeur_de_la_photorésistance
+}
+```
+
+Ce code arduino permet de faire cela avec la concaténation de chaîne de caractères.
+
+```c
+String json;
+  json = "{\"luminosite\":";
+  json = json + analogRead(0);
+  json = json + "}";
+```
+
+Dans notre cas nous aurons deux valeurs à enregistrer,  puis il faudra imprimer le résultat dans le port Serial.
+
+```c
+void setup() {
+  Serial.begin(9600); // ouvrir une connection via le cable série
+}
+
+void loop() {
+  int photor1 = analogRead(A0); // lire les données sur A0 et les stocker dans une variable
+  int photor2 = analogRead(A1);// lire les données sur A1 et les stocker dans une variable
+
+  delay(1000); // attendre 1 seconde
+ 
+  // construire une chaine de caractère par concatenation
+  String json;
+  json = "{\"photor1\":"; // on ajoute la première clé "photor1"
+  json = json + photor1; // on ajoute la première valeur  
+  json = json +";\"photor2\":"; // on ajoute la seconde clé "photor2"
+  json = json +  photor2;// on ajoute la seconde valeur  
+  json = json + "}";
+
+  Serial.println(json); // on écrit notre fichier sur le port série
+  // nous allons donc pouvoir récupérer ces valeurs avec processing
+}
+```
+
+#### Code processing
+
+Encore une fois le code processing va être assez similaire à ce que nous avons fait jusqu'à présent notament dans les exemples précédents.
+
+La seule différence est que nous allons utiliser différentes fonctions pour charger un fichier depuis le disque dur, manipuler des objets json et enregistrer un fichier sur le disque dur.
+
+Dans un premier temps voici, un sketch classique qui permet de récupérer les valeurs et les visualiser au rythme auquel elles arrivent.
+
+```java
+
+import processing.serial.*;
+Serial myPort;  
+
+int photor1 =0;
+int photor2 =0;
+
+
+void setup() {
+  size(800, 500);
+  // initialisation de la communication via usb depuis arduino
+  // ATTENTION à bien utiliser le port adapté
+  printArray(Serial.list());
+  String portName = Serial.list()[4];
+  myPort = new Serial(this, portName, 9600);
+  myPort.bufferUntil('\n');
+}
+
+void draw() {    
+  background(0);
+  fill(255);
+
+  ellipse(width*0.25, height*0.5, photor1, photor1);
+  ellipse(width*0.75, height*0.5, photor2, photor2);
+}  
+
+void serialEvent (Serial myPort) {
+  try {
+    while (myPort.available() > 0) {
+      String inBuffer = myPort.readStringUntil('\n');
+      if (inBuffer != null) {
+        if (inBuffer.substring(0, 1).equals("{")) {
+          JSONObject json = parseJSONObject(inBuffer);
+          if (json == null) {
+            //println("JSONObject could not be parsed");
+          } else {
+            // récupérer les données stockée dans le format json transmis via usb
+            photor1    = json.getInt("photor1"); // on récupère la valeur correspondant à la clé "photor1"
+            photor2    = json.getInt("photor2");
+          }
+        } else {
+        }
+      }
+    }
+  } 
+  catch (Exception e) {
+  }
+}
+```
+
+Il nous faut maintenant nous occuper de l'enregistrement sur le disque dur.
+
+Tout d'abord il nous faut un fichier texte vide appelé **data.json** dans un dossier /data situé à l'endroit ou votre programme processing est sauvegardé. En réalité il ne doit pas être complétement vide mais juste contenir une accolade ouvrante et une accolade fermante :
+
+```json
+{}
+```
+cela correspond à la structure de base d'un fichier json.
+
+Après avoir récupéré les données depuis la chaîne de caractère au format json depuis l'arduino et ce toujours dans la fonction *void serialEvent(Serial myPort)*
+
+```java
+// récupérer les données stockée dans le format json transmis via usb
+photor1    = json.getInt("photor1"); // on récupère la valeur correspondant à la clé "photor1"
+photor2    = json.getInt("photor2");
+```
+
+Nous allons pouvoir procéder à l'enregistrement :
+- d'abord nous devons charger notre fichier json (pour l'instant vide)
+  ```java
+  JSONArray js  = loadJSONArray("data.json"); // on charge le fichier data.json - dans lequel on va ajouter une entrée
+  ```
+
+- ensuite nous allons créer un nouvel objet json que nous allons renseigner avec de nouvelles données
+  ```java
+  JSONObject njs = new JSONObject(); // on crée un nouvel objet json
+            // on ajoute un timestamp avec date et heure
+  njs.setString("timestamp", year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second());
+  njs.setInt("luminosity1", photor1); // on ajoute la première valeur
+  njs.setInt("luminosity2", photor2); // on ajoute la seconde valeur
+  ```
+
+- puis nous allons ajouter ce nouvel objet à notre fichier chargé à l'étape 1.
+  ```java
+  js.append(njs); // on ajoute ce nouvel objet à l'objet chargé précédement
+  ```
+
+- enfin nous sauvegardons le tout sur notre disque dur
+  ```java
+  saveJSONArray(js, "data/data.json"); // on sauvegarde le tout en écrasant le fichier précédent.
+  ```
+A chaque fois que des données sont reçues nous rechargeons le fichier, ajoutons des données et écrasons le fichier précédent : au fur et à mesure nous stockons donc toutes les données envoyées par arduino.
+
+Après avoir réalisé un enregistrement, il faut bien penser à renommer le fichier *data.json* avec un nom équivoque et à recréer un fichier vide si l'on veut relancer un enregistrement.
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
