@@ -383,178 +383,174 @@ Once installed, examples of use will be available in the menu: *File* -> *Exampl
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-### Entrées Analogiques
+### Analog Inputs
 
-Les entrées analogiques et capteurs analogiques contrairement aux entrée digitale et aux capteurs logiques vont elles nous fournir une plage de valeurs, ces valeurs seront comprises entre **0** et **1024**.
+Analog inputs and analog sensors unlike digital inputs and logic sensors will provide us with a range of values, these values ​​will be between **0** and **1024** when using a 10 bit DAC (usually the case on most arduino boards).
 
-#### Potentiomètre 
+#### Potentiometer 
 
-Le [*potentionmètre*](https://fr.wikipedia.org/wiki/Potentiom%C3%A8tre) est le grand classique de l'électronique : en fonction de sa position, sa résistance interne varier ce qui va permettre de mesurer un courant plus ou moins fort et encodé entre 0 et 1024.
+The [*potentiometer*](https://en.wikipedia.org/wiki/Potentiometer) is a classic of electronics: depending on its position, its internal resistance vary which will measure a current more or less strong and encoded between 0 and 1024.
 
 <img src="assets/read_from_pot.gif" width="480" height="270" /><br>
 
-Le potentiomètre dispose de 3 pattes : les deux aux extrémités sont dédiées à son alimentation (une reliée à **GND** l'autre au **5V**, la patte centrale porte le signal que nous souhaitons lire et sera donc reliée à une **entrée analogique**.
+The potentiometer has 3 legs: both ends are dedicated to its power supply (one connected to **GND** the other to **5V**, the central leg carries the signal that we want to read and will be connected to an **analog input**.
 
 <img src="read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
 
-Le code est très similaire au code des capteurs logiques excepté que les pins analogiques sont forcément des entrées et il n'est donc pas nécessaire d'en préciser l'usage avec **pinMode()** et que nous lisons sur une entrée analogique en utilisant **analogRead()** à la place **digitaleRead()** :
+The code is very similar to the code of logic sensors except : that the analog pins are necessarily inputs and it is therefore not necessary to specify the use with **pinMode()**, and that we read on an analog input using **analogRead()** instead **digitaleRead()**:
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); // open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the pin A0 and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-#### Micro
+#### Microphone
 
-Les micro le plus souvent utilisé en électronique sont des [microphones électrostatiques](https://fr.wikipedia.org/wiki/Microphone#Microphone_%C3%A9lectrostatique) dans notre cas le micro est déjà monté sur un ciruit imprimé, nous n'avons donc pas grand choses à ajouter et nous allons pouvoir récupérer une valeur entre 0 et 1023 représentant le niveau sonore. Dans ce cas de figure nous ne pourrons pas enregistrer un son pour le rejouer par la suite, le but est uniquement de mesurer le niveau sonore.
+The mics most often used in electronics are [electret microphones](https://en.wikipedia.org/wiki/Electret_microphone) in our case the microphone is already mounted on a printed circuit, so we have not much to add and we will be able to recover a value between 0 and 1023 representing the sound level. In this case we will not be able to record a sound to replay it afterwards, the goal is only to measure the sound level.
 
-Il existe une multitude de micro certains possèdent des molettes de réglage pour calibrer leur sensibilité.
+There are a multitude of mics some have adjustment wheels to calibrate their sensitivity.
 
 <img src="assets/read_from_grove_mic.gif" width="480" height="270" /><br>
 
-Nous n'utiliserons que 3 des 4 broches du connecteur : deux pour l'alimentation et la troisième pour lire les données analogiques. Le wiki du fabricant nous précise les connexions disponnibles sur la broche : http://wiki.seeedstudio.com/Grove-Sound_Sensor/
+We will use only 3 of the 4 pins of the connector: two for the power supply and the third for reading the analog data. The manufacturer's wiki tells us which connections are available on the spindle: http://wiki.seeedstudio.com/Grove-Sound_Sensor/
 
 <img src="read_from_grove_mic/read_from_grove_mic.png" width="480" height="360" /><br>
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); // open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the A0 pin and store it in an integer variable
+  Serial.println(value); // to print the contents of the variable in the serial monitor
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-#### Photo-résistance
+#### Photoresistor
 
-La [*photorésistance*](https://fr.wikipedia.org/wiki/Photor%C3%A9sistance) fait varier sa résistance en fonction de la luminosité qu'elle reçoit. Il en existe de toutes tailles et de toutes sensibilités.
+The [*photoresistor*](https://en.wikipedia.org/wiki/Photoresistor) varies its resistance according to the brightness it receives. There are all sizes and sensitivities.
 
 <img src="assets/read_from_photores.gif" width="480" height="270" /><br>
 
-Pour protéger la lecture du courant sur notre entrée analogique nous allons une résistance de 10 kilo ohms. Nous retrouvons un montage assez similaire à celui d'un capteur logique tilt.
+To protect the current reading on our analog input we are going to a resistance of 10 kilo ohms. We find a circuit quite similar to that of a logical tilt sensor.
 
 <img src="read_from_photores/read_from_photores.png" width="480" height="360" /><br>
 
-Nous lisons le signal sur l'entrée analogique A0 : 
+We read the signal on the analog input A0: 
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); // open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the pin A0 and store it in an integer variable
+  Serial.println(value); //  print the contents of the variable in the serial monitor
 }
 ```
 
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
-#### Capteur Piezo
+#### Piezo sensor
 
-Le capteur *piezoélectrique* fait appel au principe de [*piezoélectricité](https://fr.wikipedia.org/wiki/Pi%C3%A9zo%C3%A9lectricit%C3%A9) qui fait en sorte que certains matériaux peuvent se déformer quand ils sont soumis à un courant électrique ou au contraire qu'ils puissent aussi générer de l'électricité quand ils sont déformés.
+The piezoelectric sensor uses the principle of [*piezoelectricity*](https://en.wikipedia.org/wiki/Piezoelectricity) which causes certain materials to become deformed when they are subjected to an electric current or on the contrary they can also generate electricity when they are deformed.
 
-On peut donc s'en servir comme capteur de vibrations soit comme micro-contact, ou comme petit haut-parleur permettant de vibrer à des fréquences données (et donc aussi agir en tant qu'actuateur !)
+It can be used as a vibration sensor either as a contact mic, or as a small speaker to vibrate at given frequencies (and therefore also acts as an actuator!)
 
-Ici nous allons nous contenter de détecter des vibrations et d'en mesurer l'importance.
+Here we will detect vibrations and measure their level.
 
 <img src="assets/read_from_piezo.gif" width="480" height="270" /><br>
 
-Pour protéger notre entrée mais aussi parce que par rapport à une résistance de 10kOhms elle nous permettra d'avoir de meilleures valeurs en sortie, nous allons utiliser un résistance de 100kOhms.
+To protect our input, but also because compared to a resistance of 10kOhms it will give better readings, we will use a resistance of 100kOhms.
 
 <img src="read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
 
-Le code lui reste le même tant que notre capteur est sur la même entrée.
+The code remains the same as long as our sensor is on the same input.
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); //open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the A0 pin and store it in an integer variable
+  Serial.println(value); // to print the contents of the variable in the serial monitor
 }
 ```
-
-
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 #### FSR 
 
-Le *FSR* est un capteur de force : il va convertir le poids appliqué sur sa surface en un courant électrique mesurable.
+*FSR* sensor is a force sensor: it will convert the weight applied on its surface into a measurable electric current.
 
 <img src="assets/read_from_fsr.gif" width="480" height="270" /><br>
 
-On retouve le même type de schéma que pour le capteur *tilt* ou que pour le *piezo* ou encore la *photorésistance*. Ici il est monté avec une résistance de 47 kOhms, mais vous pouvez essayer d'ajuster cette valeur pour affiner la précision utile.
+We find the same type of diagram as for the sensor *tilt* or that for the *piezo* or the *photoresistance*. Here it is mounted with a resistance of 47 kOhms, but you can try to adjust this value to refine the precision.
 
 <img src="read_from_FSR/read_from_FSR.png" width="480" height="360" /><br>
 
-
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); // open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the A0 pin and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
-
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 #### Flex
 
-Le *flex sensor* va convertir la courbure qu'il prend en valeur comprises entre 0 et 1023. Il faut noter que soumis à aucune contrainte la valeur lue doit être de l'ordre de 511, cela signifie que notre capteur peut détecter une torsion dans les deux sens.
+The *flex sensor* will convert the curvature that it takes to a value between 0 and 1023. It should be noted that subjected to no constraints the value read must be around 511, it means that our sensor can detect a flexion in both ways.
 
 <img src="assets/read_from_flex.gif" width="480" height="270" /><br>
 
-Ici il est monté avec une résistance de 47 kOhms, mais vous pouvez essayer d'ajuster cette valeur pour affiner la précision utile.
+Here it is mounted with a resistance of 47 kOhms, but you can try to adjust this value to refine the precision.
 
 <img src="read_from_flex/read_from_Flex.png" width="480" height="480" /><br>
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); // open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the A0 pin and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 
-### Capteurs de distance
+### Distance sensors
 
-Il existe plusieurs méthodes pour calculer des distances : infra-rouge, ultra-son, laser. Ici nous allons nous intéresser aux deux premières technologies.
+There are several methods to calculate distances: infra-red, ultra-sound, laser. Here we will focus on the first two technologies.
 
-#### Infra-rouge
+#### Infrared
 
-Le capteur infra-rouge va permettre avec un système de lentilles et d'équations trigonométrique d'estimer une distance. Le [modèle que nous utilisons](https://www.gotronic.fr/art-capteur-de-mesure-sharp-gp2y0a21yk0f-11539.htm) permet d'obtenir un estimation de la distance pour des distances comprises entre 10 et 80 cm et lire le résultat sur une entrée analogique.
+The infrared sensor will allow a system of lenses and trigonometric equations to estimate a distance. The [model we use](https://www.gotronic.fr/art-capteur-de-mesure-sharp-gp2y0a21yk0f-11539.htm) allows to obtain an estimation of the distance for distances between 10 and 80 cm and to read the result on an analog input.
 
 <img src="assets/read_from_irdistance.gif" width="480" height="270" /><br>
 
@@ -562,53 +558,53 @@ Le capteur infra-rouge va permettre avec un système de lentilles et d'équation
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir la connexion série
+  Serial.begin(9600); // open the serial connection
   
 }
 
 void loop() {
-  int value = analogRead(0); // lire la valeur sur la pin A0 et la stocker dans une variable entière
-  Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
+  int value = analogRead(0); // read the value on the A0 pin and store it in an integer variable
+  Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
 
 
-#### Ultra-son
+#### Ultrasound
 
-Il existe différents types de capteurs à ultra-son pour mesurer les distances qui est un peu plus précis et permet d'avoir une portée plus importante (jusqu'à quelques mètres)
-- le classique [HC-SR04](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) qui nécessite un branchement à 4 fils.
-- le [module grove](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm) qui dispose de la connectique grove est d'une bibliothèque associée. Il est donc relativement plus simple à utiliser.
+There are different types of ultrasonic sensors to measure distances which is a little more precise and allows to have a greater range (up to a few meters) than the infrared method
+- The classic [HC-SR04](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) which requires a 4-wire connection.
+- The [grove module](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm) which has the grove connectivity and an associated library. It is therefore relatively easier to use.
 
-Le principe de mesure de ces deux capteurs est le même et les résultats obtenus sont donc très similaires :
+The measuring principle of these two sensors is the same and the results obtained are therefore very similar:
 <img src="assets/read_from_ultrasonic_distance.gif" width="480" height="270" /><br>
 
 
-#### Ultra-son-grove
+#### Grove ultrasound
 
-[*module grove*](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm)
+[*grove module*](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm)
 
-Le circuit ressemble à un circuit classique avec les composants grove :
+The circuit looks like a classic circuit with grove components:
 
 <img src="read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="480" /><br>
 
-Le code nécessite d'installer une bibliothèque. Vous pouvez avoir accès au gestionnaire de bibliothèques d'arduino en cliquant sur le menu : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*. Il faut alors rechercher et installer la bibliothèque **Grove Ultrasonic ranger**.
+The code requires to install a library. You can access the arduino library manager by clicking on the menu: *Sketch* -> *Include Library* -> *Manage Libraries*. You must then look for and install the **Grove Ultrasonic ranger** library.
 
-Cette bibliothèque va faire abstraction de toute la procédure qui est décrite plus bas pour le Hc-sr04 et nous permettre donc de manipuler un code minimaliste ressemblant beaucoup à ce que nous avons déjà vu jusqu'à présent.
+This library will ignore all the procedure described below for the Hc-sr04 and allow us to manipulate a minimalist code much like what we have seen before.
 
 ```c
-#include "Ultrasonic.h" // importer la bibliothèque
-Ultrasonic ultrasonic(2); // la broche "sig" du capteur est branchée sur "D2" de l'arduino
+#include "Ultrasonic.h" // import the library
+Ultrasonic ultrasonic(2); // the "sig" pin of the sensor is connected to "D2" of the arduino
 
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  long RangeInCentimeters = ultrasonic.MeasureInCentimeters(); // mesurer la distance en cm
+  long RangeInCentimeters = ultrasonic.MeasureInCentimeters(); // measure the distance in cm
   Serial.println(RangeInCentimeters);//0~400cm
-  delay(100); // attendre un peu entre deux mesures.
+  delay(100); //wait a little between two measurements.
 }
 ```
 
@@ -619,65 +615,64 @@ void loop() {
 
 [*HC-SR04*](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) 
 
-Le branchement est un peu différent de ce que nous avons vu jusqu'à présent. Deux pattes vont servir à l'alimentation **GND** et **5V** ou **VCC**.
+The hookup is a little different from what we have seen so far. Two legs will be used for **GND** and **5V** or **VDC** power supplies.
 
-Les deux suivantes **trig** et **echo** aux entrées digitales 11 et 10 respectivement.
+The next two **trig** and **echo** at digital inputs 11 and 10 respectively.
 
 <img src="read_from_UltraSonic_Distance/read_from_ultrasonic_distance.png" width="480" height="360" /><br>
 
-Cela est du au fonctionnement intrinsèque du capteur. Nous allons en fait générer un courant sur la patte **trig** et mesurer un courant sur la patte **echo** : nous allons émettre des ultra-sons et écouter leur écho et en fonction du temps écoulé entre l'émission et la réception de l'écho nous pourrons déterminer une distance (car nous connaissons la vitesse du son).
+This is due to the way the sensor work. We will actually generate a current on the leg **trig** and measure a current on the leg **echo**: we will emit ultrasounds, listen to their echo and according to the time elapsed between the emission and the reception of the echo we can determine a distance (because we know the speed of the sound !).
 
-Le code s'en ressent car il sera nettement plus complexe. En effet il nous faut :
+The code will be significantly more complex. Indeed we need:
+- initialize our pin 11 and 10 respectively as an input and an output. [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/)
+- emit a current / signal on the pin 11. [**digitalWrite()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/)
+- measure an echo on the pin 10. [**pulseIn()**](https://www.arduino.cc/reference/en/language/functions/advanced-io/pulsein/)
+- transform a value from duration to distance.
+- print this value in the console.
 
-- initialiser nos pin 11 et 10 respectivement comme une entrée et une sortie. [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/)
-- émettre un courant / signal sur la pin 11. [**digitalWrite()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/)
-- mesurer un écho sur la pin 10. [**pulseIn()**](https://www.arduino.cc/reference/en/language/functions/advanced-io/pulsein/)
-- transformer une valeur de durée en distance.
-- imprimmer cette valeur dans la console.
+By reading the documentation of **pulseIn()**, we will realize that our signal emitted on the trigger pin must also follow a particular form.
 
-En lisant la documentation de **pulseIn()**, on se rendra compte que notre signal émit sur la pin de trigger doit d'ailleurs suivre une forme particulière.
-
-Nous devrons donc aussi utiliser les fonctions :
+We will also have to use the functions:
 
 - [**delay()**](https://www.arduino.cc/reference/en/language/functions/time/delay/)
-- et [**delayMicroseconds()**](https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/)
+- and [**delayMicroseconds()**](https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/)
 
-qui permettent de stopper le fil d'éxecution de notre programme pour un instant déterminé et donc de créer des temporisations.
+which allow to stop the thread of execution of our program for a given time and thus to create delays.
 
 ```c
 
-// pour nous en souvenir nous allons utiliser des variables pour stocker les numéros des pins utilisées
+// for us to remember we will use variables to store the numbers of pins used
 int trigPin = 11;    // Trigger
 int echoPin = 10;    // Echo
 
 void setup() {
   Serial.begin (9600);
-  // nous précisons que la pin 11 est une sortie (émission d'ultra-sons)
+  // we specify that pin 11 is an output (ultrasound emission)
   pinMode(trigPin, OUTPUT); // trigPin est remplacé par sa valeur
-  // nous précisons que la pin 10 est une entrée (réception de l'écho)
+  // we specify that the pin 10 is an entry (reception of the echo)
   pinMode(echoPin, INPUT);
 }
 
 void loop() {
-  // On envoit un signal écrivant sur la pin de trigger (11)
-  // En alternant les valeurs de courant LOW et HIGH et de cours délais
+  // Send a signal on the trigger pin (11)
+  // alternating LOW and HIGH current values ​​and delay rates
   digitalWrite(trigPin, LOW);
-  delayMicroseconds(10); // forcer le programme à rester dans son état précédent(LOW) pendant 10 micro secondes
+  delayMicroseconds(10); // force the program to stay in its previous state (LOW) for 10 seconds
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10); // forcer le programme à rester dans son état précédent(HIGH) pendant 10 micro secondes
+  delayMicroseconds(10); // force the program to stay in its previous state (HIGH) for 10 micro seconds
   digitalWrite(trigPin, LOW);
     
-  // récuperer la distance en mesurant les pics en courant HIGH sur la pin d'écho    
+ // get the distance by measuring peaks HIGH current on the echo pin
   long duration = pulseIn(echoPin, HIGH);
-  // Convertir la durée en cm
+ // Convert the duration in cm
   long cm = (duration/2) / 29.1;     
     
-  // imprimer le réulstat
+ // print the result
   Serial.print(cm);
   Serial.print("cm");
   Serial.println();
     
-  // attendre un peu avant de recommencer l'opération
+ // wait a little before starting the operation again
   delay(250);
 }
 ```
