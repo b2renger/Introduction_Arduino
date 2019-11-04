@@ -23,62 +23,63 @@ Each example will include a circuit diagram to make and code to write and upload
 
 * [Connect sensors and retrieve values](https://github.com/b2renger/Introduction_arduino#connecting-captors-and-receiving-values) <br>
 
-    * [digital inputs and logic sensors]() <br>
-        * [PIR](https://github.com/b2renger/Introduction_arduino#pir) <br>
-        * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt) <br>
-        * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch) <br>
-        * [Button](https://github.com/b2renger/Introduction_arduino#button) <br>
+  * [digital inputs and logic sensors]() <br>
+    * [PIR](https://github.com/b2renger/Introduction_arduino#pir) <br>
+    * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt) <br>
+    * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch) <br>
+    * [Button](https://github.com/b2renger/Introduction_arduino#button) <br>
+  
+  * [analog inputs]() <br>
+    * [Potentiometer](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre) <br>
+    * [Micro](https://github.com/b2renger/Introduction_arduino#micro) <br>
+    * [Photo-resistance](https://github.com/b2renger/Introduction_arduino#photo-resistance) <br>
+    * [Piezo Sensor](https://github.com/b2renger/Introduction_arduino#capteur-piezo) <br>
+    * [Flex](https://github.com/b2renger/Introduction_arduino#flex) <br>
+    * [FSR](https://github.com/b2renger/Introduction_arduino#fsr) <br>
 
-    * [analog inputs]() <br>
-        * [Potentiometer](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre) <br>
-        * [Micro](https://github.com/b2renger/Introduction_arduino#micro) <br>
-        * [Photo-resistance](https://github.com/b2renger/Introduction_arduino#photo-resistance) <br>
-        * [Piezo Sensor](https://github.com/b2renger/Introduction_arduino#capteur-piezo) <br>
-        * [Flex](https://github.com/b2renger/Introduction_arduino#flex) <br>
-        * [FSR](https://github.com/b2renger/Introduction_arduino#fsr) <br>
+  * [Distance Sensors](https://github.com/b2renger/Introduction_arduino#distance-sensor) <br>
+    * [Infra-red](https://github.com/b2renger/Introduction_arduino#infra-red) <br>
+    * [Ultra-sound](https://github.com/b2renger/Introduction_arduino#ultra-son) <br>
+      * [Ultra-sound grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove) <br>
+      * [Ultra-sound hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04) <br>
 
-    * [Distance Sensors](https://github.com/b2renger/Introduction_arduino#distance sensor) <br>
-        * [Infra-red](https://github.com/b2renger/Introduction_arduino#infra-red) <br>
-        * [Ultra-sound](https://github.com/b2renger/Introduction_arduino#ultra-son) <br>
-          * [Ultra-sound grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove) <br>
-          * [Ultra-sound hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04) <br>
-
-    * [Digital sensors - SDA and SCL input]() <br>
-        * [Accelerometer](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9romecromancer) <br>
-        * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope) <br>
-        * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture) <br>
+  * [Digital sensors - SDA and SCL input]() <br>
+    * [Accelerometer](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9romecromancer) <br>
+    * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope) <br>
+    * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture) <br>
     
 * [Connect actuators and enable devices](https://github.com/b2renger/Introduction_arduino#connecting-actuators-and-activating-permanent-prizes) <br>
 
-  * [Turn on leds](https://github.com/b2renger/Introduction_arduino#leds-simples) <br>
-    * [Turn on leds: blink](https://github.com/b2renger/Introduction_arduino#make-clink-one-led) <br>
-    * [Turn on leds: pulse](https://github.com/b2renger/Introduction_arduino#make-pulsed-one-led) <br>
+  * [Turn on leds](https://github.com/b2renger/Introduction_arduino#leds-simples) <br>
+    * [Turn on leds: blink](https://github.com/b2renger/Introduction_arduino#make-clink-one-led) <br>
+    * [Turn on leds: pulse](https://github.com/b2renger/Introduction_arduino#make-pulsed-one-led) <br>
 
-  * [Activate a vibrator](https://github.com/b2renger/Introduction_arduino#grader-motor) <br>
-    * [Activate a vibrator: blink](https://github.com/b2renger/Introduction_arduino#vibreur-on-off) <br>
-    * [Activate a vibrator: pulse](https://github.com/b2renger/Introduction_arduino#vibreur-pulse) <br>
+  * [Activate a vibrator](https://github.com/b2renger/Introduction_arduino#grader-motor) <br>
+    * [Activate a vibrator: blink](https://github.com/b2renger/Introduction_arduino#vibreur-on-off) <br>
+    * [Activate a vibrator: pulse](https://github.com/b2renger/Introduction_arduino#vibreur-pulse) <br>
 
-  * [run servomotor](https://github.com/b2renger/Introduction_arduino#servomotors) <br>
-      * [classic sevomotor](https://github.com/b2renger/Introduction_arduino#servomoteur-classique) <br>
-      * [servomotor with continuous rotation](https://github.com/b2renger/Introduction_arduino#servomotor-%C3%A0-rotatoin-continue) <br>
-      * [Linear Servomotor](https://github.com/b2renger/Introduction_arduino#linear-servomotor) <br>
+  * [run a servomotor](https://github.com/b2renger/Introduction_arduino#servomotors) <br>
+    * [classic sevomotor](https://github.com/b2renger/Introduction_arduino#servomoteur-classique) <br>
+    * [servomotor with continuous rotation](https://github.com/b2renger/Introduction_arduino#servomotor-%C3%A0-rotatoin-continue) <br>
+    * [Linear Servomotor](https://github.com/b2renger/Introduction_arduino#linear-servomotor) <br>
 
-  * [light leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels) <br>
-        * [RGB](https://github.com/b2renger/Introduction_arduino#specify-color-rgb) <br>
-        * [HSB](https://github.com/b2renger/Introduction_arduino#specify-color-in-hsv) <br>
-  * [use a digits viewer](https://github.com/b2renger/Introduction_arduino#using-a-poster-using-a-4-digits) <br>
+  * [light leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels) <br>
+    * [RGB](https://github.com/b2renger/Introduction_arduino#specify-color-rgb) <br>
+    * [HSB](https://github.com/b2renger/Introduction_arduino#specify-color-in-hsv) <br>
+  
+  * [use a digits viewer](https://github.com/b2renger/Introduction_arduino#using-a-poster-using-a-4-digits) <br>
 
 * [Control an actuator with a sensor](https://github.com/b2renger/Introduction_arduino#controler-a-actuateur-with-a-sensor) <br>
-    * [Use the map function ()](https://github.com/b2renger/Introduction_arduino#use-map-function) <br>
-    * [Potentiometer to conventional servo](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique) <br>
-    * [Flex to Continuous Servo](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu) <br>
-    * [FSR to neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb) <br>
+  * [Use the map function ()](https://github.com/b2renger/Introduction_arduino#use-map-function) <br>
+  * [Potentiometer to conventional servo](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique) <br>
+  * [Flex to Continuous Servo](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu) <br>
+  * [FSR to neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb) <br>
 
 * [Use sensors to control processing code](https://github.com/b2renger/Introduction_arduino#use-captors-to-control-contr%C3%B4ler-code-processing) <br>
-    * [Control the playback of a video with a distance sensor](https://github.com/b2renger/Introduction_arduino#controler-the-playback-of-video-with-a-captor-of- distance) <br>
-    * [Control an animation with photoresistance](https://github.com/b2renger/Introduction_arduino#controler-a-animation-with-photoresistance) <br>
-    * [Control neopixels leds with the mouse](https://github.com/b2renger/Introduction_arduino#controler-ed-neopixels-with-mouse) <br>
-    * [Save data to a file on your computer](https://github.com/b2renger/Introduction_arduino#register-designs-in-a-file) <br>
+  * [Control the playback of a video with a distance sensor](https://github.com/b2renger/Introduction_arduino#control-the-playback-of-video-with-a-distance-sensor) <br>
+  * [Control an animation with photoresistance](https://github.com/b2renger/Introduction_arduino#controler-a-animation-with-photoresistance) <br>
+  * [Control neopixels leds with the mouse](https://github.com/b2renger/Introduction_arduino#controler-ed-neopixels-with-mouse) <br>
+  * [Save data to a file on your computer](https://github.com/b2renger/Introduction_arduino#register-designs-in-a-file) <br>
 
 ## Introduction
 
