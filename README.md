@@ -78,7 +78,7 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
     * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
     * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
     * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
-    * [Enregistrer des données dans un fichier sur votre ordinateur](https://github.com/b2renger/Introduction_arduino#Enregistrer)<br>
+    * [Enregistrer des données dans un fichier sur votre ordinateur](https://github.com/b2renger/Introduction_arduino#enregistrer-des-donn%C3%A9es-dans-un-fichier)<br>
 
 
 ## Introduction
