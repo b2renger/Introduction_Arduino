@@ -44,6 +44,12 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
         * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
     
 * [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
+  * [Allumer des leds](https://github.com/b2renger/Introduction_arduino#leds)<br>
+    * [Allumer des leds : blink](https://github.com/b2renger/Introduction_arduino#ledsblink)<br>
+    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#ledspulse)<br>
+  * [Activer un vibreur](https://github.com/b2renger/Introduction_arduino#vibreur)<br>
+    * [Activer un vibreur : blink](https://github.com/b2renger/Introduction_arduino#vibreurblink)<br>
+    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#vibreurpulse)<br>
 	* [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
         * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
         * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
@@ -902,11 +908,79 @@ void loop() {
 
 
 ## Connecter des actuateurs et activer des périphériques
+Après avoir utilisé les commandes **digitalRead()** et **analogRead()** pour lire des courants sur les broches d'entrée d'une carte arduino, nous allons maintenant voir comment utiliser les fonction **digitalWrite()** et **analogWrite()** pour générer des courants sur les broches de sortie. A noter que les broches digitales peuvent être configurées en tant que sortie ou en tant qu'entrée à l'aide de la fonction [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/).
+
+### Leds simples
+Ces leds sont les actuateurs les plus simples que l'on puisse trouver, elles sont très peu chères et existent dans une multitude de couleurs et de tailles. Nous allons nous concentrer tout d'abord sur des leds monochromes avant de parler plus loin des leds RGBW en ruban.
+
+Deux modes d'interactions sont possibles avec ce type d'actuateur, on peut :
+- soit envoyer un courant binaire 'HIGH' ou 'LOW' à l'aide de **digitalWrite()** pour faire clignoter une led.
+- soit envoyer un courant 'analogique' entre 0 et 255 à l'aide de **analogWrite()** pour réaliser une effet de gradation de la lumière.
+
+Dans les deux cas le circuit sera le même :
+
+<img src="set_led_blink/set_led.png" width="480" height="360" /><br>
+
+Il est important de savoir que la [led](https://fr.wikipedia.org/wiki/Diode_%C3%A9lectroluminescente) simple est un composant polarisé - c'est à dire qu'il a un sens. La petite patte correspond au moins et doit donc être reliée à la masse, la patte la plus longue correspond au plus et doit être reliée à une sortie digitale.
+Entre la masse et la patte moins de la led on insère une résistance de 220 ohms afin de protéger la led d'une éventuelle surtension qui risquerait de la griller.
+
+#### Faire clignoter une led
+
+<img src="assets/set_led_blink.gif" width="480" height="360" /><br>
+
+Pour faire clignoter une led il suffit d'utiliser la fonction [**digitalWrite()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/). Cette fonction prend deux arguments :
+- le premier est le numéro de la pin sur laquelle on doit envoyer un courant.
+- le second est la 'valeur' du courant : soit 'HIGH' soit 'LOW'.
+
+```c
+void setup() {
+  pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+}
+
+void loop() {
+  digitalWrite(3, HIGH); // envoyer un courant 'fort' sur la broche 3
+  delay(500); // attendre 500 millisecondes
+  digitalWrite(3, LOW); // envoyer un courant 'faible' sur la broche 3
+  delay(500); // attendre 500 millisecondes
+} 
+```
+
+#### Faire "pulser" une led
+
+<img src="assets/set_led_pulse.gif" width="480" height="360" /><br>
+
+Pour faire pulse une led il suffit d'utiliser la fonction [**analogWrite()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/). Cette fonction prend deux arguments :
+- le premier est le numéro de la pin sur laquelle on doit envoyer un courant.
+- le second est la 'valeur' du courant : comprise entre 0 et 255. 0 correspondra à une led éteinte et 255 à une led allumée au maximum de sa luminosité.
+
+Notez bien qu'en utilisant [**analogWrite()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/) notre led n'est pas pour autant branchée sur une broche analogique. Les broches analogiques ne sont que des sorties. Il faut donc brancher notre led sur une pin digitale, mais une pin [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion), la liste des pins pwm est disponible dans la documentation des différentes cartes.
+
+```c
+float t = 0; // une variable pour stocker le temps
+
+void setup() {
+   pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+}
+
+void loop() {
+  t += 0.025; // on augmente la valeur du temps (on peut changer la valeur pour faire pulse + ou - vite)
+  double l = ((sin(t) + 1) /2.0)*255; // on calcule une luminosité l doit être compris entre 0 et 255
+  analogWrite(3, l); // on allume la led avec la luminosité calculée.
+}
+```
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Moteur vibreur
+
+
+
+[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+
+### Servomoteurs
 
 Nous avons vu que les entrées digitales permettait de mesurer des courants *HIGH* ou *LOW*, elles permettent aussi deux générer ces deux types de courants comme dans le cas de notre capteur de distance à ultra-son. Une autre possibilité est de générer un signal [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion): en envoyant des impulsions électriques très rapides et dont la durée varie on peut encoder des valeurs plus complexes et donc contrôler l'intensité et la couleur de leds ou la vitesse / sens de rotation de moteurs.
 
-
-### Servomoteurs
 D'une manière générale tous les servomoteurs se branchent de le même façon :
 
 <img src="set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
