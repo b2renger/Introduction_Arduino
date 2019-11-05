@@ -680,65 +680,65 @@ void loop() {
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Capteurs numériques - SDA et SCL
+### Digital sensors - SDA and SCL
 
-Les capteurs que nous allons utiliser maintenant vont pouvoir nous fournir une information plus complexe et moins brute, ils vont nottament nous permettre de récupérer plusieurs valeurs en même temps. 
+The sensors we will use now will be able to provide us more complex and less raw information, and they will allow us to recover several values ​​at the same time. 
 
-On parle de capteur [**I2C**](https://fr.wikipedia.org/wiki/I2C), il se branchent habituellement sur les entrée analogiques 4 et 5 d'une carte arduino uno.
+We speak of [**I2C**](https://en.wikipedia.org/wiki/I%C2%B2C) sensors, they usually plug into analog inputs 4 and 5 of an arduino uno card, or in the dedicated pins.
 
-Le protocole **I2C** permet de communiquer avec deux fils, l'un portera la **donnée** (**SDA**) et l'autre la **clock** (**SCL**). Le signal porté par la clock permettra de recomposer la donnée faite de bits (suite de 0 et de 1).
+The **I2C** protocol allows you to communicate with two wires, one will carry the **data** (**SDA**) and the other the **clock** (**SCL**). The signal carried by the clock will recompose the data made of bits (stream of 0 and 1).
 
-Génralement ces capteurs sont déjà montés sur des circuits integrés et ne nécessite le cablage que de 4 cables : GND, VCC pour l'alimentation et SDA et SCL pour les données.
+Generally these sensors are already mounted on integrated circuits and require the wiring of only 4 cables: GND, VCC for power supply, and SDA and SCL for data.
 
-Le code peut s'avérer complexe et fait souvent appel à l'usage de bibliothèques fournies par la communauté ou par le fabricant. Il faut donc souvent se référer à la page du fabricant pour trouver les moyen d'exploiter des capteurs, il faut donc faire attention à choisir des capteurs bien documentés.
+The code can be complex and often involves the use of libraries provided by the community or by the manufacturer. So you often have to refer to the manufacturer's page to find the way to operate sensors, so be careful to choose well-documented sensors.
 
-Installer une bibliothèque se fait via une interface graphique dans l'IDE arduino. Il faut ouvrir le menu *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*
+Installing a library is done via a GUI in the arduino IDE. You have to open the menu *Sketch* -> *Include a library* -> *Manage libraries*
 
 <img src="assets/arduino_bibliotheques.png" width="680" height="470" /><br>
 
-Qui vous permettra d'ouvrir cette fenêtre : 
+Which will allow you to open this window:
 
 <img src="assets/arduino-gestionnaire-bibliotheque.png" width="680" height="370" /><br>
 
-Vous avez alors un champ de recherche vous permettant de chercher et d'installer les bibliothèques dont vous avez besoin.
+You then have a search box that allows you to search and install the libraries you need.
 
-Généralement chaque bibliothèque vient avec sont lot d'exemples plus ou mois utiles, plus ou moins nombreux et plus ou moins clairs. Vous pouvez y accéder via le menu *Fichier* -> *Exemples* et tout en bas du menu déroulant vous trouverez les exemples relatifs aux bibliothèques.
+Generally each library comes with more or less useful examples, at least one and more or less clear. You can access it via the *File* -> *Examples* menu and at the very bottom of the drop-down menu you will find your custom library examples.
 
 
-#### Accéléromètre
+#### accelerometer
 
-L'[*accéléromètre*](https://fr.wikipedia.org/wiki/Acc%C3%A9l%C3%A9rom%C3%A8tre) permet de mesure l'accélération linéaire, soit la projection de la gravité sur chacun de ses trois axes.
+The [*accelerometer*](https://en.wikipedia.org/wiki/Accelerometer) allows measurement of linear acceleration, ie the projection of gravity on each of its three axes.
 
 <img src="assets/read_fom_accelerometer.gif" width="480" height="270" /><br>
 
-Le montage est tout ce qu'il y a de plus simple :
+The circuit is quite simple:
 
 <img src="read_from_accelerometer/read_from_3axisAccelerometer.png" width="480" height="360" /><br>
 
-Le code est lui assez complexe, il utilise la bibliothèque *ADXL345* spécialement dédiée à ce composant, elle ne sera donc pas utilisable avec tous les accéléromètres.
+The code is quite complex, it uses the library *ADXL345* dedicated to this component, it will not be used with all accelerometers.
 
-On en apprend plus sur son utilisation sur la page de référence du fabricant : http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/
+We can learn more about its use on the manufacturer's reference page: http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Accelerometer-1.5g/
 
-Ce qu'il est important de comprendre c'est que l'on stocke les valeurs issues de l'accéléromètre à chaque fois que la boucle s'éxecute. Pour récupérer ces valeurs on est obligé de faire appel aux méthodes écrites et décrites dans la bibliothèque - il n'est pas possible de recomposer simplement la donnée vit les informations mesurées sur les pins.
+What is important that we store the values ​​from the accelerometer each time the loop is executed. To recover these values ​​one has to resort to the methods written and described in the library - it is not possible to simply recompose the data through the information measured on the pins.
 
 ```c
-// prévenir que nous allons avoir besoin de ces bibliothèques
+// we are going to need these libraries
 #include <Wire.h>
 #include <ADXL345.h>
 
-ADXL345 accel; // on crée un objet qui nous permet de manipuler les données provenant de notre acceleromètre
+ADXL345 accel; // create an object that allows us to manipulate data from our accelerometer
 
 void setup() {
   Serial.begin(9600);
-  accel.powerOn(); // on active notre capteur
+  accel.powerOn(); // we activate our sensor
 }
 
 void loop() {
 
-  // on crée trois variables pour stocker les valeurs brutes de notre acceleromètre.
+  // we create three variables to store the raw values ​​of our accelerometer.
   int x, y, z;
-  accel.readXYZ(&x, &y, &z); //on lit données de l'accéleromètre et on les stockent dans nos variables.
-  // on imprimme le résultat dans le moniteur série
+  accel.readXYZ(&x, &y, &z); // read data from the accelerometer and store them in our variables.
+  // we print the result in the serial monitor
   Serial.print("values of X , Y , Z: ");
   Serial.print(x);
   Serial.print(" , ");
@@ -746,10 +746,10 @@ void loop() {
   Serial.print(" , ");
   Serial.println(z);
 
-  // on crée un tableau pour stocker les valeurs provenant du calcul effectué par notre bibliothèques quand on appel getAcceleration()
+  // we create a table to store the values ​​coming from the computation done by our library when we call getAcceleration ()
   double xyz[3]; 
-  accel.getAcceleration(xyz); //on lit données de l'accéleromètre et on les stockent dans notre tableau
-  // on imprimme le résultat
+  accel.getAcceleration(xyz); // read data from the accelerometer and store it in our table
+ // print the result
   Serial.print("X=");
   Serial.print(xyz[0]);
   Serial.print(" g , ");
@@ -765,41 +765,40 @@ void loop() {
 }
 ```
 
-
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
 #### Gyroscope
 
-Un [*gyroscope*](https://fr.wikipedia.org/wiki/Gyroscope) permet de mesurer la rotation d'un objet dans l'espace et de connaitre sa position angulaire.
+A [*gyroscope*](https://en.wikipedia.org/wiki/Gyroscope) allows to measure the rotation of an object in space and to know its angular position.
 
-Sa mise en oeuvre est assez similaire à la mise en oeuvre de l'accéleromètre.
+Its use is quite similar to the use of an accelerometer.
 
 <img src="assets/read_from_gyroscope.gif" width="480" height="270" /><br>
 
 <img src="read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
 
-La page de documentation du fabricant nous fournit les informations relative à son utilisation en terme de code : http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/    
+The manufacturer's documentation page provides us with information about its use in terms of code:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/    
 
-Il faudra installer la bibliothèque *ITG3200* - Grove 3-axis-digital-gyro.
+It will be necessary to install the library *ITG3200* - Grove 3-axis-digital-gyro.
 
 ```c
-// prévenir que nous allons avoir besoin de ces bibliothèques
+//we are going to need these libraries
 #include <Wire.h>
 #include "ITG3200.h"
 
 ITG3200 gyro;
 void setup(){
     Serial.begin(9600);
-    // on active notre capteur
+    // activate our sensor
     gyro.init();
-    gyro.zeroCalibrate(200,10);//sample 200 times to calibrate and it will take 200*10ms
+    gyro.zeroCalibrate(200,10);//sample 200 times to calibrate and it will take 200*10ms - don't move
 }
 
 void loop(){
-    // on crée trois variables pour stocker les valeurs brutes de notre gyro.
+    // we create three variables to store the raw values ​​of our gyro.
     int16_t x,y,z;
-    gyro.getXYZ(&x,&y,&z);//on lit les données de l'gyro et on les stockent dans nos variables.
-    // on imprimme le résultat dans le moniteur série
+    gyro.getXYZ(&x,&y,&z);// we read the data of the gyro and we store them in our variables.
+    // print the result in the serial monitor
     Serial.print("values of X , Y , Z: ");
     Serial.print(x);
     Serial.print(" , ");
@@ -807,10 +806,10 @@ void loop(){
     Serial.print(" , ");
     Serial.println(z);
 
-    // on crée trois variables pour stocker les valeurs provenant du calcul effectué par notre bibliothèques 
+   // we create three variables to store the values ​​coming from the calculation made by our library
     float ax,ay,az;
     gyro.getAngularVelocity(&ax,&ay,&az);
-    // on imprimme
+    // we print
     Serial.print("Angular Velocity of X , Y , Z: ");
     Serial.print(ax);
     Serial.print(" , ");
@@ -831,66 +830,65 @@ void loop(){
 
 #### Gesture
 
-Le dernier capteur que nous allons voir est un *capteur de gestes*. Il va nous permettre de pouvoi identifier jusqu'à 9 gestes :
+The last sensor we will see is a *gesture sensor*. It will allow us to identify up to 9 gestures:
 
 <img src="assets/read_from_gesture.gif" width="480" height="270" /><br>
 
-Ce capteur consiste en une série de photorésistances : lorsque l'on bouge devant, la luminosité reçue par chaque photorésistance change et une bibliothèque logicielle nous permettre de reconnaitre des patterns de mesure de courant relatifs à ces gestes.
+This sensor consists of a series of photoresistors: when moving in front, the brightness received by each photoresistor changes and a software library allow us to recognize patterns of current measurement related to these gestures.
 
 <img src="read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
 
-Selon la page du fabricant : http://wiki.seeedstudio.com/Grove-Gesture_v1.0/
-il faut utiliser la bibliothèque *paj7620* - * Gesture PAJ7620*
+According to the manufacturer's page: http://wiki.seeedstudio.com/Grove-Gesture_v1.0/
+use the library *paj7620* - *Gesture PAJ7620*
 
-Pour différencier les différents cas de gestes nous aurons recours à une structure de contrôle de type [**switch()**](https://www.arduino.cc/reference/en/language/structure/control-structure/switchcase/).
+To identify the different cases of gestures we will use a [**switch()**](https://www.arduino.cc/reference/en/language/structure/control-structure/switchcase/). control structure
 
-Ce type de syntaxe de code nous permet de gérer différents cas en fonction de la valeur d'une variable et donc d'éxecuter un code différent pour chaque valeur. Ici nous imprimerons à chaque fois un message différent dans le moniteur série.
+This type of code syntax allows us to handle different cases depending on the value of a variable and thus execute a different code for each value (similar to a if statement). Here we will print each time a different message in the serial monitor.
 
 
 ```c
-
-
+// libraries
 #include <Wire.h>
 #include "paj7620.h"
 
-// un variable qui représente notre capteur.
+// a variable to hold the id of a gesture
 uint8_t gesture = 0;
 
 void setup() {
   Serial.begin(9600);
-  // initialiser le capteur
+  // initialize the sensor
   gesture = paj7620Init();			// initialize Paj7620 registers
   Serial.println("Please input your gestures:\n");
 }
 
 void loop() {
-  // des varaibles pour stocker les valeurs du capteur
+  // Variables to store sensor values
   uint8_t data = 0, data1 = 0;
-  gesture = paj7620ReadReg(0x43, 1, &data); // lire les valeur du capteur
+  gesture = paj7620ReadReg(0x43, 1, &data); // read the value of the sensor
 
   switch (data){ 
-    case GES_RIGHT_FLAG: // si data correspond à un gesture vers la droite
+    case GES_RIGHT_FLAG: // if data is a gesture to the right
       Serial.println("Right");
       break;
-    case GES_LEFT_FLAG: // si data correspond à un gesture vers la gauche
+    case GES_LEFT_FLAG: // if data is a gesture to the left
       Serial.println("Left");
       break;
-    case GES_UP_FLAG: // si data correspond à un gesture vers le haut
+    case GES_UP_FLAG:// if data corresponds to a gesture upwards
       Serial.println("Up");
       break;
-    case GES_DOWN_FLAG: // si data correspond à un gesture vers le bas
+    case GES_DOWN_FLAG:// if data is a down gesture
       Serial.println("Down");
       break;
-    case GES_FORWARD_FLAG: // si data correspond à un gesture vers l'avant
+    case GES_FORWARD_FLAG: // if data is a forward gesture
       Serial.println("Forward");
       break;
-    case GES_BACKWARD_FLAG: // si data correspond à un gesture vers l'arrière
+    case GES_BACKWARD_FLAG: // if data is a backward gesture
       Serial.println("Backward");
       break;
-    case GES_CLOCKWISE_FLAG: // si data correspond à un gesture tourner dans le sens des aiguilles d'une montre
+    case GES_CLOCKWISE_FLAG: // if data corresponds to a gesture turn  clockwise
       Serial.println("Clockwise");
       break;
-    case GES_COUNT_CLOCKWISE_FLAG: // si data correspond à un gesture tourner dans le sens inverse des aiguilles d'une montre
+    case GES_COUNT_CLOCKWISE_FLAG:// if data is a gesture turn counterclockwise
       Serial.println("anti-clockwise");
       break;
     default:
