@@ -1326,142 +1326,142 @@ Note that here we measure tens of milliseconds: the *delay(10)* makes the progra
 
 ## Control an actuator with a sensor
 
-Dans cette partie nous allons nous attacher à créer des montages un peu plus complexes, et aussi à écrire du code un peu plus complexe.
+In this part we will focus on creating a little more complex circuit, and also write more complex code.
 
-L'objectif est de controller un actuateur (par exemple un moteur) avec un capteur (par exemple une photorésistance). L'actuateur a besoin de recevoir certaines valeurs (comprises entre 0 et 180 pour un moteur par exemple) et nos capteurs peuvent fournir tout type de plages de valeurs (entre 0 et 1023 pour une photorésistance).
+The objective is to control an actuator (for example a motor) with a sensor (for example a photoresistor). The actuator needs to receive certain values ​​(for instance between 0 and 180 for a motor) and our sensors can provide any type of range of values ​​(between 0 and 1023 for a photoresistor).
 
-Il va donc falloir récupérer les valeurs de notre capteur et les transformer dans un intervalle utile pour notre actuateur. Il s'agit en réalité unique de réaliser un produit en croix - mais une fonction dédiée est prévue dans le langage de programation arduino.
+Therefore we will need to recover the values ​​of our sensor and transform them in a useful interval for our actuator. It is actually only a cross product - but a dedicated function is provided in the arduino programming language.
 
-### Utiliser la fonction map()
+### Use the map() function
 
-La fonction [**map()**](https://www.arduino.cc/reference/en/language/functions/math/map/) permet de transformer une valeur qui est dans un intervalle que l'on connait vers un nouvel intervalle qui nous sera utile.
+The [**map()**](https://www.arduino.cc/reference/en/language/functions/math/map/) function allows to transform a value that is in an interval that we know to a new interval that will be useful.
 
-Par exemple :
+For instance :
 ```c
-int val = analogRead(0); // lire une valeur sur A0 - celle ci sera comprise entre 0 et 1023
-int newval = map(val, 0, 1023, 0, 180); // notre valeur est comprise entre 0 et 1023, on veut une valeur entre 0 et 180
+int val = analogRead(0); // read a value on A0 - this one will be between 0 and 1023
+int newval = map(val, 0, 1023, 0, 180); // our value is between 0 and 1023, we want a value between 0 and 180
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Potentiomètre vers servo classique
+### Potentiometer to servo
 
-Comment controller un servomoteur avec un potentiomètre ?
+How to control a servomotor with a potentiometer?
 
 <img src="assets/map_potentiometer_to_servo.gif" width="480" height="270" /><br>
 
-Le montage est la réunion de deux montages déjà vu précédement : on branche un potentiomètre sur l'entrée analogique *A0*, et on branche un moteur sur la sortie digitale *D6*.
+The circuit is the meeting of two montages already seen before: one connects a potentiometer on the analog input *A0*, and one plugs a motor on the digital output *D6*.
 
 <img src="map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
 
-Le code va aussi réunir deux bouts de code déjà existant, on va juste utiliser la fonction map pour faire le lien entre notre mesure de la valeur du potentiomètre et l'information que l'on va envoyer au servomoteur.
+The code will also bring together two pieces of code already existing, we will just use the map function to link our measurement of the value of the potentiometer and the information that we will send to the servomotor.
 
 ```c
-// inclure la bibliothèque pour les servomoteurs
+// include library for servo motors
 #include <Servo.h>
-Servo myservo; // créer un objet permettant de manipuler un servomoteur
+Servo myservo; // create an object to manipulate a servomotor
 
 
 void setup() {
-  Serial.begin(9600); // ouvrir une connexion série
+  Serial.begin(9600); // open a serial connection
     
-  pinMode(6, OUTPUT);// préciser que l'on va utiliser la pin 6 comme une sortie.
-  myservo.attach(6);// attacher notre servomoteur à cette pin 6
+  pinMode(6, OUTPUT);// specify that we will use the pin 6 as an output.
+  myservo.attach(6);// attach our servomotor to this pin 6
     
 }
 
 void loop() {
 
-  int potValue = analogRead(0); // on lit notre valeur sur l'entrée analogique 0
-  Serial.println(potValue); // on imprimme la valeur de notre potentiomètre dans le moniteur série
+  int potValue = analogRead(0); // we read our value on the analog input 0
+  Serial.println(potValue); // we print the value of our potentiometer in the serial monitor
   
-  // on va calculer une position pour notre servomoteur, une position qui dépendra de la valeur de notre potentiomètre
-  int servoPos = map(potValue, 0, 1023, 0, 180); // on map la valeur de notre potentiomètre qui est comprise entre 0 et 1023, vers un intervalle compris entre 0 et 180?.
-  myservo.write(servoPos); // écrire la position calculée sur le servomoteur
+  // we will calculate a position for our servomotor, a position that will depend on the value of our potentiometer
+  int servoPos = map(potValue, 0, 1023, 0, 180); // we map the value of our potentiometer which is between 0 and 1023, to an interval between 0 and 180
+  myservo.write(servoPos); // write the calculated position on the servomotor
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Flex vers servo continu
+### Flex servo to continuous rotation servo
 
-L'objectif ici va être de contrôller la vitesse et le sens de rotation d'un servomoteur à l'aide d'un capteur de flexion :
+The objective here is to control the speed and direction of rotation of a servomotor using a bending sensor:
 
 <img src="assets/map_flex_to_servo_continu.gif" width="480" height="270" /><br>
 
-De la même manière que précédement, ce montage est la combinaison du montage permettant de récupérer l'information d'un capteur de flexion et du montage permettant de controller un servomoteur à rotation continue.
+In the same way as previously, this circuit is the combination of the montage for recovering the information of a flex sensor and the assembly for controlling a  continuous rotation servomotor.
 
 <img src="map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
 
-Le code va reprendre le code permettant de mesurer la valeur d'un capteur de flexion et va le combiner avec le code permettant de faire tourner un moteur à rotation continue en mappant les valeur provenant du capteur de flexion vers des valeurs utiles pour faire tourner un moteur à rotation continu.
+The code will be composed of the code to measure the value of a bending sensor and combine it with the code to run a continuously rotating motor by mapping the values ​​from the bending sensor to useful values ​​to turn a continuous rotation motor.
 
 ```c
-// inclure la bibliothèque pour controller des servomoteurs
+// include the library to control servo motors
 #include <Servo.h>
-Servo myservo; // créer un objet qui nous permettra de manipuler notre servomoteur.
+Servo myservo; // create an object that will allow us to manipulate our servomotor.
 
 
 void setup() {
-  Serial.begin(9600); // ouvrir une connexion série pour pouvoir imprimmer des valeurs dans le moniteur série
-  pinMode(6, OUTPUT); // on précise que l'on utilise la pin 6 comme une sortie
-  myservo.attach(6); // on précise que notre servo est connecté sur la pin 6
+  Serial.begin(9600); // open a serial connection to print values ​​in the serial monitor
+  pinMode(6, OUTPUT); //we specify that we use the pin 6 as an output
+  myservo.attach(6); // we specify that our servo is connected to the pin 6
 
 
 }
 
 void loop() {
-  // on lit la valeur provenant de notre capteur de flexion qui est branché sur la pin A0
+  // we read the value from our bending sensor which is connected to the A0 pin
   int flexion = analogRead(0);
-  Serial.println(flexion);// on imprime la valeur dans le moniteur série
-  // on va calculer une vitesse de rotation pour notre servomoteur qui dépendera de la valeur mesurée par
-  // notre capteur de flexion. En observant les valeurs imprimmées dans le moniteur série, on se rend compte que 
-  // les valeurs de notre capteur sont a peu près comprises entre 200 et 700.
-  int servoRotation = map(flexion, 200, 700, 0, 180); // on mappe donc notre valeur de flexion qui est comprise entre 200 et 700 vers de valeurs comprises entre 0 et 180
-  myservo.write(servoRotation); // on envoit ces nouvelles valeurs vers notre servomoteur pour le faire tourner.
+  Serial.println(flexion);// print the value in the serial monitor
+  // we will calculate a speed of rotation for our servomotor which will depend on the value measured by
+  // our bending sensor. Looking at the values ​​printed in the serial monitor, we realize that
+  // the values ​​of our sensor are approximately between 200 and 700.
+  int servoRotation = map(flexion, 200, 700, 0, 180); // we therefore map our bending value which is between 200 and 700 to values ​​between 0 and 180
+  myservo.write(servoRotation); // we send this new value ​​to our servomotor to make it run.
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### FSR vers neopixels HSB
+### FSR to neopixels HSB
 
-Ici nous allons utiliser un capteur pour fixer la teinte de la lumière produite par un strip de leds rgb.
+Here we will use a sensor to fix the tint of light produced by a strip of leds rgb.
 
 <img src="assets/map_fsr_to_neopixels.gif" width="480" height="270" /><br>
 
-Le cablage comporte un capteur de force avec un résistance 47kOhms branché sur l'entrée analogique A0, et un strip de led branché sur la pin digitale D6.
+The wiring includes a force sensor with a 47kOhms resistor connected to the analog input A0, and a led strip connected to the digital pin D6.
 
 <img src="map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
 
-Comme d'habitude nous allons récupérer une valeur analogique comprise entre 0 et 1023 et nous allons transformer les valeurs obtenues en valeurs comprises entre 0 et 255 pour pouvoir controller la teinte de nos leds.
+As usual we will recover an analog value between 0 and 1023 and we will transform the values ​​obtained in values ​​between 0 and 255 to be able to control the hue of our leds.
 
  ```c
-// bibliothèque pour les leds
+// library for leds
 #include <FastLED.h>
-#define NUM_LEDS 5 // préciser le nombre de leds
+#define NUM_LEDS 5 //specify the number of leds eg 5
 
-CRGBArray<NUM_LEDS> leds; //créer un tableau pour adresser chaque led individuellemtn
+CRGBArray<NUM_LEDS> leds; // create a table to address each led individually
 
 
 void setup() {
-  FastLED.addLeds<NEOPIXEL, 6>(leds, NUM_LEDS); // initialiser le ruban sur la pin 6
+  FastLED.addLeds<NEOPIXEL, 6>(leds, NUM_LEDS); // initialize the ribbon on the pin 6
 }
 
 void loop() {
-  int fsrValue = analogRead(0); // lire la valeur analogique
-  int hueValue = map(fsrValue, 0, 1023, 0, 200); // transformer notre valeur provenant du capteur en une valeur comprise entre 0 et 200.
+  int fsrValue = analogRead(0); // read the analog value
+  int hueValue = map(fsrValue, 0, 1023, 0, 200); // convert our value from the sensor to a value between 0 and 200.
     
-  // on parcourt toutes les leds de notre rubant à l'aide d'une boucle fort
+  // we go through all the leds of our ribbons using a for loop
   for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = CHSV(hueValue, 255, 255); // on applique la teinte en utilisant le mode HSV 
+    leds[i] = CHSV(hueValue, 255, 255); // apply hue using HSV mode
   }
-  FastLED.show();// on actualise le ruban de led
+  FastLED.show();// update the LED ribbon
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-## Utiliser des capteurs pour contrôler du code processing
+## Use sensors to control code processing
 
 Dans cette partie nous allons nous concenter sur l'utilisation du port série et nous allons depuis un programme arduino écrire des valeurs de capteurs dans un port série que nous pourrons alors récupérer dans un programme processing.
 
