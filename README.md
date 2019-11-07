@@ -1463,25 +1463,25 @@ void loop() {
 
 ## Use sensors to control code processing
 
-Dans cette partie nous allons nous concenter sur l'utilisation du port série et nous allons depuis un programme arduino écrire des valeurs de capteurs dans un port série que nous pourrons alors récupérer dans un programme processing.
+In this part we will focus on the use of the serial port and we are going : from an arduino program write sensor values ​​in a serial port that we can then recover in a [processing](https://processing.org/) program.
 
-Nous pourrons faire de même dans l'autre sens : c'est à dire envoyer des informations de processing vers arduino.
+We can do the same in the other direction: that is, send processing information to arduino.
 
-Pour info USB signifie Universal Serial Bus, le port série est donc bien le port usb on programme donc une manière de faire transiter d'un appareil à l'autre des information via une connexion usb.
+FIY USB means Universal Serial Bus, so the serial port is the USB port so we program a way to pass from one device to another information via a USB connection.
 
-### Controler le playback d'une vidéo avec un capteur de distance
+### Control the playback of a video using a distance sensor
 
-Le premier programme va utiliser un capteur de distance et la distance détectée par notre capteur servira à régler la vitesse de défilement d'une vidéo lue par un programme processing : 
+The first program will use a distance sensor and the distance detected by our sensor will be used to adjust the running speed of a video read by a processing program: 
 
 <img src="assets/serial_distance_to_movie_speed.gif" width="480" height="270" /><br>
 
-Pour rappel le cablage du capteur de distance ce fait comme ceci :
+As a reminder, the wiring of the distance sensor is as follows :
 
 <img src="read_from_IRDistance/read_from_irdistance.png" width="480" height="270" /><br>
 
-Nous allons utiliser l'exemple de code fournit dans la bibliothèque vidéo de processing. Disponible dans le navigateur d'exemples : *Exemples* -> *Libraries* -> *Video* -> *Movie* -> *Speed*
+We will use the sample code provided in the processing video library. Available in the examples browser: *Exemples* -> *Libraries* -> *Video* -> *Movie* -> *Speed*
 
-Je vous conseille de l'ouvrir depuis processing (comme ça vous aurez déjà la vidéo et le code), mais le code ressemble à cela avec quelques commentaires en français.
+I advise you to open it from processing (as you already have the video and code), but the code looks like this with some comments.
 
 ```java
 /**
@@ -1490,53 +1490,53 @@ Je vous conseille de l'ouvrir depuis processing (comme ça vous aurez déjà la 
  * the playback speed.
  */
 
-import processing.video.*; // importer la bibliothèqe video
-Movie mov; // créer un objet Movie appelé mov afin de pouvoir charger un film et le lire.
+import processing.video.*; // import the library video
+Movie mov; // create a movie object called mov so you can load a movie and play it.
 
 void setup() {
   size(640, 360);
   background(0);
-  mov = new Movie(this, "transit.mov"); // charger le film "transit.mov" qui se trouve dans le dossier data de votre sketch
-  mov.loop(); //lancer la lecture du film en boucle
+  mov = new Movie(this, "transit.mov"); // load the movie "transit.mov" which is in the data folder of your sketch
+  mov.loop(); // start looping the movie
 }
 
 void draw() {    
-  image(mov, 0, 0); // afficher une frame du film
+  image(mov, 0, 0); // display a frame of the movie
              
-  // calculer une variable que l'on utilisera pour controller la vitesse de défilement du film
-  // cette variable dépendera de la souris dont la position horizontale est comprise entre 0 et 'width'
-  // et nous voulons obtenir des valeurs entre 0.1 et 2
+  // calculate a variable that will be used to control the movie's frame rate
+  // this variable will depend on the mouse whose horizontal position is between 0 and 'width'
+  // and we want to get values ​​between 0.1 and 2
   float newSpeed = map(mouseX, 0, width, 0.1, 2);
-  mov.speed(newSpeed); // utiliser notre variable pour chager la vitesse de lecture du film
+  mov.speed(newSpeed); // use our variable to change the speed of the movie
   
-  // afficher la valeur de la vitesse en haut à gauche
+  // show the speed value on the top left
   fill(255);
   text(nfc(newSpeed, 2) + "X", 10, 30); 
 }  
 
-// fonction nécessaire pour déclencher la lecture du film
+// function needed to trigger movie playback
 void movieEvent(Movie movie) {
   mov.read();  
 }
 
 ```
-
-Dans ce code on fait dépendre la vitesse de la position de la souris, nous allons donc remplacer la variable *mouseX* à la ligne :
+In this code we make the speed depend on the position of the mouse, so we will replace the variable * mouseX * on the line:
 
 ```java
 float newSpeed = map(mouseX, 0, width, 0.1, 2);
 ```
-par la valeur que nous allons capter via notre capteur de distance et notre carte arduino. Pour cela dans notre code arduino nous allons écrire une chaîne de caractère au format [**JSON**](https://fr.wikipedia.org/wiki/JavaScript_Object_Notation) dans laquelle nous allons insérer une valeur lue sur notre entrée analogique.
+by the value that we will capture via our distance sensor and arduino card. 
 
-Notre chaîne de caractère devra ressembler à cela
+For this in our arduino code we will write a character string in the format [**JSON **](https://en.wikipedia.org/wiki/JSON) in which we will insert a value read from our analog input.
+
+Our character string will have to look like this
 ```json
 {
-    "distance" : valeur_actuelle_de_la_distance
+    "distance" : distance_value_measured_by_our_sensor
 }
 ```
 
-Ce code arduino permet de faire cela avec la concaténation de chaîne de caractères.
-
+This arduino code makes it possible to do this with string concatenation.
 ```c
 String json;
   json = "{\"distance\":";
@@ -1544,7 +1544,7 @@ String json;
   json = json + "}";
 ```
 
-Il ne nous reste plus qu'à poster cette chaîne de caractère sur le port série à l'aide de **Serial.println()** comme d'habitude. Voici donc l'ensemble du code arduino :
+We just have to post this character string on the serial port with **Serial.println ()** as usual. Here is the whole arduino code:
 
 ```c
 
@@ -1564,64 +1564,63 @@ void loop() {
   Serial.println(json);
 }
 ```
+On the processing side, it is now necessary to start receiving this string of characters, to extract the distance data and to use it.
 
-Du côté processing il faut maintenant s'atteler à recevoir cette chaîne de caractères, extraire la donnée de distance et l'utiliser.
+We will have to use the library [**Serial**](https://processing.org/reference/libraries/serial/index.html), it is not necessary to install it because it is integrated by default in processing.
 
-Il va nous falloir utiliser la bibliothèque [**Serial**](https://processing.org/reference/libraries/serial/index.html), il n'est pas nécessaire de l'installer car elle est integrée par défaut dans processing.
-
-Il faut donc commencer par importer la bibliothèqe en tapant tout en haut du sketch que nous utilisons pour lire notre film :
+We have to start by importing the library by typing at the very top of the sketch we use to read our film:
 ```java
 import processing.serial.*;
-Serial myPort;  // Créer un objet serial pour pouvoir lire les information postées sur le port série
+Serial myPort;  //Create a serial object to read the information posted on the serial port
 ```
-nous en profiterons créer une variable destinée à stocker l'information reçue par arduino
+we will use it to create a variable intended to store the information received by arduino
 
 ```java
 int valueFromArduino = 50;
 int movieSpeed = 0;
 ```
-
-Ensuite nous devons ajouter quelques lignes au **setup()** : il faut au démarrage du programme initialiser la connexion série avec notre carte arduino.
+Then we have to add some lines to the **setup()**: it is necessary to start the program initialize the serial connection with our arduino card.
 
 ```java
-// initialisation de la communication via usb depuis arduino
-// ATTENTION à bien utiliser le port adapté
-printArray(Serial.list()); // imprimmer la liste des appreils connectés au port série
-String portName = Serial.list()[3]; // ma carte arduino est la troisième dans la liste imprimmée dans la console
-myPort = new Serial(this, portName, 9600); // on ouvre la communication
+// initialization of communication via usb from arduino
+// BE CAREFUL to use the adapted port
+printArray(Serial.list()); //print the list of devices connected to the serial port
+String portName = Serial.list()[3]; // my arduino card is the third in the list printed in the console
+myPort = new Serial(this, portName, 9600); //we open the communication
 myPort.bufferUntil('\n');
 ```
 
-Maitenant il nous faut exécuter du code à chaque fois qu'une information est postée sur le port série, cela se fait en l'écrivant dans une fonction : 
+Now, we have to execute code every time information is posted on the serial port, this is done by writing it in a function:
 ```java
 void serialEvent (Serial myPort) {
   
 }
 ```
 
-Le code ci-dessous est un peu barbare, mais il n'est pas nécessaire de tout comprendre. En gros on va essayer de lire les données arrivant sur le port série, si celui-ci est ouvert, puis on va décrotiquer la chaine de caractère :
+The code below is a little hard to get, but you do not have to understand everything. Basically we will try to read the data arriving on the serial port, if it is open, then we will decode our json string:
 
 ```java
 void serialEvent (Serial myPort) {
-  try { // on essaye de faire qqchose mais on ne plante pas si on y arrive pas
+  try { // we try to do something but we do not crash if we can not do it
     while (myPort.available() > 0) {
-      String inBuffer = myPort.readStringUntil('\n'); // lire la chaine de caractère du port série jusqu'au retour charriot
-      if (inBuffer != null) { // si ce n'est pas nul
-        if (inBuffer.substring(0, 1).equals("{")) { // et si ça ressemble à du json
-          JSONObject json = parseJSONObject(inBuffer); // on essaye de le lire comme du json
-          // C'est à partir de là qu'il faut comprendre !!
-          if (json == null) { // si ce n'est pas du json on fait rien
+      String inBuffer = myPort.readStringUntil('\n'); // read the string from the serial port until the carriage return
+      if (inBuffer != null) { // if it's not null
+        if (inBuffer.substring(0, 1).equals("{")) { // and if it looks like json
+          JSONObject json = parseJSONObject(inBuffer); // we try to read it like json
+          
+          // It is from here that one must understand !!
+          if (json == null) { // if it's not json we do nothing
             
           }
-          else { // sinon on récupère la valeur portant le nom 'distance' et on la stocke dans une variable !
-            if (abs(json.getInt("distance")-valueFromArduino)> 50) { // vérifier que la valeur a suffisament changé
+          else { // else we get the value with the name 'distance' and we store it in a variable!
+            if (abs(json.getInt("distance")-valueFromArduino)> 50) { // check that the value has changed enough
               valueFromArduino    = json.getInt("distance");
-              // on map la valeur et on la stocke dans notre variable movie speed créée tout au début
+              // we map the value and store it in our movie speed variable created at the beginning
               movieSpeed = map(valueFromArduino, 50, 650, 2, 0);
-              movieSpeed = constrain(movieSpeed, 0, 2); // on maintient cette valeur dans un intervalle cohérent des fois que notre capteur renvoit des valeurs trop grandes ou trop petites
+              movieSpeed = constrain(movieSpeed, 0, 2); // keep this value in a consistent range of times that our sensor returns too large or too small values
             }
           }
-        // il ne nous reste plus qu'à fermer toutes nos accolades ^^
+        // we just have to close all our braces ^^
         } 
         else {
         }
@@ -1632,15 +1631,14 @@ void serialEvent (Serial myPort) {
   }
 }
 ```
-Il y a pas mal de tests de sécurité pour éviter que notre programme plante si notre chaîne est nulle ou si la donnée que l'on cherche n'est pas disponible.
+There are a lot of security tests to prevent our program from crashing if our string is null or if the data we are looking for is not available.
 
-Mais il ne nous reste plus qu'à utiliser *movieSpeed* pour réellement controller la vitesse de lecture du film.
+But we only have to use *movieSpeed ​* to actually control the speed of the movie.
 
 ```java
 mov.speed(movieSpeed);
 ```
-
-Voici donc le code processing permettant de récupérer la valeur de distance depuis arduino et l'utiliser pour controller la vitesser de lecture d'un film :
+Here is the processing code to retrieve the distance value from arduino and use it to control the speed of reading a movie:
 
 ```java
 
@@ -1661,8 +1659,8 @@ void setup() {
   mov = new Movie(this, "transit.mov");
   mov.loop();
 
-  // initialisation de la communication via usb depuis arduino
-  // ATTENTION à bien utiliser le port adapté
+ // initialization of communication via usb from arduino
+  // BE CAREFUL to use the adapted port
   printArray(Serial.list());
   String portName = Serial.list()[3];
   myPort = new Serial(this, portName, 9600);
@@ -1712,16 +1710,16 @@ void serialEvent (Serial myPort) {
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Controler une animation avec une photoresistance
+### Control an animation with a photoresistance
 
-La logique de cette animation est très similaire à la précédente. Nous allons remplacer le capteur de distance par une photorésistance et nous allons utiliser un exemple différent :
+The logic of this animation is very similar to the previous one. We will replace the distance sensor with a photoresistor and we will use a different example:
 
 <img src="assets/serial_photores_to_animation.gif" width="480" height="270" /><br>
 
-Le cablage est celui d'une photorésistance classique branchée sur A0.
+The wiring is a photoresistor connected to A0.
 <img src="read_from_photores/read_from_photores.png" width="480" height="270" /><br>
 
-Le code arduino est quasiment le même, on va juste adapter l'identifiant dans notre json qui va stocker notre valeur :
+The arduino code is almost the same, we will just adapt the identifier in our json that will store our value:
 
 ```c
 void setup() {
@@ -1739,7 +1737,7 @@ void loop() {
 }
 ```
 
-D'un point de vue processing nous allons encore une fois utiliser un exemple disponible avec le logiciel : *Exemples* -> *Topics* -> *Fractals and L-Systems* -> *Tree*
+From a processing point of view we will again use an example available with the software: *Examples* -> *Topics* -> *Fractals and L-Systems* -> *Tree*
 
 ```java
 /**
@@ -1802,20 +1800,20 @@ void branch(float h) {
 }
 ```
 
-D'une manière assez similaire à précédement, on peut identifier la ligne pertinente pour l'interaction :
+In a similar way to the previous one, we can identify the relevant line for the interaction:
 ```java
 // Let's pick an angle 0 to 90 degrees based on the mouse position
   float a = (mouseX / (float) width) * 90f;
 ```
 
-On va donc supprimer cett ligne et 'remplacer' *mouseX* par une valeur provenant de la photorésistance... D'abord adaptons la fonction *serialEvent()* utilisé précédement pour récupérer la valeur provenant de notre programme arduino :
+So we will delete this line and 'replace' *mouseX* by a value coming from the photoresistance ... First, let's adapt the *serialEvent()* function used previously to retrieve the value from our arduino program:
 
-- Définissons d'abord une variable globale qui permettera de stocker notre valeur :
+- Let's first define a global variable that will store our value:
 ```java
 float valueFromArduino = 0;
 ```
 
-- Puis adaptons la fonction *serialEvent()* pour ranger dans *valueFromArduino* la valeur de la photorésistance en utilisant la bonne clé, soit celle que nous avons définit dans notre programme arduino (ie 'photores') :
+- Then let's adapt the *serialEvent()* function to store in *valueFromArduino* the value coming from arduino by using the right key, the very one we defined in our arduino program (ie 'photores'):
 ```java
 void serialEvent (Serial myPort) {
   try {
@@ -1824,11 +1822,13 @@ void serialEvent (Serial myPort) {
       if (inBuffer != null) {
         if (inBuffer.substring(0, 1).equals("{")) {
           JSONObject json = parseJSONObject(inBuffer);
+
           if (json == null) {
             //println("JSONObject could not be parsed");
           } else {
             valueFromArduino    = json.getInt("photores");
           }
+
         } else {
         }
       }
@@ -1838,11 +1838,11 @@ void serialEvent (Serial myPort) {
   }
 }
 ```
-Il ne nous reste plus qu'à utiliser cette valeur en la mappant à un intervalle de valeur visuellement pertinent
+We only have to use this value by mapping it to a visually relevant value range
 ```java
 theta = map(valueFromArduino, 15, 250, 0, PI);
 ```
-Voici donc finalement le programme processing en integralité :
+So here is finally the entire processing program:
 
 ```java
 /**
@@ -1863,8 +1863,8 @@ float theta;
 void setup() {
   size(640, 360);
 
-  // initialisation de la communication via usb depuis arduino
-  // ATTENTION à bien utiliser le port adapté
+ // initialization of communication via usb from arduino
+  // BE CAREFUL to use the adapted port
   printArray(Serial.list());
   String portName = Serial.list()[3];
   myPort = new Serial(this, portName, 9600);
@@ -1936,17 +1936,17 @@ void branch(float h) {
 ```
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Controler des leds neopixels avec la souris
+### Control neopixel leds with the mouse
 
-Ce troisième exemple va illustrer la communication inverse : nous allons envoyer des données de processing à arduino. En fonction de la position de la souris la couleur de la fenêtre sera affectée et ces positions de souris seront aussi envoyées à arduino pour controller l'allumage de leds.
+This third example will illustrate the reverse communication: we will send data from processing to arduino. Depending on the position of the mouse the color of the window will be affected and these mouse positions will also be sent to arduino to control the lighting of leds.
 
 <img src="assets/serial_mouse_to_neopixels.gif" width="480" height="270" /><br>
 
-Le schéma électrique est simple : il s'agit de brancher un ruban de leds sur une carte arduino :
+The electrical diagram is simple: it is about connecting a ribbon of LEDs on an arduino card:
 
 <img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
-Le programme processing va utiliser le mode HSB pour ajuster le teinte en fonction de la position en abscisses de la souris, la saturation en fonction de la position en ordonnées de la souris et la luminosité en fonction de l'état de la souris (est-ce qu'on appuie sur le bouton ou non ?) Ces données seront mappées dans processing puis écrites sur le port série pour pouvoir les réutiliser dans arduino. Nous allons donc envoyer 3 valeurs, ces valeurs seront séparées par des virgules et nous utiliserons un point virgule pour marquer la fin d'un paquet de données.
+The processing program will use the HSB mode to adjust the hue according to the position on the absciss of the mouse, the saturation according to the ordinate position of the mouse and the brightness according to the state of the mouse (is it whether the button is pressed or not?) This data will be mapped to processing and written to the serial port for reuse in arduino. We will send 3 values, these values ​​will be separated by commas and we will use a semicolon to mark the end of a data packet.
 
 ```java
 import processing.serial.*;
@@ -1956,9 +1956,9 @@ Serial myPort;
 void setup() {
   size(600, 600); 
   colorMode(HSB,255,255,255);
-  //initialisation de la bibliothèque série
+  // initialize the serial library
   println(Serial.list());
-  String portName = Serial.list()[3]; //attention à bien utiliser le bon port
+  String portName = Serial.list()[3]; // be careful to use the correct port
   myPort = new Serial(this, portName, 9600);
 }
 
@@ -1979,21 +1979,20 @@ void draw() {
   myPort.write(s);
 }
 ```
+The arduino code will be much more complex than usual, but it is not necessary to understand everything. You can refer to [the original post](http://www.esologic.com/parsing-serial-data-sent-to-arduino/) of the code I use here.
 
-Le code arduino lui va être nettement plus complexe que d'habitude, mais il n'est pas nécessaire de tout comprendre. Vous pouvez vous référer au [post original](http://www.esologic.com/parsing-serial-data-sent-to-arduino/) si vous le souhaitez.
-
-La partie que nous allons manipuler est située à l'intérieur du *else* dans la fonction loop
+The part we are going to manipulate is located inside *else* in the loop function
 
 ```c
 // from http://www.esologic.com/parsing-serial-data-sent-to-arduino/
 
-// code nécessaire à la réception et à l'extraction de données provenant de processing
+// code needed for receiving and retrieving data from processing
 const char EOPmarker = ';'; //This is the end of packet marker
 char serialbuf[32]; //This gives the incoming serial some room. Change it if you want a longer incoming.
 #include <string.h> // we'll need this for subString
 #define MAX_STRING_LEN 20 // like 3 lines above, change as needed.
 
-// code nécessaire au fonctionne ment des leds
+// code necessary for the operation of leds
 #include <FastLED.h>
 #define NUM_LEDS 5
 CRGBArray<NUM_LEDS> leds;
@@ -2007,24 +2006,24 @@ void setup() {
 void loop() {
     
   if (Serial.available() > 0) { //makes sure something is ready to be read
-    // cette partie de code permet de recomposer le message provenant de processing
+    // this part of code allows you to recompose the message from processing
     static int bufpos = 0; //starts the buffer back at the first position in the incoming serial.read
     char inchar = Serial.read(); //assigns one byte (as serial.read()'s only input one byte at a time
     if (inchar != EOPmarker) { //if the incoming character is not the byte that is the incoming package ender
       serialbuf[bufpos] = inchar; //the buffer position in the array get assigned to the current read
       bufpos++; //once that has happend the buffer advances, doing this over and over again until the end of package marker is read.
     }
-    
-    // à l'intérieur de ce else nous pouvons récupérer nos valeurs et les utiliser
+
+    // inside this else we can recover our values ​​and use them
     else { //once the end of package marker has been read
       serialbuf[bufpos] = 0; //restart the buff
       bufpos = 0; //restart the position of the buff
 
-      int pressed = atoi(subStr(serialbuf, ",", 1)); // récupérer la première valeur et la stocker dans une variable
-      int x = atoi(subStr(serialbuf, ",", 2)); // récupérer la deuxième ...
-      int y = atoi(subStr(serialbuf, ",", 3)); // récupérer la troisième...
+      int pressed = atoi(subStr(serialbuf, ",", 1)); // get the first value and store it in a variable
+      int x = atoi(subStr(serialbuf, ",", 2)); // get back the second ...
+      int y = atoi(subStr(serialbuf, ",", 3)); // get back the third ...
         
-      // allumer les leds en fonction de nos valeurs
+     // turn on the leds according to our values
       for (int i = 0; i < NUM_LEDS; i++) {
         leds[i] = CHSV(x, y, pressed *255);
       }
@@ -2034,7 +2033,7 @@ void loop() {
   }
 }
 
-// cette fonction est nécessaire pour permettre de découper la chaine de caractère provenant de processing
+// this function is necessary to allow to cut the string from processing
 char* subStr (char* input_string, char *separator, int segment_number) {
   char *act, *sub, *ptr;
   static char copy[MAX_STRING_LEN];
@@ -2050,73 +2049,72 @@ char* subStr (char* input_string, char *separator, int segment_number) {
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Enregistrer des données dans un fichier
+### Save data to a file
 
-Dans cet exemple nous allons nous attacher à lire des données provenant de plusieurs capteurs et nous allons les transmettre à processing afin de pouvoir les enregistrer dans un fichier sur notre disque dur.
+In this example we will focus on reading data from several sensors and we will send them to processing so we can save them to a file on our hard drive.
 
-Cela peut-être utile afin de pouvoir réaliser des représentation de données basées sur des enregistrement de capteurs.
+This may be useful in order to realize data representations based on sensor recordings.
 
-Dans notre cas nous allons enregistrer les données analogiques provenant de deux photorésistances, elles seront côte à côte sur une planche de prototypage, ce qui n'est pas idéal; mais il est facile d'imaginer des situation où les capteurs pourront être positionnés à différents endroits et il serait donc possible de mesurer l'ensoleillement à différents endroits.
+In our case we will record the analog data from two photoresistors, they will be side by side on a prototyping board, which is not ideal; but it is easy to imagine situations where the sensors can be positioned in different places and it would be possible to measure sunshine in different places through the course of day for instance.
 
 #### Circuit
 
-Le circuit est un circuit assez classique :
+The circuit is a fairly classic circuit:
 
 <img src="serial_enregistrer_des_donnees_dans_un_fichier/read_from_photores_x2.png" width="480" height="360" /><br>
 
 #### Code arduino
 
-Du point de vue du code arduino, il n'y a pas grand chose de nouveau. Comme précédement nous allons écrire une chaîne de caractère au format [**JSON**](https://fr.wikipedia.org/wiki/JavaScript_Object_Notation) dans laquelle nous allons insérer une valeur lue sur notre entrée analogique.
+From the point of view of the arduino code, there is not much new. As before we will write a character string in the format [** JSON **](https://en.wikipedia.org/wiki/JSON) in which we will insert a value read on our analog input.
 
-Notre chaîne de caractère devra ressembler à cela
+Our character string will have to look like this
 ```json
 {
-    "luminosite" : valeur_de_la_photorésistance
+    "luminosity" : photoresistor_value
 }
 ```
-
-Ce code arduino permet de faire cela avec la concaténation de chaîne de caractères.
+This arduino code makes it possible to do this with string concatenation.
 
 ```c
 String json;
-  json = "{\"luminosite\":";
+  json = "{\"luminosity\":";
   json = json + analogRead(0);
   json = json + "}";
 ```
 
-Dans notre cas nous aurons deux valeurs à enregistrer,  puis il faudra imprimer le résultat dans le port Serial.
+In our case we will have two values ​​to save, then it will print the result in the Serial port.
 
 ```c
 void setup() {
-  Serial.begin(9600); // ouvrir une connection via le cable série
+  Serial.begin(9600); // open a connection via the serial cable
 }
 
 void loop() {
-  int photor1 = analogRead(A0); // lire les données sur A0 et les stocker dans une variable
-  int photor2 = analogRead(A1);// lire les données sur A1 et les stocker dans une variable
+  int photor1 = analogRead(A0); // read the data on A0 and store them in a variable
+  int photor2 = analogRead(A1);// read the data on A1 and store them in a variable
 
-  delay(1000); // attendre 1 seconde
+  delay(1000); // wait 1 second
  
-  // construire une chaine de caractère par concatenation
+  // build a string of characters by concatenation
   String json;
-  json = "{\"photor1\":"; // on ajoute la première clé "photor1"
-  json = json + photor1; // on ajoute la première valeur  
-  json = json +";\"photor2\":"; // on ajoute la seconde clé "photor2"
-  json = json +  photor2;// on ajoute la seconde valeur  
+  json = "{\"photor1\":"; // add the first key "photor1"
+  json = json + photor1; // we add the first value
+  json = json +";\"photor2\":"; // we add the second key "photor2"
+  json = json +  photor2;// we add the second value  
   json = json + "}";
 
-  Serial.println(json); // on écrit notre fichier sur le port série
-  // nous allons donc pouvoir récupérer ces valeurs avec processing
+  Serial.println(json); // we write our file on the serial port
+  // we will be able to recover these values ​​with processing
 }
 ```
 
-#### Code processing
+#### processing code
 
-Encore une fois le code processing va être assez similaire à ce que nous avons fait jusqu'à présent notament dans les exemples précédents.
+Again the processing code will be quite similar to what we have done so far in the previous examples.
 
-La seule différence est que nous allons utiliser différentes fonctions pour charger un fichier depuis le disque dur, manipuler des objets json et enregistrer un fichier sur le disque dur.
+The only difference is that we will use different functions to load a file from the hard disk, manipulate json objects and save a file to the hard disk.
 
-Dans un premier temps voici, un sketch classique qui permet de récupérer les valeurs et les visualiser au rythme auquel elles arrivent.
+At first, here is a classic skit that allows you to recover the values ​​and visualize them at the rate at which they arrive.
 
 ```java
 
@@ -2129,8 +2127,8 @@ int photor2 =0;
 
 void setup() {
   size(800, 500);
-  // initialisation de la communication via usb depuis arduino
-  // ATTENTION à bien utiliser le port adapté
+  // initialization of communication via usb from arduino
+  // BE CAREFUL to use the adapted port
   printArray(Serial.list());
   String portName = Serial.list()[4];
   myPort = new Serial(this, portName, 9600);
@@ -2155,9 +2153,9 @@ void serialEvent (Serial myPort) {
           if (json == null) {
             //println("JSONObject could not be parsed");
           } else {
-            // récupérer les données stockée dans le format json transmis via usb
-            photor1    = json.getInt("photor1"); // on récupère la valeur correspondant à la clé "photor1"
-            photor2    = json.getInt("photor2");
+            // recover the data stored in the format json transmitted via usb
+            photor1    = json.getInt("photor1"); // get the value corresponding to the key "photor1"
+            photor2    = json.getInt("photor2");// get the value corresponding to the key "photor2"
           }
         } else {
         }
@@ -2169,49 +2167,49 @@ void serialEvent (Serial myPort) {
 }
 ```
 
-Il nous faut maintenant nous occuper de l'enregistrement sur le disque dur.
+We now have to take care of the recording on the hard disk.
 
-Tout d'abord il nous faut un fichier texte vide appelé **data.json** dans un dossier /data situé à l'endroit ou votre programme processing est sauvegardé. En réalité il ne doit pas être complétement vide mais juste contenir une accolade ouvrante et une accolade fermante :
+First we need an empty text file called **data.json** in a / data folder located where your program processing is saved. In reality it must not be completely empty but just contain an opening brace and a closing one:
 
 ```json
 {}
 ```
-cela correspond à la structure de base d'un fichier json.
+this matchs to the basic structure of a json file.
 
-Après avoir récupéré les données depuis la chaîne de caractère au format json depuis l'arduino et ce toujours dans la fonction *void serialEvent(Serial myPort)*
+After getting the data from the character string in json format from the arduino and still in the *void serialEvent(Serial myPort)* function 
 
 ```java
-// récupérer les données stockée dans le format json transmis via usb
-photor1    = json.getInt("photor1"); // on récupère la valeur correspondant à la clé "photor1"
+// recover the data stored in the format json transmitted via usb
+photor1    = json.getInt("photor1"); // get the value corresponding to the key "photor1"
 photor2    = json.getInt("photor2");
 ```
 
-Nous allons pouvoir procéder à l'enregistrement :
-- d'abord nous devons charger notre fichier json (pour l'instant vide)
+We will be able to proceed to the registration:
+- first we have to load our json file (for now empty)
   ```java
-  JSONArray js  = loadJSONArray("data.json"); // on charge le fichier data.json - dans lequel on va ajouter une entrée
+  JSONArray js  = loadJSONArray("data.json"); // load the file data.json - in which we will add an entry
   ```
 
-- ensuite nous allons créer un nouvel objet json que nous allons renseigner avec de nouvelles données
+- then we will create a new json object that we will fill with new data
   ```java
-  JSONObject njs = new JSONObject(); // on crée un nouvel objet json
-            // on ajoute un timestamp avec date et heure
+  JSONObject njs = new JSONObject(); // create a new object json
+           // add a timestamp with date and time
   njs.setString("timestamp", year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second());
-  njs.setInt("luminosity1", photor1); // on ajoute la première valeur
-  njs.setInt("luminosity2", photor2); // on ajoute la seconde valeur
+  njs.setInt("luminosity1", photor1); // add the first value
+  njs.setInt("luminosity2", photor2); // add the second value
   ```
 
-- puis nous allons ajouter ce nouvel objet à notre fichier chargé à l'étape 1.
+- then we will add this new object to our loaded file in step 1.
   ```java
-  js.append(njs); // on ajoute ce nouvel objet à l'objet chargé précédement
+  js.append(njs); // add this new object to the previously loaded object
   ```
 
-- enfin nous sauvegardons le tout sur notre disque dur
+- finally we save everything on our hard drive
   ```java
-  saveJSONArray(js, "data/data.json"); // on sauvegarde le tout en écrasant le fichier précédent.
+  saveJSONArray(js, "data/data.json"); //we save it while overwriting the previous file.
   ```
-A chaque fois que des données sont reçues nous rechargeons le fichier, ajoutons des données et écrasons le fichier précédent : au fur et à mesure nous stockons donc toutes les données envoyées par arduino.
+Whenever data is received we reload the file, add data and overwrite the previous file: as we store all the data sent by arduino.
 
-Après avoir réalisé un enregistrement, il faut bien penser à renommer le fichier *data.json* avec un nom équivoque et à recréer un fichier vide si l'on veut relancer un enregistrement.
+After making a recording, remember to rename the file *data.json* with a new name and recreate an empty file if you want to restart a recording.
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
