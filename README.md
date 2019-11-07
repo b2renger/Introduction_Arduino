@@ -906,112 +906,112 @@ void loop() {
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
 
-## Connecter des actuateurs et activer des périphériques
-Après avoir utilisé les commandes **digitalRead()** et **analogRead()** pour lire des courants sur les broches d'entrée d'une carte arduino, nous allons maintenant voir comment utiliser les fonction **digitalWrite()** et **analogWrite()** pour générer des courants sur les broches de sortie. A noter que les broches digitales peuvent être configurées en tant que sortie ou en tant qu'entrée à l'aide de la fonction [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/).
+## Connect actuators and activate devices
+After having used **digitalRead()** and **analogRead()** commands to read currents on the input pins of an arduino card, we will now see how to use **digitalWrite()** functions and **analogWrite()** to generate currents on the output pins. Note that the digital pins can be configured as an output or as input using the [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/) function.
 
-### Leds simples
-Ces leds sont les actuateurs les plus simples que l'on puisse trouver, elles sont très peu chères et existent dans une multitude de couleurs et de tailles. Nous allons nous concentrer tout d'abord sur des leds monochromes avant de parler plus loin des leds RGBW en ruban.
+### Classic led
+These leds are the simplest actuators that can be found, they are very inexpensive and exist in a multitude of colors and sizes. We will first focus on monochrome LEDs before talking further about RGBW leds in ribbon.
 
-Deux modes d'interactions sont possibles avec ce type d'actuateur, on peut :
-- soit envoyer un courant binaire 'HIGH' ou 'LOW' à l'aide de **digitalWrite()** pour faire clignoter une led.
-- soit envoyer un courant 'analogique' entre 0 et 255 à l'aide de **analogWrite()** pour réaliser une effet de gradation de la lumière.
+Two interaction modes are possible with this type of actuator, one can:
+- either send a 'HIGH' or 'LOW' bit stream using **digitalWrite()** to blink a led.
+- either send an 'analog' current between 0 and 255 using **analogWrite()** to dim.
 
-Dans les deux cas le circuit sera le même :
+In both cases the circuit will be the same:
 
 <img src="set_led_blink/set_led.png" width="480" height="360" /><br>
 
-Il est important de savoir que la [led](https://fr.wikipedia.org/wiki/Diode_%C3%A9lectroluminescente) simple est un composant polarisé - c'est à dire qu'il a un sens. La petite patte correspond au moins et doit donc être reliée à la masse, la patte la plus longue correspond au plus et doit être reliée à une sortie digitale.
-Entre la masse et la patte moins de la led on insère une résistance de 220 ohms afin de protéger la led d'une éventuelle surtension qui risquerait de la griller.
+It is worth knowing that the [led](https://en.wikipedia.org/wiki/Light-emitting_diode) is polarized - that means it should be plugged considering the current flow in the component. The small led corresponds to the 'minus' and must be connected to the ground, the longest leg corresponds to the 'plus' and must be connected to a digital output.
+Between the ground leg we use a resistance of 220 ohms to protect the led from a possible surge.
 
-#### Faire clignoter une led
+#### Blink a led
 
 <img src="assets/set_led_blink.gif" width="480" height="360" /><br>
 
-Pour faire clignoter une led il suffit d'utiliser la fonction [**digitalWrite()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/). Cette fonction prend deux arguments :
-- le premier est le numéro de la pin sur laquelle on doit envoyer un courant.
-- le second est la 'valeur' du courant : soit 'HIGH' soit 'LOW'.
+To flash a led simply use the[**digitalWrite()**](https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/) function. It uses two arguments :
+- the first is the number of the pin on which a current must be sent.
+- the second is the 'value' of the current: either 'HIGH' or 'LOW'.
 
 ```c
 void setup() {
-  pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+  pinMode(3, OUTPUT); // use pin 3 in output mode
 }
 
 void loop() {
-  digitalWrite(3, HIGH); // envoyer un courant 'fort' sur la broche 3
-  delay(500); // attendre 500 millisecondes
-  digitalWrite(3, LOW); // envoyer un courant 'faible' sur la broche 3
-  delay(500); // attendre 500 millisecondes
+  digitalWrite(3, HIGH); // send a 'strong' current on pin 3
+  delay(500); // wait 500 milliseconds
+  digitalWrite(3, LOW); // send a 'weak' current on pin 3
+  delay(500); //wait 500 milliseconds
 } 
 ```
 
-#### Faire "pulser" une led
+#### Pulse a led
 
 <img src="assets/set_led_pulse.gif" width="480" height="360" /><br>
 
-Pour faire pulse une led il suffit d'utiliser la fonction [**analogWrite()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/). Cette fonction prend deux arguments :
-- le premier est le numéro de la pin sur laquelle on doit envoyer un courant.
-- le second est la 'valeur' du courant : comprise entre 0 et 255. 0 correspondra à une led éteinte et 255 à une led allumée au maximum de sa luminosité.
+To pulse an LED just use the [**analogWrite()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/) function. This function uses two arguments:
+- the first is the number of the pin on which a current must be sent.
+- the second is the 'value' of the current: between 0 and 255. 0 will correspond to the led being off and 255 to a led lit at the maximum of its brightness.
 
-Notez bien qu'en utilisant [**analogWrite()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/) notre led n'est pas pour autant branchée sur une broche analogique. Les broches analogiques ne sont que des sorties. Il faut donc brancher notre led sur une pin digitale, mais une pin [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion), la liste des pins pwm est disponible dans la documentation des différentes cartes.
+Note that using[**analogWrite()**](https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/) our LED is not connected to an analog pin. Analog pins are just inputs. We must connect our LED on a digital pin, but a [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion) pin, the list of pwm pins is available in each board documentation.
 
 ```c
-float t = 0; // une variable pour stocker le temps
+float t = 0; // a variable to store time
 
 void setup() {
-   pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+   pinMode(3, OUTPUT); // use pin 3 in output mode
 }
 
 void loop() {
-  t += 0.025; // on augmente la valeur du temps (on peut changer la valeur pour faire pulse + ou - vite)
-  double l = ((sin(t) + 1) /2.0)*255; // on calcule une luminosité l doit être compris entre 0 et 255
-  analogWrite(3, l); // on allume la led avec la luminosité calculée.
+  t += 0.025; // we increase the value of the time (we can change the value to make pulse + or - fast)
+  double l = ((sin(t) + 1) /2.0)*255; // we calculate a brightness l must be between 0 and 255
+  analogWrite(3, l); // turn on the led with calculated brightness.
 }
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Moteur vibreur
+### Vibrator motor
 
-Pour le vibreur la logique est exactement que pour la led, le montage est très similaire :
+For the vibrator the logic is exactly that for the led, the assembly is very similar:
 
 <img src="set_vibrator_onoff/set_vibrator.png" width="480" height="360" /><br>
 
-Et le code sera aussi similaire ...
+And the code will be similar ...
 
-#### Vibreur on off
+#### Vibrator motor on off
 
 <img src="assets/set_vibrator_blink.gif" width="480" height="360" /><br>
 
 ```c
 
 void setup() {
-  pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+  pinMode(3, OUTPUT); // use pin 3 in output mode
 }
 
 void loop() {
-  digitalWrite(3, HIGH); // envoyer un courant 'fort' sur la broche 3
-  delay(500); // attendre 500 millisecondes
-  digitalWrite(3, LOW); // envoyer un courant 'faible' sur la broche 3
-  delay(500); // attendre 500 millisecondes
+  digitalWrite(3, HIGH); // send a 'strong' current on pin 3
+  delay(500); // wait 500 milliseconds
+  digitalWrite(3, LOW); // send a 'weak' current on pin 3
+  delay(500); // wait 500 milliseconds
 } 
 
 ```
 
-#### Vibreur pulse
+#### Vibrator on off pulse
 
 <img src="assets/set_vibrator_pulse.gif" width="480" height="360" /><br>
 
 ```c
-float t = 0; // une variable pour stocker le temps
+float t = 0; // a variable to store time
 
 void setup() {
-   pinMode(3, OUTPUT); // utiliser la broche 3 en mode sortie
+   pinMode(3, OUTPUT); // use pin 3 in output mode
 }
 
 void loop() {
-  t += 0.025; // on augmente la valeur du temps (on peut changer la valeur pour faire pulse + ou - vite)
-  double l = ((sin(t) + 1) /2.0)*255; // on calcule une luminosité l doit être compris entre 0 et 255
-  analogWrite(3, l); // on allume la led avec la luminosité calculée.
+  t += 0.025; // we increase the value of the time (we can change the value to make pulse + or - fast)
+  double l = ((sin(t) + 1) /2.0)*255; // we calculate a brightness l must be between 0 and 255
+  analogWrite(3, l); // the led is lit with the calculated brightness.
 }
 
 ```
@@ -1020,315 +1020,311 @@ void loop() {
 
 ### Servomoteurs
 
-Nous avons vu que les entrées digitales permettait de mesurer des courants *HIGH* ou *LOW*, elles permettent aussi deux générer ces deux types de courants comme dans le cas de notre capteur de distance à ultra-son. Une autre possibilité est de générer un signal [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion): en envoyant des impulsions électriques très rapides et dont la durée varie on peut encoder des valeurs plus complexes et donc contrôler l'intensité et la couleur de leds ou la vitesse / sens de rotation de moteurs.
+We have seen that digital inputs made it possible to measure currents *HIGH* or *LOW*, they also allow two generate these two types of currents as in the case of our ultrasonic distance sensor. Another possibility is to generate a [PWM](https://en.wikipedia.org/wiki/Pulse-width_modulation) signal : by sending very fast electric pulses which duration varies, one can encode more complex data ​​and thus control the intensity and the color of leds or a motor's speed or rotation direction.
 
-D'une manière générale tous les servomoteurs se branchent de le même façon :
+In a general way all the servomotors connect in the same way :
 
 <img src="set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
 
-Le cable foncé est la masse (GND), le cable rouge est l'alimentation (5V), le dernier est généralement jaune ou orange on le relie à une sortie digitale d'une carte arduino, mais attention à une sortie PWM.
+The dark cable is the ground (GND), the red cable is the power supply (5V), the last is generally yellow or orange it is connected to a digital output of an arduino card, but beware of a **PWM** output.
 
-On utilise la bibliothèque [**Servo**](https://www.arduino.cc/en/Reference/Servo) qui est inclue par défaut dans l'IDE vous n'avez donc rien de particulier à installer logiciellement pour faire fonctionner des servomoteurs.
+We use the [**Servo**](https://www.arduino.cc/en/Reference/Servo) library which is included by default in the IDE so you have nothing special to install to operate servomotors.
 
-Le code est aussi le même on envoit une valeur à l'aide de la fonction [**.write()**](https://www.arduino.cc/en/Reference/ServoWrite) :
-- 90 pour la position de repos
-- 0 pour un des deux comportements / position extême
-- 180 pour l'autre
+The code is also the same one sends a value using the function [**.write()**](https://www.arduino.cc/en/Reference/ServoWrite), beware those values are not angles :
+- 90 for the rest position
+- 0 for one of the two behaviors /  exteme position
+- 180 for the other
 
-Les servos moteurs existe en une multitude de taille, de vitesse, et de puissance. En fonction de leur caractéristiques ils peuvent nécessiter plus ou moins d'énergie ou couter plus ou moins cher.
+Servo Motors exist in a multitude of sizes, speeds, and power. Depending on their characteristics they may require more or less energy or cost more or less.
 
-#### Servomoteur classique
+#### Classic servo
 
-Un servo classique va accepter comme paramètre un angle, les valeurs maximales et minimum peuvent varier en fonction des moteurs, de même que la vitesse qui leur permettra d'atteindre cet angle.
+A conventional servo will accept a parameter as an angle, the maximum and minimum values ​​may vary depending on the engines, as well as the speed that will allow them to reach this angle.
 
 <img src="assets/set_position_servo_classique.gif" width="480" height="270" /><br>
 
-Notre code va nous permettre de tester simplement le comportement du servomoteur, en le faisant changer d'état toutes les 1.5 secondes.
+Our code will allow us to simply test the behavior of the servomotor, making it change state every 1.5 seconds.
 
 ```c
-// inclure la bibliothèque servo
+// include the servo library
 #include <Servo.h>
 
-// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
-// des informations à notre servo moteur
+// create an object called myservo that can be manipulated to send
+// information to our servo motor
 Servo myservo;
 
 void setup() {
-  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
-  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
+  pinMode(6, OUTPUT); // specify that we want to use pin 6 as an output
+  myservo.attach(6);  // tell our library that a servo is connected to pin 6
 }
 
 void loop() {
-  myservo.write(90); // mettre le servo en position de repos
-  delay(1500); // attendre 1.5 sec
-  myservo.write(0); // mettre le servo en buté à gauche
+  myservo.write(90); // put servo in  rest position
+  delay(1500); // wait 1.5 sec
+  myservo.write(0); // put the servo on the left
   delay(1500);
-  myservo.write(90);// mettre le servo en position de repos
+  myservo.write(90);// put the servo in the rest position
   delay(1500);
-  myservo.write(180); // mettre le servo en buté à droite
+  myservo.write(180); // put the servo on the right
   delay(1500);
 }
 ```
-Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
+You can try changing the values ​​to see what happens.
 
 
+#### continuous rotation servo
 
-#### Servomoteur à rotation continue
+This type of servo will accept as parameter a speed of rotation between 0 and 180.
+- 0 will rotate at maximum speed clockwise.
+- 180 will rotate it at maximum speed counterclockwise.
+- 90 will stop it.
 
-Un servomoteur à rotation continue va accepter comme paramètre dans sa fonction **.write()** une vitesse de rotation comprise entre 0 et 180.
-
-- 0 le fera tourner à vitesse maximum dans le sens des aiguilles d'une montre.
-- 180 le fera tourner à vitesse maximum dans le sens inverse des aiguilles d'une montre.
-- 90 le fera s'arreter.
-
-Des valeurs autour de 90 le feront donc tourner plus ou moins vite dans un sens ou dans l'autre.
+Values ​​around 90 will make it turn more or less quickly in one direction or the other.
 
 <img src="assets/set_rotation_servo_continu.gif" width="480" height="270" /><br>
 
 ```c
-// inclure la bibliothèque servo
+// include the servo library
 #include <Servo.h>
 
-// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
-// des informations à notre servo moteur
+// create an object called myservo that can be manipulated to send
+// information to our servo motor
 Servo myservo;
 
 void setup() {
-  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
-  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
+  pinMode(6, OUTPUT); // specify that we want to use the pin 6 as an output
+  myservo.attach(6);  // specify that a servo is connected to the pin 6
 }
 
 void loop() {
-  myservo.write(90); // mettre le servo en position de repos
-  delay(1500); // attendre 1.5 sec
-  myservo.write(0); // faire tourner le servo le plus vite possible dans le sens des aiguilles d'une montre
+  myservo.write(90); // put the servo in the rest position
+  delay(1500); // wait 1.5 sec
+  myservo.write(0); // rotate the servo as fast as possible clockwise
   delay(1500);
-  myservo.write(90);// mettre le servo en position de repos
+  myservo.write(90);// put the servo in the rest position
   delay(1500);
-  myservo.write(180); // faire tourner le servo le plus vite possible dans le sens inverse des aiguilles d'une montre
+  myservo.write(180); // turn the servo as fast as possible counterclockwise
   delay(1500);
 }
 ```
-Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
+You can try changing the values ​​to see what happens.
 
 
-#### Servomoteur linéaire
+#### Linear servo
 
-Le servomoteur linéaire va lui effectuer une translation. On précise entre les parenthèse de **write()** sa position.
+The linear servomotor will perform a translation. We specify its position between the parentheses of **write()** .
 
 <img src="assets/set_position_servo_lineaire.gif" width="480" height="270" /><br>
 
 ```c
-// inclure la bibliothèque servo
+// include the servo library
 #include <Servo.h>
 
-// créer un objet que l'on appelera myservo que l'on pourra manipuler pour envoyer
-// des informations à notre servo moteur
+// create an object that will be called myservo that can be manipulated to send
+// information to our servo motor
 Servo myservo;
 
 void setup() {
-  pinMode(6, OUTPUT); // préciser que l'on veut utiliser la pin 6 comme une sortie
-  myservo.attach(6);  // préciser à notre bibliothèque qu'un servo est connecté à la pin 6
+  pinMode(6, OUTPUT); // specify that we want to use pin 6 as an output
+  myservo.attach(6);  // tell our library that a servo is connected to pin 6
 }
 
 void loop() {
-  myservo.write(90); // au milieu
-  delay(1500); // attendre 1.5 sec
-  myservo.write(0); // à l'opposé
+  myservo.write(90); // center
+  delay(1500); // wait 1.5 sec
+  myservo.write(0); // on the left
   delay(1500);
-  myservo.write(90);//au milieu
+  myservo.write(90);//center
   delay(1500);
-  myservo.write(180); // à l'autre opposé
+  myservo.write(180); // on the right
   delay(1500);
 }
 ```
-
-Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
+You can try changing the values ​​to see what happens.
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
 
-### Alumer des leds (neopixels)
+### Playing with leds (neopixels)
 
-Nous allons utiliser directement des rubans de leds. Ces rubans présentent des séries de leds RGB dont chacune est contrôllable individuellement en couleur et en intensité.
+We will directly use LED ribbons. These ribbons feature a series of RGB LEDs, each of which is individually controllable in color and intensity.
 
-Ils peuvent être découpés à la longueur souhaités et ne nécessitent que trois cables pour les contrôller : deux pour l'alimentation et un pour la donnée. Le schéma de montage sera toujours le même.
+They can be cut to the desired length and require only three cables to control them: two for the power supply and one for the data. The assembly scheme will always be the same.
 
 <img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
-En fonction du nombre de leds que vous voulez allumer mais aussi en fonction de la couleur ou de l'intensité, il vous faudra une puissance différente. Il peut parfois être nécessaire de faire appel à des alimentations externes - en dessous d'une dizaine de led par entrée une carte arduino devrait pouvoir alimenter sans recours à une source d'énergie externe. Une led consomera au maximum 60mA (allumée en blanc à l'intensité maximale). A des courants plus importants, il pourra être intéressant d'ajouter un condensateur en parallèle sur l'alimentation.
+Depending on the number of leds you want to light but also depending on the color or intensity, you will need a certain amount of power. It may sometimes be necessary to use external power supplies - below a dozen of leds an arduino card should be able to power without needing an external power source. A led consumes at most 60mA (lit in white at the maximum intensity). At larger currents, it may be interesting to add a capacitor in parallel on the power supply.
 
-Pour la partie logicielle nous allons utiliser la bibliothèque Fast-LED. Il faut donc l'installer via **le gestionnaire de bibliothèques** (Menu *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*).
+For the software part we will use the Fast-LED library. It must therefore be installed via **the library manager** (Menu *Sketch* -> *Include a library* -> *Manage libraries*).
 
-Nous allons voir comment spécifier la couleur de chaque led soit avec une couleur RGB soit avec une couleur HSV.
+We will see how to specify the color of each led either with a RGB color or with an HSV color.
 
-La bibliothèque fast-led nous offre une syntaxe permettant de définir le nombre de led dont on dispose, le type de led et la pin de contrôle utilisée.
+The fast-led library gives us a syntax to define the number of LEDs available, the type of led and the control pin used.
 
-Ensuite on peut afficher des couleurs sur les leds en parcourant chaque led de notre ruban à l'aide d'une [**boucle for()**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
+Then we can display colors on the LEDs by scanning each led of our ribbon using a [**for() loop**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
 
 
-#### Spécifier la couleur en RGB
+#### Use RGB color scheme
 
-Ici nous allons créer une petite animation en faisant varier les composantes rouge et verte de chaque led.
+Here we will create a small animation by varying the red and green components of each led.
 
 <img src="assets/set_neopixels_rgb.gif" width="480" height="270" /><br>
 
 ```c 
-// inclure la bibliothèque fast-led
+// include fast-led library
 #include <FastLED.h>
-#define NUM_LEDS 5 // définir le nombre de leds
+#define NUM_LEDS 5 // define the number of leds eg 5
 
-CRGBArray<NUM_LEDS> leds; // définir un tableau de données chaque entrée du tableau représentera une led.
-float  inc = 0; // un variable que l'on va utiliser pour créer une animation.
+CRGBArray<NUM_LEDS> leds; // define a table of data each entry of the table will represent a led.
+float  inc = 0; // a variable that we will use to create an animation (simulate time)
 
 void setup() {
-  // on initialise notre strip de led sur la pin 9
+  // we initialize our strip of led on the pin 9
   FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
 }
 
 void loop() {
 
-  inc +=  0.05; // on augmente la valeur de inc
-  // on calcule en fonction de inc un valeur qui va osciller entre 0 et 244.
-  int green = (sin(inc) + 1)*122; // cette valeur est stocké dans une variable nommée "green"
+  inc +=  0.05; // increase the value of inc
+  // we calculate in from inc a value that will oscillate between 0 and 244.
+  double green = (sin(inc) + 1)*122; // this value is stored in a variable named "green"
      
-  // Pour i allant de 0 à 5, on va éxecuter le code entre accolades, 
-  // à chaque fois on augmente la valeur de i de 1
+  // For i ranging from 0 to 5, we will execute the code between braces,
+  // each time it's done we increase the value of i of 1
   for (int i = 0; i < NUM_LEDS; i++) {
-    // on change la valeur de la led 'i' du tableau nommé 'leds" en lui donnant une nouvelle valeur RGB
+    // change the value of the led 'i' of the array named 'leds' giving it a new RGB value
     leds[i] = CRGB(255-green, green, 0);
   }
-  FastLED.show(); // on actualise le ruban de led
+  FastLED.show(); // we update the LED ribbon
 }
 ```
 
-Si vous souhaitez donner une couleur précise à chaque led, il vous suffit d'utiliser des appels directs à chaque led sans boucle for : 
+If you want to give a precise color to each led, you can use direct calls to each led without for loop:
 
 ```c
 void loop(){
-    leds[0] = CRGB(255, 0, 0); //rouge
-    leds[1] = CRGB(0, 255, 0); // vert
-    leds[2] = CRGB(0, 0, 255); // bleu
-    leds[3] = CRGB(255, 255, 255); // blanc
-    leds[0] = CRGB(0, 0, 0); // noir
-    FastLED.show(); // on actualise le ruban de led
+    leds[0] = CRGB(255, 0, 0); //red
+    leds[1] = CRGB(0, 255, 0); // green
+    leds[2] = CRGB(0, 0, 255); // blue
+    leds[3] = CRGB(255, 255, 255); // White
+    leds[0] = CRGB(0, 0, 0); // black
+    FastLED.show(); // we update the LED ribbon
 }
 
 ```
 
+#### Use HSV color scheme
 
-#### Spécifier la couleur en HSV
-
-Le montage est le même : 
+The cicuit is the same: 
 <img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
 
-Le code est quasiment le même sauf que l'on appelle la fonction **CHSV()** de la bibliothèque Fast-led. Même si dans la plupart des logiciels la teinte est représentée par une valeur entre 0 et 360 et la saturation ainsi que le luminosité sont représentées par des valeurs comprises entre 0 et 100, ici chacune des trois valeurs doit être comprise entre 0 et 255.
+The code is almost the same except that we call the **CHSV()** function of the Fast-led library. Even if in most software the hue is represented by a value between 0 and 360 and the saturation and the brightness are represented by values ​​between 0 and 100, in this case each of the three values ​​must be between 0 and 255.
 
 
 ```c
-// inclure la bibliothèque fast-led
+// include the fast-led library
 #include <FastLED.h>
-#define NUM_LEDS 5 // définir le nombre de leds
+#define NUM_LEDS 5 // define the number of leds eg 5
 
-CRGBArray<NUM_LEDS> leds; // définir un tableau de données chaque entrée du tableau représentera une led.
+CRGBArray<NUM_LEDS> leds; // define a table of data each entry of the table will represent a led.
 float  inc = 0;
 
 void setup() {
-  // on initialise notre strip de led sur la pin 9
+  // we initialize our strip of led on the pin 9
   FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
 }
 
 void loop() {
     
-  // on augmente la valeur de inc
-  // on calcul en fonction de inc un valeur qui va osciller entre 0 et 244.
+  // increase the value of inc
+  // we calculate according to inc a value that will oscillate between 0 and 244.
   inc +=  0.05;
-  int saturation = (sin(inc) + 1)*122; // cette valeur est stocké dans une variable nommée "saturation"
-  // Pour i allant de 0 à 5, on va éxecuter le code entre accolades, 
-  // à chaque fois on augmente la valeur de i de 1
+  double saturation = (sin(inc) + 1)*122; // this value is stored in a variable named "saturation"
+  // For i ranging from 0 to 5, we will execute the code between braces,
+  // each time we increase the value of i of 1
   for (int i = 0; i < NUM_LEDS; i++) {
-    // on change la valeur de la led 'i' du tableau nommé 'leds" en lui donnant une nouvelle valeur RGB
+    // change the value of the led 'i' of the array named 'leds' giving it a new HSV value
     leds[i] = CHSV(255 - i *50, saturation, 255);
   }
-    FastLED.show();// on actualise le ruban de led
+    FastLED.show();// we update the LED ribbon
 }
 ```
 
-on peut encore une fois appeler directement la fonction **CHSV()**
+we can once again directly call the function **CHSV()**
 ```c
 void loop(){
-    leds[0] = CHSV(0, 255, 255); //rouge
-    leds[1] = CHSV(90, 255, 255); // vert
-    leds[2] = CHSV(180, 255, 255); // bleu
-    leds[3] = CHSV(255, 0, 255); // blanc
-    leds[0] = CHSV(0, 0, 0); // noir
-    FastLED.show(); // on actualise le ruban de led
+    leds[0] = CHSV(0, 255, 255); //red
+    leds[1] = CHSV(90, 255, 255); // green
+    leds[2] = CHSV(180, 255, 255); // blue
+    leds[3] = CHSV(255, 0, 255); // White
+    leds[0] = CHSV(0, 0, 0); // black
+    FastLED.show(); // we update the LED ribbon
 }
 
 ```
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
-### Utiliser un afficheur à 4 digits
+### Use a 4-digit display
 
-Un afficheur à 4 digits permet d'afficher des chiffres et des lettres (de A à F) sur des digits (ensemble de 7 segments). Il y a 4 digits disponnibles pour afficher des chiffres.
+A 4-digit display allows to display numbers and letters (from A to F) on digits (set of 7 segments). There are 4 digits available to display numbers.
 
 <img src="assets/set_four_digit_display.gif" width="480" height="270" /><br>
 
-La page de documentation du fabricant du composant est disponnible ici : http://wiki.seeedstudio.com/Grove-4-Digit_Display/
+The component manufacturer's documentation page is available here : http://wiki.seeedstudio.com/Grove-4-Digit_Display/
 
-Le cablage est un cablage classique pour ce genre de périphérique.
+Cabling is as follows :
 
 <img src="set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
 
-D'un point de vue logiciel il va vous falloir télécharger le bibliothèque **TM1637** /**Grove 4-digit display**.
+From a software point of view you will need to download the library **TM1637** /**Grove 4-digit display**.
 
 ```c
-// inclure la bibliothèque dédiée à l'afficheur 4 digit
+// include the library dedicated to the 4 digit display
 #include "TM1637.h"
-// définir les pins de connexion pour la clock et la donnée
-#define CLK 8
-#define DIO 9
-TM1637 tm1637(CLK, DIO); // attacher de manière effective nos pin et notre écran
+// define the connection pins for the clock and the data
+#define CLK 8 // eg D8
+#define DIO 9 // eg D9
+TM1637 tm1637(CLK, DIO); //  attach our pins to the object used to manipulate our screen
 
-// définir les caractères disponnibles
+// define the available characters
 int8_t NumTab[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}; //0~9,A,b,C,d,E,F
-// définir une variable que l'on va augmenter petit à petit pour calculer en temps
+// define a variable that we will increase little by little to calculate the time
 int num = 0;
 
 void setup() {
-  // initialiser notre écran et spécifier sa luminosité
+  // initialize our screen and specify its brightness
   tm1637.init();
   tm1637.set(BRIGHTEST);//BRIGHT_TYPICAL = 2,BRIGHT_DARKEST = 0,BRIGHTEST = 7;
 }
 
 void loop(){
 
-  // calculer le chiffre à afficher pour chaque colone du tableau de numération
-  // car même si notre chiffre à moins de 4 valeurs (0 pour les milliers, centaines et dizaines)
-  // on veut afficher les zéros précédent notre valeur.
+  // calculate the number to be displayed for each column of the counting table
+  // because even if our number is less than 4 values ​​(0 for thousands, hundreds and tens)
+  // we want to display the zeros before our value.
   int milles = int((num /1000)%10);
   int cents = int ((num /100)%10);
   int dizaines = int((num/10)%10);
   int unites = int(num%10);
   
-  tm1637.display(0, NumTab[milles]); // afficher le chiffre des milliers sur l'ensemble de segment le plus à gauche
+  tm1637.display(0, NumTab[milles]); // show the thousands digit on the leftmost segment 
   tm1637.display(1, NumTab[cents]);
   tm1637.display(2, NumTab[dizaines]);
-  tm1637.display(3, NumTab[unites]); // afficher le chiffre des unités sur l'ensemble de segment le plus à droite
+  tm1637.display(3, NumTab[unites]); // display the units digit on the rightmost segment 
     
-  delay(10); // attendre un peu
+  delay(10); //  wait a little
   
-  num +=1 ; // augmenter la valeur de num de 1
+  num +=1 ; // increase the num value of 1
 }
 ```
-Remarquez bien qu'ici on mesure des dizaines de millisecondes : le *delay(10)* fait que le programme se met en pause une dizaine de millisecondes avant de boucler.
+Note that here we measure tens of milliseconds: the *delay(10)* makes the program pauses about ten milliseconds before looping.
 
 
 [^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
 
 
-## Controler un actuateur avec un capteur
+## Control an actuator with a sensor
 
 Dans cette partie nous allons nous attacher à créer des montages un peu plus complexes, et aussi à écrire du code un peu plus complexe.
 
