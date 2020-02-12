@@ -271,11 +271,11 @@ Encore une fois le code est identique sauf que notre composant est branché pour
 ```c
 void setup() {
   Serial.begin(9600); // ouvrir la connexion série
-  pinMode(2, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+  pinMode(2, INPUT); // préciser que la pin 2 va être utilisée comme une entrée
 }
 
 void loop() {
-  int value = digitalRead(2); // lire la valeur sur la pin 7 et la stocker dans une variable entière
+  int value = digitalRead(2); // lire la valeur sur la pin 2 et la stocker dans une variable entière
   Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
 }
 ```
@@ -321,11 +321,11 @@ Contrairement aux composants précédents il y aura deux exemples de code pour d
 ```c
 void setup() {
   Serial.begin(9600); // ouvrir la connection série
-  pinMode(2, INPUT); // préciser que la pin 7 va être utilisée comme une entrée
+  pinMode(2, INPUT); // préciser que la pin 2 va être utilisée comme une entrée
 }
 
 void loop() {
-  int value = digitalRead(2); // lire la valeur sur la pin 7 et la stocker dans une variable entière
+  int value = digitalRead(2); // lire la valeur sur la pin 2 et la stocker dans une variable entière
   Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
 }
 ```
