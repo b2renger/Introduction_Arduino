@@ -260,7 +260,7 @@ void loop() {
 
 [**home**](#Contenu)<br>
 
-### Microswitch
+#### Microswitch
 
 Le microswitch est de la même famille que les interupteurs ou les boutons. Lorsque l'on appuie dessus le circuit est fermé, on peut alors mesurer un 1 - sinon le circuit est ouvert et il n'y a pas de courant qui passe on mesure alors un 0.
 
@@ -283,7 +283,7 @@ void loop() {
 
 [**home**](#Contenu)<br>
 
-### Bouton
+#### Bouton
 
 Les boutons peuvent apparaitrent aux premiers abords comme le composant le plus simple à utiliser, mais ce n'est pas réellement le cas - il est conseillé de commencer par utiliser le microswitch avant de passer au bouton. Le montage peut s'avérer compliqué (surtout lorsque l'on souhaite en avoir plusieurs) et le code n'est pas forcément le plus simple - nous sommes habitués naturellement à avoir différents types d'interactions avec un bouton qui demandent parfois un peu d'expertise.
 
