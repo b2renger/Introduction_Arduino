@@ -1,6 +1,6 @@
 # Introduction Arduino
 
-Code for a creative coding class with arduino for designers. English wip : [here](https://github.com/b2renger/Introduction_Arduino/tree/english)
+Code for a creative coding class with arduino for designers. English wip : [here](https://github.com/b2renger/Introduction_Arduino/blob/english/README.md)
 
 [Arduino](https://www.arduino.cc/) est une marque de cartes électroniques open hardware : c'est à dire des cartes dont les schémas sont disponibles librement et gratuitement.
 
@@ -19,66 +19,66 @@ Ici nous allons nous concentrer sur comment récupérer des valeurs de différen
 Chaque exemple comportera un schéma électrique à réaliser et du code à écrire et téléverser sur une carte. La première partie consiste en un petit inventaire de capteurs, la deuxième présentera quelques actuateurs (moteurs , leds et afficheur à digits), la troisième partie elle consistera à récupérer l'information d'un capteurs pour la transmettre à un actuateur, et finalement la quatrième partie nous amenera à faire communiquer notre ordinateur avec notre carte arduino.
 
 ## CONTENU
-* [Introduction](https://github.com/b2renger/Introduction_arduino#introduction)<br>
+* [Introduction](#Introduction)<br>
 
-* [Connecter des capteurs et récupérer les valeurs](https://github.com/b2renger/Introduction_arduino#connecter-des-capteurs-et-r%C3%A9cup%C3%A9rer-les-valeurs)<br>
+* [Connecter des capteurs et mesurer des valeurs](#Connecter-des-capteurs-et-mesurer-des-valeurs)<br>
 
-    * [les entrées digitales et capteurs logiques]()<br>
-        * [PIR](https://github.com/b2renger/Introduction_arduino#pir)<br>
-        * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt)<br>     
-        * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch)<br>
-        * [Bouton](https://github.com/b2renger/Introduction_arduino#bouton)<br>
+    * [Les broches Digitales et capteurs logiques](#Les-broches-Digitales-et-capteurs-logiques)<br>
+        * [PIR](#PIR)<br>
+        * [Tilt](#Tilt)<br>     
+        * [Microswitch](#Microswitch)<br>
+        * [Bouton](#Bouton)<br>
 
-    * [les entrées analogiques]()<br>
-        * [Potentiomètre](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre)<br> 
-        * [Micro](https://github.com/b2renger/Introduction_arduino#micro)<br>
-        * [Photo-résistance](https://github.com/b2renger/Introduction_arduino#photo-r%C3%A9sistance)<br>
-        * [Capteur Piezo](https://github.com/b2renger/Introduction_arduino#capteur-piezo)<br>
-        * [Flex](https://github.com/b2renger/Introduction_arduino#flex)<br>    
-        * [FSR](https://github.com/b2renger/Introduction_arduino#fsr)<br>
+    * [Les broches analogiques](#Les-broches-analogiques)<br>
+        * [Potentiometre](#Potentiometre)<br> 
+        * [Microphone](#Microphone)<br>
+        * [Photo-resistance](#Photo-resistance)<br>
+        * [Capteur piezo](#Capteur-piezo)<br>
+        * [Flex](#Flex)<br>    
+        * [FSR](#FSR)<br>
 
-    * [Capteurs de distance](https://github.com/b2renger/Introduction_arduino#capteur-de-distance)<br>
-        * [Infra-rouge](https://github.com/b2renger/Introduction_arduino#infra-rouge)<br>
-        * [Ultra-son](https://github.com/b2renger/Introduction_arduino#ultra-son)<br>
-          * [Ultra-son grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove)<br>
-          * [Ultra-son hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04)<br>
+    * [Capteurs de distance](#Capteurs-de-distance)<br>
+        * [Infra-rouge](#Infra-rouge)<br>
+        * [Ultra-son](#Ultra-son)<br>
+          * [Ultra-son grove](#Ultra-son-grove)<br>
+          * [Ultra-son hc sr04](#Ultra-son-hc-sr04)<br>
 
-    * [Capteurs numériques - entrée SDA et SCL]()<br>
-        * [Accéléromètre](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9rom%C3%A8tre)<br>
-        * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope)<br>
-        * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture)<br>
+    * [Capteurs digitaux et broches SDA-SCL](#Capteurs-digitaux-et-broches-SDA-SCL)<br>
+        * [Accelerometre](#Accelerometre)<br>
+        * [Gyroscope](#Gyroscope)<br>
+        * [Gesture](#Gesture)<br>
     
-* [Connecter des actuateurs et activer des périphériques](https://github.com/b2renger/Introduction_arduino#connecter-des-actuateurs-et-activer-des-p%C3%A9riph%C3%A9riques)<br>
+* [Connecter des actuateurs et agir sur le monde](#Connecter-des-actuateurs-et-agir-sur-le-monde)<br>
 
-  * [Allumer des leds](https://github.com/b2renger/Introduction_arduino#leds-simples)<br>
-    * [Allumer des leds : blink](https://github.com/b2renger/Introduction_arduino#faire-clignoter-une-led)<br>
-    * [Allumer des leds : pulse](https://github.com/b2renger/Introduction_arduino#faire-pulser-une-led)<br>
+  * [Allumer des leds](#Allumer-des-leds)<br>
+    * [Faire clignoter des leds](#Faire-clignoter-des-leds)<br>
+    * [Faire varier des leds](#Faire-varier-des-leds)<br>
 
-  * [Activer un vibreur](https://github.com/b2renger/Introduction_arduino#moteur-vibreur)<br>
-    * [Activer un vibreur : blink](https://github.com/b2renger/Introduction_arduino#vibreur-on-off)<br>
-    * [Activer un vibreur : pulse](https://github.com/b2renger/Introduction_arduino#vibreur-pulse)<br>
+  * [Activer un vibreur](#Activer-un-vibreur)<br>
+    * [Vibreur on-off](#Vibreur-on-off)<br>
+    * [Vibreur variation](#Vibreur-variation)<br>
 
-  * [faire tourner servomoteur](https://github.com/b2renger/Introduction_arduino#servomoteurs)<br>
-      * [sevomoteur classique](https://github.com/b2renger/Introduction_arduino#servomoteur-classique)<br>
-      * [servomoteur à rotation continue](https://github.com/b2renger/Introduction_arduino#servomoteur-%C3%A0-rotatoin-continue)<br>
-      * [servomoteur linéaire](https://github.com/b2renger/Introduction_arduino#servomoteur-lin%C3%A9aire)<br>
+  * [Faire tourner un servomoteur](#Faire-tourner-un-servomoteur)<br>
+      * [Servomoteur classique](#Servomoteur-classique)<br>
+      * [Servomoteur rotation continue](#Servomoteur-rotation-continue)<br>
+      * [Servomoteur lineaire](#Servomoteur-lineaire)<br>
 
-  * [allumer des leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels)<br>
-        * [RGB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-rgb)<br>
-        * [HSB](https://github.com/b2renger/Introduction_arduino#sp%C3%A9cifier-la-couleur-en-hsv)<br>
-  * [utiliser un afficheur à digits](https://github.com/b2renger/Introduction_arduino#utiliser-un-afficheur-%C3%A0-4-digits)<br>
+  * [Allumer des leds neopixel](#Allumer-des-leds-neopixel)<br>
+      * [RGB](#RGB)<br>
+      * [HSB](#HSB)<br>
+  * [Utiliser un afficheur 7 segments](#Utiliser-un-afficheur-7-segments)<br>
 	
-* [Controler un actuateur avec un capteur](https://github.com/b2renger/Introduction_arduino#controler-un-actuateur-avec-un-capteur)<br>
-    * [Utiliser la fonction map()](https://github.com/b2renger/Introduction_arduino#utiliser-la-fonction-map)<br>
-    * [Potentiomètre vers servo classique](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique)<br>
-    * [Flex vers servo continu](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu)<br>
-    * [FSR vers neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb)<br>
+* [Controler un actuateur avec un capteur](#Controler-un-actuateur-avec-un-capteur)<br>
+    * [Utiliser la fonction map()](#Utiliser-la-fonction-map())<br>
+    * [Potentiometre et servo classique](#Potentiometre-et-servo-classique)<br>
+    * [Flex et servo continu](#Flex-et-servo-continu)<br>
+    * [FSR et neopixels](#FSR-et-neopixels)<br>
 
-* [Utiliser des capteurs pour contrôler du code processing](https://github.com/b2renger/Introduction_arduino#utiliser-des-capteurs-pour-contr%C3%B4ler-du-code-processing)<br>
-    * [Controler le playback d'une vidéo avec un capteur de distance](https://github.com/b2renger/Introduction_arduino#controler-le-playback-dune-vid%C3%A9o-avec-un-capteur-de-distance)<br>
-    * [Controler une animation avec une photoresistance](https://github.com/b2renger/Introduction_arduino#controler-une-animation-avec-une-photoresistance)<br>
-    * [Controler des leds neopixels avec la souris](https://github.com/b2renger/Introduction_arduino#controler-des-leds-neopixels-avec-la-souris)<br>
-    * [Enregistrer des données dans un fichier sur votre ordinateur](https://github.com/b2renger/Introduction_arduino#enregistrer-des-donn%C3%A9es-dans-un-fichier)<br>
+* [Utiliser des capteurs pour interagir avec code processing](#Utiliser-des-capteurs-pour-interagir-avec-du-code-processing)<br>
+    * [Controller un playback video avec un capteur de distance](#Controller-un-playback-video-avec-un-capteur-de-distance)<br>
+    * [Controller une animation avec une photoresistance](#Controller-une-animation-avec-une-photoresistance)<br>
+    * [Controller des leds avec la souris](#Controller-des-leds-avec-la-souris)<br>
+    * [Enregistrer des mesures dans un fichier sur votre ordinateur](#Enregistrer-des-mesures-dans-un-fichier-sur-votre-ordinateur)<br>
 
 
 ## Introduction
@@ -154,10 +154,10 @@ Une fois cela fait vous pouvez **vérifier** votre programme puis le **téléver
 
 Lorsque l'on réalise un circuit notre carte doit être déconnectée de notre ordinateur, au moment où l'on code il est préférable de la garder connectée.
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 
-## Connecter des capteurs et récupérer les valeurs
+## Connecter des capteurs et mesurer des valeurs 
 
 Cette première partie consiste en un petit inventaire de capteurs. Vous disposerez à chaque fois d'un montage et de code pour lire la valeur du capteurs et l'imprimer dans le moniteur série.
 
@@ -179,8 +179,9 @@ D'un point de vue électronique, parfois nous allons utiliser des résistances e
 
 En fonction du courant requis pour un fonctionnement optimal de nos capteurs, nous deverons choisir une résistance adaptée.
 
+[**home**](#Contenu)<br>
 
-### Entrées Digitales et capteurs logiques
+### Les broches Digitales et capteurs logiques
 
 Les entrées digitales sont au nombre de 13. Typiquement une pin digitale ne va mesurer que deux type de courant : soit il y a du courant, soit il n'y en a pas / *HIGH* ou *LOW* / 1 ou 0 / *True* ou *False*.
 
@@ -227,7 +228,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 #### PIR
 
@@ -257,7 +258,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 ### Microswitch
 
@@ -280,7 +281,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 ### Bouton
 
@@ -293,6 +294,8 @@ Les boutons existent de différentes tailles et de différentes formes, ils peuv
 Le bouton d'arcade dispose de 3 broches, le petit bouton en bas à droite de 4 et le bouton en bas à gauche dispose de 3 broches aussi (il s'agit d'un bouton capacitif). 
 
 Le circuit électronique est sensiblement le même pour tous les boutons : il est préférable de faire un montage en branchant le bouton avec 3 fils : 2 pour l'alimentation (noir et rouge) avec une résistance de 10kohms sur la masse, et un fil (jaune) pour la lecture de la valeur. Le bouton capacitif grove est déjà monté sur une petite carte disposant d'une résistance intégrée.
+
+[**home**](#Contenu)<br>
 
 #### Circuits
 
@@ -329,6 +332,8 @@ void loop() {
   Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
 }
 ```
+
+[**home**](#Contenu)<br>
 
 
 #### Utiliser le click pour changer un état
@@ -384,10 +389,7 @@ Vous pouvez rechercher deux bibliothèques :
 Une fois installées, des exemples d'utilisation seront disponibles dans le menu : *Fichier* -> *Exemples*
 
 
-
-
-
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 ### Entrées Analogiques
 
@@ -578,7 +580,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 
 #### Ultra-son
@@ -618,10 +620,10 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 
-#### Hc-sr04
+#### Ultra-son Hc sr04
 
 [*HC-SR04*](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) 
 
@@ -687,10 +689,9 @@ void loop() {
   delay(250);
 }
 ```
+[**home**](#Contenu)<br>
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
-
-### Capteurs numériques - SDA et SCL
+### Capteurs digitaux et broches SDA-SCL
 
 Les capteurs que nous allons utiliser maintenant vont pouvoir nous fournir une information plus complexe et moins brute, ils vont nottament nous permettre de récupérer plusieurs valeurs en même temps. 
 
@@ -714,8 +715,10 @@ Vous avez alors un champ de recherche vous permettant de chercher et d'installer
 
 Généralement chaque bibliothèque vient avec sont lot d'exemples plus ou mois utiles, plus ou moins nombreux et plus ou moins clairs. Vous pouvez y accéder via le menu *Fichier* -> *Exemples* et tout en bas du menu déroulant vous trouverez les exemples relatifs aux bibliothèques.
 
+[**home**](#Contenu)<br>
 
-#### Accéléromètre
+
+#### Accelerometre
 
 L'[*accéléromètre*](https://fr.wikipedia.org/wiki/Acc%C3%A9l%C3%A9rom%C3%A8tre) permet de mesure l'accélération linéaire, soit la projection de la gravité sur chacun de ses trois axes.
 
@@ -775,8 +778,7 @@ void loop() {
 }
 ```
 
-
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 #### Gyroscope
 
@@ -836,8 +838,7 @@ void loop(){
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
-
+[**home**](#Contenu)<br>
 
 #### Gesture
 
@@ -914,14 +915,14 @@ void loop() {
 }
 
 ```
+[**home**](#Contenu)<br>
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
-
-
-## Connecter des actuateurs et activer des périphériques
+## Connecter des actuateurs et agir sur le monde
 Après avoir utilisé les commandes **digitalRead()** et **analogRead()** pour lire des courants sur les broches d'entrée d'une carte arduino, nous allons maintenant voir comment utiliser les fonction **digitalWrite()** et **analogWrite()** pour générer des courants sur les broches de sortie. A noter que les broches digitales peuvent être configurées en tant que sortie ou en tant qu'entrée à l'aide de la fonction [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/).
 
-### Leds simples
+[**home**](#Contenu)<br>
+
+### Allumer des leds
 Ces leds sont les actuateurs les plus simples que l'on puisse trouver, elles sont très peu chères et existent dans une multitude de couleurs et de tailles. Nous allons nous concentrer tout d'abord sur des leds monochromes avant de parler plus loin des leds RGBW en ruban.
 
 Deux modes d'interactions sont possibles avec ce type d'actuateur, on peut :
@@ -935,7 +936,9 @@ Dans les deux cas le circuit sera le même :
 Il est important de savoir que la [led](https://fr.wikipedia.org/wiki/Diode_%C3%A9lectroluminescente) simple est un composant polarisé - c'est à dire qu'il a un sens. La petite patte correspond au moins et doit donc être reliée à la masse, la patte la plus longue correspond au plus et doit être reliée à une sortie digitale.
 Entre la masse et la patte moins de la led on insère une résistance de 220 ohms afin de protéger la led d'une éventuelle surtension qui risquerait de la griller.
 
-#### Faire clignoter une led
+[**home**](#Contenu)<br>
+
+#### Faire clignoter des leds
 
 <img src="assets/set_led_blink.gif" width="480" height="360" /><br>
 
@@ -955,8 +958,9 @@ void loop() {
   delay(500); // attendre 500 millisecondes
 } 
 ```
+[**home**](#Contenu)<br>
 
-#### Faire "pulser" une led
+#### Faire varier des leds
 
 <img src="assets/set_led_pulse.gif" width="480" height="360" /><br>
 
@@ -980,9 +984,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Moteur vibreur
+### Activer un vibreur
 
 Pour le vibreur la logique est exactement que pour la led, le montage est très similaire :
 
@@ -990,7 +994,7 @@ Pour le vibreur la logique est exactement que pour la led, le montage est très 
 
 Et le code sera aussi similaire ...
 
-#### Vibreur on off
+#### Vibreur on-off
 
 <img src="assets/set_vibrator_blink.gif" width="480" height="360" /><br>
 
@@ -1008,8 +1012,10 @@ void loop() {
 } 
 
 ```
+[**home**](#Contenu)<br>
 
-#### Vibreur pulse
+
+#### Vibreur variation
 
 <img src="assets/set_vibrator_pulse.gif" width="480" height="360" /><br>
 
@@ -1028,9 +1034,10 @@ void loop() {
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Servomoteurs
+
+### Faire tourner un ervomoteurs
 
 Nous avons vu que les entrées digitales permettait de mesurer des courants *HIGH* ou *LOW*, elles permettent aussi deux générer ces deux types de courants comme dans le cas de notre capteur de distance à ultra-son. Une autre possibilité est de générer un signal [PWM](https://fr.wikipedia.org/wiki/Modulation_de_largeur_d%27impulsion): en envoyant des impulsions électriques très rapides et dont la durée varie on peut encoder des valeurs plus complexes et donc contrôler l'intensité et la couleur de leds ou la vitesse / sens de rotation de moteurs.
 
@@ -1048,6 +1055,8 @@ Le code est aussi le même on envoit une valeur à l'aide de la fonction [**.wri
 - 180 pour l'autre
 
 Les servos moteurs existe en une multitude de taille, de vitesse, et de puissance. En fonction de leur caractéristiques ils peuvent nécessiter plus ou moins d'énergie ou couter plus ou moins cher.
+
+[**home**](#Contenu)<br>
 
 #### Servomoteur classique
 
@@ -1083,9 +1092,10 @@ void loop() {
 ```
 Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
+[**home**](#Contenu)<br>
 
 
-#### Servomoteur à rotation continue
+#### Servomoteur rotation continue
 
 Un servomoteur à rotation continue va accepter comme paramètre dans sa fonction **.write()** une vitesse de rotation comprise entre 0 et 180.
 
@@ -1123,8 +1133,10 @@ void loop() {
 ```
 Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
+[**home**](#Contenu)<br>
 
-#### Servomoteur linéaire
+
+#### Servomoteur lineaire
 
 Le servomoteur linéaire va lui effectuer une translation. On précise entre les parenthèse de **write()** sa position.
 
@@ -1157,10 +1169,10 @@ void loop() {
 
 Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 
-### Alumer des leds (neopixels)
+### Allumer des leds neopixel
 
 Nous allons utiliser directement des rubans de leds. Ces rubans présentent des séries de leds RGB dont chacune est contrôllable individuellement en couleur et en intensité.
 
@@ -1178,8 +1190,10 @@ La bibliothèque fast-led nous offre une syntaxe permettant de définir le nombr
 
 Ensuite on peut afficher des couleurs sur les leds en parcourant chaque led de notre ruban à l'aide d'une [**boucle for()**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
 
+[**home**](#Contenu)<br>
 
-#### Spécifier la couleur en RGB
+
+#### RGB
 
 Ici nous allons créer une petite animation en faisant varier les composantes rouge et verte de chaque led.
 
@@ -1227,9 +1241,9 @@ void loop(){
 }
 
 ```
+[**home**](#Contenu)<br>
 
-
-#### Spécifier la couleur en HSV
+#### HSB
 
 Le montage est le même : 
 <img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
@@ -1279,9 +1293,9 @@ void loop(){
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Utiliser un afficheur à 4 digits
+### Utiliser un afficheur 7 segments
 
 Un afficheur à 4 digits permet d'afficher des chiffres et des lettres (de A à F) sur des digits (ensemble de 7 segments). Il y a 4 digits disponnibles pour afficher des chiffres.
 
@@ -1337,7 +1351,7 @@ void loop(){
 Remarquez bien qu'ici on mesure des dizaines de millisecondes : le *delay(10)* fait que le programme se met en pause une dizaine de millisecondes avant de boucler.
 
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 
 ## Controler un actuateur avec un capteur
@@ -1358,9 +1372,9 @@ int val = analogRead(0); // lire une valeur sur A0 - celle ci sera comprise entr
 int newval = map(val, 0, 1023, 0, 180); // notre valeur est comprise entre 0 et 1023, on veut une valeur entre 0 et 180
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Potentiomètre vers servo classique
+### Potentiometre et servo classique
 
 Comment controller un servomoteur avec un potentiomètre ?
 
@@ -1397,9 +1411,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Flex vers servo continu
+### Flex et servo continu
 
 L'objectif ici va être de contrôller la vitesse et le sens de rotation d'un servomoteur à l'aide d'un capteur de flexion :
 
@@ -1437,9 +1451,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### FSR vers neopixels HSB
+### FSR et neopixels
 
 Ici nous allons utiliser un capteur pour fixer la teinte de la lumière produite par un strip de leds rgb.
 
@@ -1475,9 +1489,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-## Utiliser des capteurs pour contrôler du code processing
+## Utiliser des capteurs pour interagir avec du code processing
 
 Dans cette partie nous allons nous concenter sur l'utilisation du port série et nous allons depuis un programme arduino écrire des valeurs de capteurs dans un port série que nous pourrons alors récupérer dans un programme processing.
 
@@ -1485,7 +1499,9 @@ Nous pourrons faire de même dans l'autre sens : c'est à dire envoyer des infor
 
 Pour info USB signifie Universal Serial Bus, le port série est donc bien le port usb on programme donc une manière de faire transiter d'un appareil à l'autre des information via une connexion usb.
 
-### Controler le playback d'une vidéo avec un capteur de distance
+[**home**](#Contenu)<br>
+
+### Controller un playback video avec un capteur de distance
 
 Le premier programme va utiliser un capteur de distance et la distance détectée par notre capteur servira à régler la vitesse de défilement d'une vidéo lue par un programme processing : 
 
@@ -1726,9 +1742,10 @@ void serialEvent (Serial myPort) {
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Controler une animation avec une photoresistance
+
+### Controller une animation avec une photoresistance
 
 La logique de cette animation est très similaire à la précédente. Nous allons remplacer le capteur de distance par une photorésistance et nous allons utiliser un exemple différent :
 
@@ -1950,9 +1967,10 @@ void branch(float h) {
   }
 }
 ```
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Controler des leds neopixels avec la souris
+
+### Controller des leds avec la souris
 
 Ce troisième exemple va illustrer la communication inverse : nous allons envoyer des données de processing à arduino. En fonction de la position de la souris la couleur de la fenêtre sera affectée et ces positions de souris seront aussi envoyées à arduino pour controller l'allumage de leds.
 
@@ -2064,9 +2082,10 @@ char* subStr (char* input_string, char *separator, int segment_number) {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
-### Enregistrer des données dans un fichier
+
+### Enregistrer des mesures dans un fichier sur votre ordinateur
 
 Dans cet exemple nous allons nous attacher à lire des données provenant de plusieurs capteurs et nous allons les transmettre à processing afin de pouvoir les enregistrer dans un fichier sur notre disque dur.
 
@@ -2230,4 +2249,4 @@ A chaque fois que des données sont reçues nous rechargeons le fichier, ajouton
 
 Après avoir réalisé un enregistrement, il faut bien penser à renommer le fichier *data.json* avec un nom équivoque et à recréer un fichier vide si l'on veut relancer un enregistrement.
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
