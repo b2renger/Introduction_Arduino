@@ -24,8 +24,8 @@ Chaque exemple comportera un schéma électrique à réaliser et du code à écr
 * [Connecter des capteurs et mesurer des valeurs](#Connecter-des-capteurs-et-mesurer-des-valeurs)<br>
 
     * [Les broches Digitales et capteurs logiques](#Les-broches-Digitales-et-capteurs-logiques)<br>
-        * [PIR](#PIR)<br>
-        * [Tilt](#Tilt)<br>     
+        * [Tilt](#Tilt)<br>   
+        * [PIR](#PIR)<br>  
         * [Microswitch](#Microswitch)<br>
         * [Bouton](#Bouton)<br>
 
@@ -418,8 +418,7 @@ void loop() {
   Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
 }
 ```
-
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 #### Micro
 
@@ -445,7 +444,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 #### Photo-résistance
 
@@ -472,7 +471,7 @@ void loop() {
 ```
 
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 #### Capteur Piezo
 
@@ -502,9 +501,7 @@ void loop() {
 ```
 
 
-
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
-
+[**home**](#Contenu)<br>
 #### FSR 
 
 Le *FSR* est un capteur de force : il va convertir le poids appliqué sur sa surface en un courant électrique mesurable.
@@ -527,9 +524,7 @@ void loop() {
   Serial.println(value); // imprimmer le contenu de la variable dans le moniteur série
 }
 ```
-
-
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 #### Flex
 
@@ -553,7 +548,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contenu)<br>
+[**home**](#Contenu)<br>
 
 
 ### Capteurs de distance
