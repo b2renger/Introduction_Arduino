@@ -18,68 +18,68 @@ Here we will focus on how to recover values ​​from different sensors, how to
 
 Each example will include a circuit diagram to make and code to write and upload to a board. The first part consists of a small inventory of sensors, the second will present some actuators (motors, leds and digits display), the third part will recover information from a sensor to transmit it to an actuator, and finally the fourth part will bring us to bridge the gap between a computer and our arduino board.
 
-## CONTENTS
-* [Introduction](https://github.com/b2renger/Introduction_arduino#introduction) <br>
+## Contents
+* [Introduction](#Introduction) <br>
 
-* [Connect sensors and retrieve values](https://github.com/b2renger/Introduction_arduino#connecting-captors-and-receiving-values) <br>
+* [Connect sensors and retrieve values](#Connect-sensors-and-retrieve-values) <br>
 
-  * [digital inputs and logic sensors]() <br>
-    * [PIR](https://github.com/b2renger/Introduction_arduino#pir) <br>
-    * [Tilt](https://github.com/b2renger/Introduction_arduino#tilt) <br>
-    * [Microswitch](https://github.com/b2renger/Introduction_arduino#microswitch) <br>
-    * [Button](https://github.com/b2renger/Introduction_arduino#button) <br>
+  * [Digital inputs and logic sensors](#Digital-inputs-and-logic-sensors) <br>
+    * [Tilt](#Tilt) <br>
+    * [PIR](#PIR) <br>
+    * [Microswitch](#Microswitch) <br>
+    * [Button](#Button) <br>
   
-  * [analog inputs]() <br>
-    * [Potentiometer](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre) <br>
-    * [Micro](https://github.com/b2renger/Introduction_arduino#micro) <br>
-    * [Photo-resistance](https://github.com/b2renger/Introduction_arduino#photo-resistance) <br>
-    * [Piezo Sensor](https://github.com/b2renger/Introduction_arduino#capteur-piezo) <br>
-    * [Flex](https://github.com/b2renger/Introduction_arduino#flex) <br>
-    * [FSR](https://github.com/b2renger/Introduction_arduino#fsr) <br>
+  * [Analog inputs](#Analog-inputs) <br>
+    * [Potentiometer](#Potentiometer) <br>
+    * [Mic](#Mic) <br>
+    * [Photoresistor](#Photoresistor) <br>
+    * [Piezo Sensor](#Piezo-sensor) <br>
+    * [Flex](#Flex) <br>
+    * [FSR](#FSR) <br>
 
-  * [Distance Sensors](https://github.com/b2renger/Introduction_arduino#distance-sensor) <br>
-    * [Infra-red](https://github.com/b2renger/Introduction_arduino#infra-red) <br>
-    * [Ultra-sound](https://github.com/b2renger/Introduction_arduino#ultra-son) <br>
-      * [Ultra-sound grove](https://github.com/b2renger/Introduction_arduino#ultra-son-grove) <br>
-      * [Ultra-sound hc sr04](https://github.com/b2renger/Introduction_arduino#hc-sr04) <br>
+  * [Distance Sensors](#Distance-sensors) <br>
+    * [Infra-red](#Infra-red) <br>
+    * [Ultra-sound](#Ultra-sound) <br>
+      * [Ultra-sound grove](#Ultra-sound-grove) <br>
+      * [Ultra-sound hc sr04](#Ultra-sound-hc-sr04) <br>
 
-  * [Digital sensors - SDA and SCL input]() <br>
-    * [Accelerometer](https://github.com/b2renger/Introduction_arduino#acc%C3%A9l%C3%A9romecromancer) <br>
-    * [Gyroscope](https://github.com/b2renger/Introduction_arduino#gyroscope) <br>
-    * [Gesture](https://github.com/b2renger/Introduction_arduino#gesture) <br>
+  * [Digital sensors SDA and SCL inputs](#Digital-sensors-SDA-and-SCL-inputs) <br>
+    * [Accelerometer](#Accelerometer) <br>
+    * [Gyroscope](#Gyroscope) <br>
+    * [Gesture](#Gesture) <br>
     
-* [Connect actuators and enable devices](https://github.com/b2renger/Introduction_arduino#connecting-actuators-and-activating-permanent-prizes) <br>
+* [Connect actuators and enable devices](#Connect-actuators-and-activate-devices) <br>
 
-  * [Turn on leds](https://github.com/b2renger/Introduction_arduino#leds-simples) <br>
-    * [Turn on leds: blink](https://github.com/b2renger/Introduction_arduino#make-clink-one-led) <br>
-    * [Turn on leds: pulse](https://github.com/b2renger/Introduction_arduino#make-pulsed-one-led) <br>
+  * [Turn on leds](#Turn-on-leds) <br>
+    * [Blink](#Led-blink) <br>
+    * [Pulse](#Led-pulse) <br>
 
-  * [Activate a vibrator](https://github.com/b2renger/Introduction_arduino#grader-motor) <br>
-    * [Activate a vibrator: blink](https://github.com/b2renger/Introduction_arduino#vibreur-on-off) <br>
-    * [Activate a vibrator: pulse](https://github.com/b2renger/Introduction_arduino#vibreur-pulse) <br>
+  * [Activate a vibrator](#Activate-a-vibrator) <br>
+    * [Blink](#Vibrator-blink) <br>
+    * [Pulse](#Vibrator-pulse) <br>
 
-  * [run a servomotor](https://github.com/b2renger/Introduction_arduino#servomotors) <br>
-    * [classic sevomotor](https://github.com/b2renger/Introduction_arduino#servomoteur-classique) <br>
-    * [servomotor with continuous rotation](https://github.com/b2renger/Introduction_arduino#servomotor-%C3%A0-rotatoin-continue) <br>
-    * [Linear Servomotor](https://github.com/b2renger/Introduction_arduino#linear-servomotor) <br>
+  * [Rotate a servomotor](#Rotate-a-servomotor) <br>
+    * [Classic sevomotor](#Classic-servomotor) <br>
+    * [Continuous rotation](#Continuous-rotation-servomotor) <br>
+    * [Linear Servomotor](#Linear-servomotor) <br>
 
-  * [light leds (neopixels)](https://github.com/b2renger/Introduction_arduino#alumer-des-leds-neopixels) <br>
-    * [RGB](https://github.com/b2renger/Introduction_arduino#specify-color-rgb) <br>
-    * [HSB](https://github.com/b2renger/Introduction_arduino#specify-color-in-hsv) <br>
+  * [Light up leds neopixel](#Light-up-leds-neopixel) <br>
+    * [RGB](#RGB) <br>
+    * [HSB](#HSB) <br>
   
-  * [use a digits viewer](https://github.com/b2renger/Introduction_arduino#using-a-poster-using-a-4-digits) <br>
+  * [Use a 7 segments display](#Use-a-7-segments-display) <br>
 
-* [Control an actuator with a sensor](https://github.com/b2renger/Introduction_arduino#controler-a-actuateur-with-a-sensor) <br>
-  * [Use the map function ()](https://github.com/b2renger/Introduction_arduino#use-map-function) <br>
-  * [Potentiometer to conventional servo](https://github.com/b2renger/Introduction_arduino#potentiom%C3%A8tre-vers-servo-classique) <br>
-  * [Flex to Continuous Servo](https://github.com/b2renger/Introduction_arduino#flex-vers-servo-continu) <br>
-  * [FSR to neopixels HSB](https://github.com/b2renger/Introduction_arduino#fsr-vers-neopixels-hsb) <br>
+* [Control an actuator with a sensor](#Control-an-actuator-with-a-sensor) <br>
+  * [Use the map() function](#use-the-map-function) <br>
+  * [Potentiometer to servo](#Potentiometer-to-servo) <br>
+  * [Flex to continuous Servo](#Flex-to-continuous-servo) <br>
+  * [FSR to neopixels](#FSR-to-neopixels) <br>
 
-* [Use sensors to control processing code](https://github.com/b2renger/Introduction_arduino#use-captors-to-control-contr%C3%B4ler-code-processing) <br>
-  * [Control the playback of a video with a distance sensor](https://github.com/b2renger/Introduction_arduino#control-the-playback-of-video-with-a-distance-sensor) <br>
-  * [Control an animation with photoresistance](https://github.com/b2renger/Introduction_arduino#controler-a-animation-with-photoresistance) <br>
-  * [Control neopixels leds with the mouse](https://github.com/b2renger/Introduction_arduino#controler-ed-neopixels-with-mouse) <br>
-  * [Save data to a file on your computer](https://github.com/b2renger/Introduction_arduino#register-designs-in-a-file) <br>
+* [Use sensors to control processing code](#Use-sensors-to-control-processing-code) <br>
+  * [Control video playback with a distance sensor](#Control-video-playback-with-a-distance-sensor) <br>
+  * [Control an animation with a photoresistor](#Control-an-animation-with-a-photoresistor) <br>
+  * [Control neopixels leds with the mouse](#Control-neopixels-leds-with-the-mouse) <br>
+  * [Save data to a file on your computer](#Save-data-to-a-file) <br>
 
 ## Introduction
 
@@ -154,10 +154,10 @@ Once done, you can **check** your program and **upload** it.
 
 When we make a circuit our card must be disconnected from our computer, when we code it is better to keep it connected.
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
-## Connect sensors and recover values
+## Connect sensors and retrieve values
 
 This first part consists of a small inventory of sensors. Each time you will have an assembly schematics and code to read the value of the sensors and print it in the serial monitor.
 
@@ -179,10 +179,13 @@ From an electronic point of view, sometimes we will use resistors and sometimes 
 
 Depending on the current required for optimal operation of our sensors, we will have to choose a suitable resistor.
 
+[**home**](#Contents)
 
 ### Digital Inputs and Logic Sensors
 
 We have 14 digital inputs. Typically a digital pin will only measure two types of current: either there is current, or there is none / *HIGH* or *LOW* / 1 or 0 / *True* or *False*.
+
+[**home**](#Contents)
 
 #### Tilt
 
@@ -227,7 +230,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 #### PIR
 
@@ -256,9 +259,9 @@ void loop() {
   Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Microswitch
+#### Microswitch
 
 The microswitch is in the same family as the switches or buttons. When we press the circuit is closed, we can then measure a 1 - otherwise the circuit is open and there is no current that passes so we measure a 0.
 
@@ -279,9 +282,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Bouton
+#### Button
 
 The buttons may appear at first glance as the simplest component to use, but this is not really the case - it is advisable to first use the microswitch before switching to the button. Circuits can be complicated (especially when you want to have many) and the code is not necessarily the simplest - we are used to having different types of button interactions that sometimes require a little bit of expertise.
 
@@ -292,6 +295,9 @@ Buttons are of different sizes and shapes, they can have 2, 3 or 4 legs but the 
 The arcade button has 3 pins, the small button at the bottom right has 4 and the button at the bottom left has 3 pins too (it is a capacitive button).
 
 The electronic circuit is essentially the same for all the buttons: it is better to plug the button with 3 wires: 2 for the power supply (black and red) with a resistance of 10kohms on the ground, and a wire (yellow) for reading the value. The capacitive button grove is already mounted on a small card with a built-in resistor.
+
+
+[**home**](#Contents)
 
 #### Circuits
 
@@ -308,12 +314,16 @@ The electronic circuit is essentially the same for all the buttons: it is better
 <img src="read_from_button/read_from_button_arcade.png" width="480" height="360" /><br>
 
 
+[**home**](#Contents)
+
 #### Code
 Unlike the previous examples there will be two code examples for two different behaviors.
 - The first will just read the data on pin 2. The value read will therefore be 0 if the button is not pressed and 1 if it is.
 - The second one will manipulate a variable to make it change its state. So every time we click the button (this means press and release), a variable will change its state to be either a 0 or 1.
 
 <img src="assets/read_from_buttons.gif" width="480" height="360" /><br>
+
+[**home**](#Contents)
 
 #### Read the value of a button
 
@@ -328,7 +338,7 @@ void loop() {
   Serial.println(value); // print the contents of the variable in the serial monitor
 }
 ```
-
+[**home**](#Contents)
 
 #### Use a click to change a state
 The code here is a bit more complex: it uses a custom written function that allows you to change the state of a variable according to the click and the previous value of the variable: it is the defined function at the bottom called **button_change()**. This function expects 3 parameters:
@@ -382,11 +392,13 @@ You can search for two libraries:
 - OneButton
 Once installed, examples of use will be available in the menu: *File* -> *Examples*
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 ### Analog Inputs
 
 Analog inputs and analog sensors unlike digital inputs and logic sensors will provide us with a range of values, these values ​​will be between **0** and **1024** when using a 10 bit DAC (usually the case on most arduino boards).
+
+[**home**](#Contents)
 
 #### Potentiometer 
 
@@ -412,9 +424,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-#### Microphone
+#### Mic
 
 The mics most often used in electronics are [electret microphones](https://en.wikipedia.org/wiki/Electret_microphone) in our case the microphone is already mounted on a printed circuit, so we have not much to add and we will be able to recover a value between 0 and 1023 representing the sound level. In this case we will not be able to record a sound to replay it afterwards, the goal is only to measure the sound level.
 
@@ -438,7 +450,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 #### Photoresistor
 
@@ -465,7 +477,7 @@ void loop() {
 ```
 
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 #### Piezo sensor
 
@@ -494,7 +506,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 #### FSR 
 
@@ -518,7 +530,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 #### Flex
 
@@ -542,14 +554,16 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
 ### Distance sensors
 
 There are several methods to calculate distances: infra-red, ultra-sound, laser. Here we will focus on the first two technologies.
 
-#### Infrared
+[**home**](#Contents)
+
+#### Infra-red
 
 The infrared sensor will allow a system of lenses and trigonometric equations to estimate a distance. The [model we use](https://www.gotronic.fr/art-capteur-de-mesure-sharp-gp2y0a21yk0f-11539.htm) allows to obtain an estimation of the distance for distances between 10 and 80 cm and to read the result on an analog input.
 
@@ -569,10 +583,10 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
-#### Ultrasound
+#### Ultra-sound
 
 There are different types of ultrasonic sensors to measure distances which is a little more precise and allows to have a greater range (up to a few meters) than the infrared method
 - The classic [HC-SR04](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) which requires a 4-wire connection.
@@ -581,8 +595,9 @@ There are different types of ultrasonic sensors to measure distances which is a 
 The measuring principle of these two sensors is the same and the results obtained are therefore very similar:
 <img src="assets/read_from_ultrasonic_distance.gif" width="480" height="270" /><br>
 
+[**home**](#Contents)
 
-#### Grove ultrasound
+#### Ultra-sound grove
 
 [*grove module*](https://www.gotronic.fr/art-telemetre-a-ultrasons-grove-101020010-18976.htm)
 
@@ -609,10 +624,10 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
-#### Hc-sr04
+#### Ultra-sound Hc-sr04
 
 [*HC-SR04*](https://www.gotronic.fr/art-module-de-detection-us-hc-sr04-20912.htm) 
 
@@ -678,9 +693,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Digital sensors - SDA and SCL
+### Digital sensors SDA and SCL inputs
 
 The sensors we will use now will be able to provide us more complex and less raw information, and they will allow us to recover several values ​​at the same time. 
 
@@ -704,8 +719,9 @@ You then have a search box that allows you to search and install the libraries y
 
 Generally each library comes with more or less useful examples, at least one and more or less clear. You can access it via the *File* -> *Examples* menu and at the very bottom of the drop-down menu you will find your custom library examples.
 
+[**home**](#Contents)
 
-#### accelerometer
+#### Accelerometer
 
 The [*accelerometer*](https://en.wikipedia.org/wiki/Accelerometer) allows measurement of linear acceleration, ie the projection of gravity on each of its three axes.
 
@@ -765,7 +781,7 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 #### Gyroscope
 
@@ -825,7 +841,7 @@ void loop(){
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
 #### Gesture
@@ -903,13 +919,15 @@ void loop() {
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
 ## Connect actuators and activate devices
 After having used **digitalRead()** and **analogRead()** commands to read currents on the input pins of an arduino card, we will now see how to use **digitalWrite()** functions and **analogWrite()** to generate currents on the output pins. Note that the digital pins can be configured as an output or as input using the [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/) function.
 
-### Classic led
+[**home**](#Contents)
+
+### Turn on leds
 These leds are the simplest actuators that can be found, they are very inexpensive and exist in a multitude of colors and sizes. We will first focus on monochrome LEDs before talking further about RGBW leds in ribbon.
 
 Two interaction modes are possible with this type of actuator, one can:
@@ -923,7 +941,9 @@ In both cases the circuit will be the same:
 It is worth knowing that the [led](https://en.wikipedia.org/wiki/Light-emitting_diode) is polarized - that means it should be plugged considering the current flow in the component. The small led corresponds to the 'minus' and must be connected to the ground, the longest leg corresponds to the 'plus' and must be connected to a digital output.
 Between the ground leg we use a resistance of 220 ohms to protect the led from a possible surge.
 
-#### Blink a led
+[**home**](#Contents)
+
+#### Led Blink
 
 <img src="assets/set_led_blink.gif" width="480" height="360" /><br>
 
@@ -943,8 +963,9 @@ void loop() {
   delay(500); //wait 500 milliseconds
 } 
 ```
+[**home**](#Contents)
 
-#### Pulse a led
+#### Led Pulse
 
 <img src="assets/set_led_pulse.gif" width="480" height="360" /><br>
 
@@ -968,9 +989,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Vibrator motor
+### Activate a vibrator
 
 For the vibrator the logic is exactly that for the led, the assembly is very similar:
 
@@ -978,7 +999,7 @@ For the vibrator the logic is exactly that for the led, the assembly is very sim
 
 And the code will be similar ...
 
-#### Vibrator motor on off
+#### Vibrator Blink
 
 <img src="assets/set_vibrator_blink.gif" width="480" height="360" /><br>
 
@@ -997,7 +1018,9 @@ void loop() {
 
 ```
 
-#### Vibrator on off pulse
+[**home**](#Contents)
+
+#### Vibrator Pulse
 
 <img src="assets/set_vibrator_pulse.gif" width="480" height="360" /><br>
 
@@ -1016,9 +1039,9 @@ void loop() {
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Servomoteurs
+### Rotate a servomotor
 
 We have seen that digital inputs made it possible to measure currents *HIGH* or *LOW*, they also allow two generate these two types of currents as in the case of our ultrasonic distance sensor. Another possibility is to generate a [PWM](https://en.wikipedia.org/wiki/Pulse-width_modulation) signal : by sending very fast electric pulses which duration varies, one can encode more complex data ​​and thus control the intensity and the color of leds or a motor's speed or rotation direction.
 
@@ -1037,7 +1060,9 @@ The code is also the same one sends a value using the function [**.write()**](ht
 
 Servo Motors exist in a multitude of sizes, speeds, and power. Depending on their characteristics they may require more or less energy or cost more or less.
 
-#### Classic servo
+[**home**](#Contents)
+
+#### Classic servomotor
 
 A conventional servo will accept a parameter as an angle, the maximum and minimum values ​​may vary depending on the engines, as well as the speed that will allow them to reach this angle.
 
@@ -1071,8 +1096,9 @@ void loop() {
 ```
 You can try changing the values ​​to see what happens.
 
+[**home**](#Contents)
 
-#### continuous rotation servo
+#### Continuous rotation servomotor
 
 This type of servo will accept as parameter a speed of rotation between 0 and 180.
 - 0 will rotate at maximum speed clockwise.
@@ -1109,8 +1135,9 @@ void loop() {
 ```
 You can try changing the values ​​to see what happens.
 
+[**home**](#Contents)
 
-#### Linear servo
+#### Linear servomotor
 
 The linear servomotor will perform a translation. We specify its position between the parentheses of **write()** .
 
@@ -1142,10 +1169,10 @@ void loop() {
 ```
 You can try changing the values ​​to see what happens.
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
-### Playing with leds (neopixels)
+### Light up leds neopixel
 
 We will directly use LED ribbons. These ribbons feature a series of RGB LEDs, each of which is individually controllable in color and intensity.
 
@@ -1163,8 +1190,9 @@ The fast-led library gives us a syntax to define the number of LEDs available, t
 
 Then we can display colors on the LEDs by scanning each led of our ribbon using a [**for() loop**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
 
+[**home**](#Contents)
 
-#### Use RGB color scheme
+#### RGB
 
 Here we will create a small animation by varying the red and green components of each led.
 
@@ -1213,7 +1241,9 @@ void loop(){
 
 ```
 
-#### Use HSV color scheme
+[**home**](#Contents)
+
+#### HSB
 
 The cicuit is the same: 
 <img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
@@ -1263,9 +1293,9 @@ void loop(){
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Use a 4-digit display
+### Use a 7 segments display
 
 A 4-digit display allows to display numbers and letters (from A to F) on digits (set of 7 segments). There are 4 digits available to display numbers.
 
@@ -1321,7 +1351,7 @@ void loop(){
 Note that here we measure tens of milliseconds: the *delay(10)* makes the program pauses about ten milliseconds before looping.
 
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 
 ## Control an actuator with a sensor
@@ -1331,6 +1361,8 @@ In this part we will focus on creating a little more complex circuit, and also w
 The objective is to control an actuator (for example a motor) with a sensor (for example a photoresistor). The actuator needs to receive certain values ​​(for instance between 0 and 180 for a motor) and our sensors can provide any type of range of values ​​(between 0 and 1023 for a photoresistor).
 
 Therefore we will need to recover the values ​​of our sensor and transform them in a useful interval for our actuator. It is actually only a cross product - but a dedicated function is provided in the arduino programming language.
+
+[**home**](#Contents)
 
 ### Use the map() function
 
@@ -1342,7 +1374,7 @@ int val = analogRead(0); // read a value on A0 - this one will be between 0 and 
 int newval = map(val, 0, 1023, 0, 180); // our value is between 0 and 1023, we want a value between 0 and 180
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 ### Potentiometer to servo
 
@@ -1381,9 +1413,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Flex servo to continuous rotation servo
+### Flex to continuous servo
 
 The objective here is to control the speed and direction of rotation of a servomotor using a bending sensor:
 
@@ -1421,9 +1453,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### FSR to neopixels HSB
+### FSR to neopixels
 
 Here we will use a sensor to fix the tint of light produced by a strip of leds rgb.
 
@@ -1459,9 +1491,9 @@ void loop() {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-## Use sensors to control code processing
+## Use sensors to control processing code
 
 In this part we will focus on the use of the serial port and we are going : from an arduino program write sensor values ​​in a serial port that we can then recover in a [processing](https://processing.org/) program.
 
@@ -1469,7 +1501,9 @@ We can do the same in the other direction: that is, send processing information 
 
 FIY USB means Universal Serial Bus, so the serial port is the USB port so we program a way to pass from one device to another information via a USB connection.
 
-### Control the playback of a video using a distance sensor
+[**home**](#Contents)
+
+### Control video playback with a distance sensor
 
 The first program will use a distance sensor and the distance detected by our sensor will be used to adjust the running speed of a video read by a processing program: 
 
@@ -1708,9 +1742,9 @@ void serialEvent (Serial myPort) {
 
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Control an animation with a photoresistance
+### Control an animation with a photoresistor
 
 The logic of this animation is very similar to the previous one. We will replace the distance sensor with a photoresistor and we will use a different example:
 
@@ -1934,9 +1968,9 @@ void branch(float h) {
   }
 }
 ```
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
-### Control neopixel leds with the mouse
+### Control neopixels leds with the mouse
 
 This third example will illustrate the reverse communication: we will send data from processing to arduino. Depending on the position of the mouse the color of the window will be affected and these mouse positions will also be sent to arduino to control the lighting of leds.
 
@@ -2047,7 +2081,7 @@ char* subStr (char* input_string, char *separator, int segment_number) {
 }
 ```
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
 
 ### Save data to a file
 
@@ -2056,6 +2090,8 @@ In this example we will focus on reading data from several sensors and we will s
 This may be useful in order to realize data representations based on sensor recordings.
 
 In our case we will record the analog data from two photoresistors, they will be side by side on a prototyping board, which is not ideal; but it is easy to imagine situations where the sensors can be positioned in different places and it would be possible to measure sunshine in different places through the course of day for instance.
+
+[**home**](#Contents)
 
 #### Circuit
 
@@ -2107,6 +2143,8 @@ void loop() {
   // we will be able to recover these values ​​with processing
 }
 ```
+
+[**home**](#Contents)
 
 #### processing code
 
@@ -2212,4 +2250,4 @@ Whenever data is received we reload the file, add data and overwrite the previou
 
 After making a recording, remember to rename the file *data.json* with a new name and recreate an empty file if you want to restart a recording.
 
-[^home](https://github.com/b2renger/Introduction_arduino#contents)<br>
+[**home**](#Contents)
