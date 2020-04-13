@@ -18,6 +18,8 @@ Ici nous allons nous concentrer sur comment récupérer des valeurs de différen
 
 Chaque exemple comportera un schéma électrique à réaliser et du code à écrire et téléverser sur une carte. La première partie consiste en un petit inventaire de capteurs, la deuxième présentera quelques actuateurs (moteurs , leds et afficheur à digits), la troisième partie elle consistera à récupérer l'information d'un capteurs pour la transmettre à un actuateur, et finalement la quatrième partie nous amenera à faire communiquer notre ordinateur avec notre carte arduino.
 
+Vous pourrez retrouver l'ensemble des explications ainsi que les code d'exemples prêt à télécharger sur ce dépôt [github](https://github.com/b2renger/Introduction_Arduino/)
+
 ## Contenu
 * [Introduction](#Introduction)<br>
 
