@@ -18,6 +18,8 @@ Here we will focus on how to recover values ​​from different sensors, how to
 
 Each example will include a circuit diagram to make and code to write and upload to a board. The first part consists of a small inventory of sensors, the second will present some actuators (motors, leds and digits display), the third part will recover information from a sensor to transmit it to an actuator, and finally the fourth part will bring us to bridge the gap between a computer and our arduino board.
 
+You can also find all the code and explanation on this [github repo](https://github.com/b2renger/Introduction_Arduino/tree/english)
+
 ## Contents
 * [Introduction](#Introduction) <br>
 
