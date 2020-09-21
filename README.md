@@ -1184,7 +1184,14 @@ They can be cut to the desired length and require only three cables to control t
 
 Depending on the number of leds you want to light but also depending on the color or intensity, you will need a certain amount of power. It may sometimes be necessary to use external power supplies - below a dozen of leds an arduino card should be able to power without needing an external power source. A led consumes at most 60mA (lit in white at the maximum intensity). At larger currents, it may be interesting to add a capacitor in parallel on the power supply.
 
-For the software part we will use the Fast-LED library. It must therefore be installed via **the library manager** (Menu *Sketch* -> *Include a library* -> *Manage libraries*).
+For the software part we will have two options : 
+- the fast-led lib
+- the neopixel lib
+
+The neopixel lib is the default one, it has barebones functionnality and will work most of the time. The fast-led one has more functionalities such as enabling to set the pixel color in HSB mode, but it has the drawback of sometimes clashing with other lib that uses advanced timing function (such as the ones used to drive 7 segment display)
+
+
+To use the Fast-LED  or the neopixel one it must be installed via **the library manager** (Menu *Sketch* -> *Include a library* -> *Manage libraries*).
 
 We will see how to specify the color of each led either with a RGB color or with an HSV color.
 
@@ -1241,6 +1248,49 @@ void loop(){
     FastLED.show(); // we update the LED ribbon
 }
 
+```
+
+With the neopixel lib it will give something like this 
+
+```c
+#include <Adafruit_NeoPixel.h>
+
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 6, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
+float inc = 0;
+
+
+void setup() {
+  pixels.begin(); // This initializes the NeoPixel library.
+}
+
+void loop() {
+
+  inc +=  0.05; // on augmente la valeur de inc
+  // on calcule en fonction de inc un valeur qui va osciller entre 0 et 244.
+  int green = (sin(inc) + 1) * 122; // cette valeur est stocké dans une variable nommée "green"
+
+  for (int i = 0; i < NUMPIXELS; i++) {
+    pixels.setPixelColor(i, pixels.Color(255 - inc, 255, 0)); // Moderately bright green color.
+  }
+
+  pixels.show(); // This sends the updated pixel color to the hardware.
+}
+````
+
+You can also set each led individually  by getting rid of the for loop : 
+
+```c
+void loop(){
+    pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // rouge
+    pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // vert
+    pixels.setPixelColor(2, pixels.Color(0, 0, 255));// bleu
+    pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // blanc
+    pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // noir
+    pixels.show(); // on actualise le ruban de led
+}
 ```
 
 [**home**](#Contents)
