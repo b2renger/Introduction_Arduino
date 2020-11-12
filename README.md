@@ -2187,7 +2187,7 @@ void loop() {
   String json;
   json = "{\"photor1\":"; // on ajoute la première clé "photor1"
   json = json + photor1; // on ajoute la première valeur  
-  json = json +";\"photor2\":"; // on ajoute la seconde clé "photor2"
+  json = json +",\"photor2\":"; // on ajoute la seconde clé "photor2"
   json = json +  photor2;// on ajoute la seconde valeur  
   json = json + "}";
 
