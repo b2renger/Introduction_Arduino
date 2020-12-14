@@ -1203,54 +1203,87 @@ Then we can display colors on the LEDs by scanning each led of our ribbon using 
 
 #### RGB
 
-Here we will create a small animation by varying the red and green components of each led.
-
 <img src="assets/set_neopixels_rgb.gif" width="480" height="270" /><br>
 
-```c 
-// include fast-led library
-#include <FastLED.h>
-#define NUM_LEDS 5 // define the number of leds eg 5
+The most simple way for a beginner is to adress leds individually :
 
-CRGBArray<NUM_LEDS> leds; // define a table of data each entry of the table will represent a led.
-float  inc = 0; // a variable that we will use to create an animation (simulate time)
+
+```c
+// include fast-led lib
+#include <FastLED.h>
+#define NUM_LEDS 5 // define the numb of leds
+
+CRGBArray<NUM_LEDS> leds; // define an array each entry will represent a led
 
 void setup() {
-  // we initialize our strip of led on the pin 9
+  // intialize the leds on pin 9
+  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
+}
+
+void loop() {
+  leds[0] = CRGB(255, 0, 0); //red
+  leds[1] = CRGB(0, 255, 0); // green
+  leds[2] = CRGB(0, 0, 255); // blue
+  leds[3] = CRGB(255, 255, 255); // white
+  leds[4] = CRGB(0, 0, 0); // black
+  FastLED.show(); // do display the color w chose
+}
+```
+
+If you use a longer strip it might be more comfortable to address all leds using a for loop
+```c 
+// include fast-led lib
+#include <FastLED.h>
+#define NUM_LEDS 5 
+
+CRGBArray<NUM_LEDS> leds; 
+
+void setup() {
   FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
 }
 
 void loop() {
 
-  inc +=  0.05; // increase the value of inc
-  // we calculate in from inc a value that will oscillate between 0 and 244.
-  double green = (sin(inc) + 1)*122; // this value is stored in a variable named "green"
-     
-  // For i ranging from 0 to 5, we will execute the code between braces,
-  // each time it's done we increase the value of i of 1
+  // for 'i' from 0 to NUM_LEDS (ie 5) do the code between brackets
+  // each time increment the value of 'i' by one.
   for (int i = 0; i < NUM_LEDS; i++) {
-    // change the value of the led 'i' of the array named 'leds' giving it a new RGB value
-    leds[i] = CRGB(255-green, green, 0);
+    // change the value of the led at index 'i' from the leds array by giving it a rgb value
+    leds[i] = CRGB(255, 0, 0);
+    // you can also try to create a gradiant
+    //int r = map(i, 0, NUM_LEDS, 0, 255);
+    // leds[i] = CRGB(r, 0, 0);
   }
-  FastLED.show(); // we update the LED ribbon
+  FastLED.show(); // do display !
 }
 ```
 
-If you want to give a precise color to each led, you can use direct calls to each led without for loop:
+
+It's also possible to do the same thing with the adafruit lib :
+
+by adressing each led individually : 
 
 ```c
-void loop(){
-    leds[0] = CRGB(255, 0, 0); //red
-    leds[1] = CRGB(0, 255, 0); // green
-    leds[2] = CRGB(0, 0, 255); // blue
-    leds[3] = CRGB(255, 255, 255); // White
-    leds[0] = CRGB(0, 0, 0); // black
-    FastLED.show(); // we update the LED ribbon
+#include <Adafruit_NeoPixel.h>
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 6, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
+
+void setup() {
+  pixels.begin(); // This initializes the NeoPixel library.
 }
 
-```
+void loop() {
+  pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // red
+  pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // green
+  pixels.setPixelColor(2, pixels.Color(0, 0, 255));// blue
+  pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // white
+  pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // black
+  pixels.show(); // do display
+}
+````
 
-With the neopixel lib it will give something like this 
+ou en utilisant une boucle for :
 
 ```c
 #include <Adafruit_NeoPixel.h>
@@ -1259,7 +1292,6 @@ With the neopixel lib it will give something like this
 // Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 6, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
-float inc = 0;
 
 
 void setup() {
@@ -1268,79 +1300,58 @@ void setup() {
 
 void loop() {
 
-  inc +=  0.05; // on augmente la valeur de inc
-  // on calcule en fonction de inc un valeur qui va osciller entre 0 et 244.
-  int green = (sin(inc) + 1) * 122; // cette valeur est stocké dans une variable nommée "green"
-
   for (int i = 0; i < NUMPIXELS; i++) {
-    pixels.setPixelColor(i, pixels.Color(255 - inc, 255, 0)); // Moderately bright green color.
+    pixels.setPixelColor(i, pixels.Color(255 , 0, 0)); // Bright red
   }
 
   pixels.show(); // This sends the updated pixel color to the hardware.
 }
 ````
 
-You can also set each led individually  by getting rid of the for loop : 
 
-```c
-void loop(){
-    pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // rouge
-    pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // vert
-    pixels.setPixelColor(2, pixels.Color(0, 0, 255));// bleu
-    pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // blanc
-    pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // noir
-    pixels.show(); // on actualise le ruban de led
-}
-```
-
-[**home**](#Contents)
+[**home**](#Contenu)<br>
 
 #### HSB
 
-The cicuit is the same: 
+Schematics stay the same : 
 <img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
 
-The code is almost the same except that we call the **CHSV()** function of the Fast-led library. Even if in most software the hue is represented by a value between 0 and 360 and the saturation and the brightness are represented by values ​​between 0 and 100, in this case each of the three values ​​must be between 0 and 255.
+
+The code is almost the same except that we call the function **CHSV()** of the Fast-led library. Even though in most software the hue is represented by a value between 0 and 360 and the saturation as well as the luminosity are represented by values ​​between 0 and 100, here each of the three values ​​must be between 0 and 255.
+
+
 
 
 ```c
-// include the fast-led library
-#include <FastLED.h>
-#define NUM_LEDS 5 // define the number of leds eg 5
 
-CRGBArray<NUM_LEDS> leds; // define a table of data each entry of the table will represent a led.
-float  inc = 0;
+#include <FastLED.h>
+#define NUM_LEDS 5 
+
+CRGBArray<NUM_LEDS> leds; 
 
 void setup() {
-  // we initialize our strip of led on the pin 9
   FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
 }
 
 void loop() {
     
-  // increase the value of inc
-  // we calculate according to inc a value that will oscillate between 0 and 244.
-  inc +=  0.05;
-  double saturation = (sin(inc) + 1)*122; // this value is stored in a variable named "saturation"
-  // For i ranging from 0 to 5, we will execute the code between braces,
-  // each time we increase the value of i of 1
+  // for 'i' from 0 to NUM_LEDS (ie 5) do the code between brackets
+  // each time increment the value of 'i' by one.
   for (int i = 0; i < NUM_LEDS; i++) {
-    // change the value of the led 'i' of the array named 'leds' giving it a new HSV value
-    leds[i] = CHSV(255 - i *50, saturation, 255);
+    leds[i] = CHSV(255 - i *50, 255, 255);
   }
-    FastLED.show();// we update the LED ribbon
+    FastLED.show();// do display !
 }
 ```
-
-we can once again directly call the function **CHSV()**
+You can also set each led individually : 
 ```c
 void loop(){
     leds[0] = CHSV(0, 255, 255); //red
     leds[1] = CHSV(90, 255, 255); // green
     leds[2] = CHSV(180, 255, 255); // blue
-    leds[3] = CHSV(255, 0, 255); // White
+    leds[3] = CHSV(255, 0, 255); // white
     leds[0] = CHSV(0, 0, 0); // black
-    FastLED.show(); // we update the LED ribbon
+    FastLED.show(); // do display
 }
 
 ```
