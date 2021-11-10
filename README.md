@@ -1173,6 +1173,51 @@ Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
 [**home**](#Contenu)<br>
 
+#### Servo Easing
+
+Il est possible d'utiliser une bibliothèque pour obtenir des mouvements plus complexes au notament gérer l'accélération du mouvement à l'aide de courbes de easing classique.
+
+<img src="assets/easing.gif" width="480" height="270" /><br>
+
+Vous pouvez donc télécharger la bibliothèque **ServoEasing**.
+Les exemples fournis sont assez complexes mais vous pouvez vous référer à l'exemple ci-dessous grandement simplifié.
+
+```c
+
+#include <Arduino.h>
+#include "ServoEasing.hpp"
+
+ServoEasing Servo1;
+void setup() {
+
+  pinMode(6, OUTPUT);
+  // put your setup code here, to run once:
+  Servo1.attach(6, 0); // on pin D6 , start position is 0
+  Servo1.setEasingType(EASE_CUBIC_IN_OUT);
+  Servo1.easeTo(180, 20); // move to 180 at 20 per second
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Servo1.setSpeed(80);
+  Servo1.setEasingType(EASE_BOUNCE_OUT);
+  Servo1.easeTo(0);
+
+  Servo1.setSpeed(20);
+   Servo1.setEasingType(EASE_ELASTIC_IN_OUT);
+  Servo1.easeTo(180);
+}
+
+```
+
+Vous pouvez vous référer à ce [lien](https://github.com/ArminJo/ServoEasing#usage)
+
+et à cette [page](https://easings.net/) qui référence les différents types de easing usuels.
+
+
+[**home**](#Contenu)<br>
+
 
 ### Allumer des leds neopixel
 
