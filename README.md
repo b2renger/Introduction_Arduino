@@ -209,7 +209,7 @@ Exemple d'utilisation :
 
 Le circuit à réaliser :
 
-<img src="read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
+<img src="code/read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
 
 Ici nous utilisons un résistance de 10 kilo ohms, pour protéger notre capteur et notre carte : cela nous permet d'abaisser le courant circulant dans nos fils avant de le mesurer. 
 
@@ -249,7 +249,7 @@ Ici au lieu d'ouvir le **moniteur série**, le résultat est affiché dans le **
 
 Le *PIR* est souvent accompagné d'un petit circuit imprimmé et il n'est donc pas nécessaire d'ajouter de résistance car cela a souvent déjà été fait sur la carte accompagnant le capteur.
 
-<img src="read_from_PIR/read_from_pir.png" width="480" height="360" /><br>
+<img src="code/read_from_PIR/read_from_pir.png" width="480" height="360" /><br>
 
 Le code est identique au code précédent si nous avons bien aussi branché le capteur *PIR* sur l'entrée 7 : 
 
@@ -273,7 +273,7 @@ Le microswitch est de la même famille que les interupteurs ou les boutons. Lors
 
 <img src="assets/read_from_microswitch.gif" width="480" height="270" /><br>
 
-<img src="read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
+<img src="code/read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
 
 Encore une fois le code est identique sauf que notre composant est branché pour sur l'entrée digitale 2
 ```c
@@ -308,15 +308,15 @@ Le circuit électronique est sensiblement le même pour tous les boutons : il es
 
 ##### Le bouton capacitif
 
-<img src="read_from_button/read_from_button_grove.png" width="480" height="360" /><br>
+<img src="code/read_from_button/read_from_button_grove.png" width="480" height="360" /><br>
 
 ##### Le bouton "classique"
 
-<img src="read_from_button/read_from_button_classic.png" width="480" height="360" /><br>
+<img src="code/read_from_button/read_from_button_classic.png" width="480" height="360" /><br>
 
 ##### Le bouton d'arcade
 
-<img src="read_from_button/read_from_button_arcade.png" width="480" height="360" /><br>
+<img src="code/read_from_button/read_from_button_arcade.png" width="480" height="360" /><br>
 
 
 #### Code
@@ -410,7 +410,7 @@ Le [*potentionmètre*](https://fr.wikipedia.org/wiki/Potentiom%C3%A8tre) est le 
 
 Le potentiomètre dispose de 3 pattes : les deux aux extrémités sont dédiées à son alimentation (une reliée à **GND** l'autre au **5V**, la patte centrale porte le signal que nous souhaitons lire et sera donc reliée à une **entrée analogique**.
 
-<img src="read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
+<img src="code/read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
 
 Le code est très similaire au code des capteurs logiques excepté que les pins analogiques sont forcément des entrées et il n'est donc pas nécessaire d'en préciser l'usage avec **pinMode()** et que nous lisons sur une entrée analogique en utilisant **analogRead()** à la place **digitaleRead()** :
 
@@ -437,7 +437,7 @@ Il existe une multitude de micro certains possèdent des molettes de réglage po
 
 Nous n'utiliserons que 3 des 4 broches du connecteur : deux pour l'alimentation et la troisième pour lire les données analogiques. Le wiki du fabricant nous précise les connexions disponnibles sur la broche : http://wiki.seeedstudio.com/Grove-Sound_Sensor/
 
-<img src="read_from_grove_mic/read_from_grove_mic.png" width="480" height="360" /><br>
+<img src="code/read_from_grove_mic/read_from_grove_mic.png" width="480" height="360" /><br>
 
 ```c
 void setup() {
@@ -461,7 +461,7 @@ La [*photorésistance*](https://fr.wikipedia.org/wiki/Photor%C3%A9sistance) fait
 
 Pour protéger la lecture du courant sur notre entrée analogique nous allons une résistance de 10 kilo ohms. Nous retrouvons un montage assez similaire à celui d'un capteur logique tilt.
 
-<img src="read_from_photores/read_from_photores.png" width="480" height="360" /><br>
+<img src="code/read_from_photores/read_from_photores.png" width="480" height="360" /><br>
 
 Nous lisons le signal sur l'entrée analogique A0 : 
 
@@ -492,7 +492,7 @@ Ici nous allons nous contenter de détecter des vibrations et d'en mesurer l'imp
 
 Pour protéger notre entrée mais aussi parce que par rapport à une résistance de 10kOhms elle nous permettra d'avoir de meilleures valeurs en sortie, nous allons utiliser un résistance de 100kOhms.
 
-<img src="read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
+<img src="code/read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
 
 Le code lui reste le même tant que notre capteur est sur la même entrée.
 ```c
@@ -517,7 +517,7 @@ Le *FSR* est un capteur de force : il va convertir le poids appliqué sur sa sur
 
 On retouve le même type de schéma que pour le capteur *tilt* ou que pour le *piezo* ou encore la *photorésistance*. Ici il est monté avec une résistance de 47 kOhms, mais vous pouvez essayer d'ajuster cette valeur pour affiner la précision utile.
 
-<img src="read_from_FSR/read_from_FSR.png" width="480" height="360" /><br>
+<img src="code/read_from_FSR/read_from_FSR.png" width="480" height="360" /><br>
 
 
 ```c
@@ -541,7 +541,7 @@ Le *flex sensor* va convertir la courbure qu'il prend en valeur comprises entre 
 
 Ici il est monté avec une résistance de 47 kOhms, mais vous pouvez essayer d'ajuster cette valeur pour affiner la précision utile.
 
-<img src="read_from_flex/read_from_Flex.png" width="480" height="480" /><br>
+<img src="code/read_from_flex/read_from_Flex.png" width="480" height="480" /><br>
 
 ```c
 void setup() {
@@ -568,7 +568,7 @@ Le capteur infra-rouge va permettre avec un système de lentilles et d'équation
 
 <img src="assets/read_from_irdistance.gif" width="480" height="270" /><br>
 
-<img src="read_from_IRDistance/read_from_irdistance.png" width="480" height="360" /><br>
+<img src="code/read_from_IRDistance/read_from_irdistance.png" width="480" height="360" /><br>
 
 ```c
 void setup() {
@@ -601,7 +601,7 @@ Le principe de mesure de ces deux capteurs est le même et les résultats obtenu
 
 Le circuit ressemble à un circuit classique avec les composants grove :
 
-<img src="read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="480" /><br>
+<img src="code/read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="480" /><br>
 
 Le code nécessite d'installer une bibliothèque. Vous pouvez avoir accès au gestionnaire de bibliothèques d'arduino en cliquant sur le menu : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*. Il faut alors rechercher et installer la bibliothèque **Grove Ultrasonic ranger**.
 
@@ -633,7 +633,7 @@ Le branchement est un peu différent de ce que nous avons vu jusqu'à présent. 
 
 Les deux suivantes **trig** et **echo** aux entrées digitales 11 et 10 respectivement.
 
-<img src="read_from_UltraSonic_Distance/read_from_ultrasonic_distance.png" width="480" height="360" /><br>
+<img src="code/read_from_UltraSonic_Distance/read_from_ultrasonic_distance.png" width="480" height="360" /><br>
 
 Cela est du au fonctionnement intrinsèque du capteur. Nous allons en fait générer un courant sur la patte **trig** et mesurer un courant sur la patte **echo** : nous allons émettre des ultra-sons et écouter leur écho et en fonction du temps écoulé entre l'émission et la réception de l'écho nous pourrons déterminer une distance (car nous connaissons la vitesse du son).
 
@@ -728,7 +728,7 @@ L'[*accéléromètre*](https://fr.wikipedia.org/wiki/Acc%C3%A9l%C3%A9rom%C3%A8tr
 
 Le montage est tout ce qu'il y a de plus simple :
 
-<img src="read_from_accelerometer/read_from_3axisAccelerometer.png" width="480" height="360" /><br>
+<img src="code/read_from_accelerometer/read_from_3axisAccelerometer.png" width="480" height="360" /><br>
 
 Le code est lui assez complexe, il utilise la bibliothèque *ADXL345* spécialement dédiée à ce composant, elle ne sera donc pas utilisable avec tous les accéléromètres.
 
@@ -790,7 +790,7 @@ Sa mise en oeuvre est assez similaire à la mise en oeuvre de l'accéleromètre.
 
 <img src="assets/read_from_gyroscope.gif" width="480" height="270" /><br>
 
-<img src="read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
+<img src="code/read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
 
 La page de documentation du fabricant nous fournit les informations relative à son utilisation en terme de code : http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/    
 
@@ -850,7 +850,7 @@ Le dernier capteur que nous allons voir est un *capteur de gestes*. Il va nous p
 
 Ce capteur consiste en une série de photorésistances : lorsque l'on bouge devant, la luminosité reçue par chaque photorésistance change et une bibliothèque logicielle nous permettre de reconnaitre des patterns de mesure de courant relatifs à ces gestes.
 
-<img src="read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
+<img src="code/read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
 
 Selon la page du fabricant : http://wiki.seeedstudio.com/Grove-Gesture_v1.0/
 il faut utiliser la bibliothèque *paj7620* - * Gesture PAJ7620*
@@ -933,7 +933,7 @@ Deux modes d'interactions sont possibles avec ce type d'actuateur, on peut :
 
 Dans les deux cas le circuit sera le même :
 
-<img src="set_led_blink/set_led.png" width="480" height="360" /><br>
+<img src="code/set_led_blink/set_led.png" width="480" height="360" /><br>
 
 Il est important de savoir que la [led](https://fr.wikipedia.org/wiki/Diode_%C3%A9lectroluminescente) simple est un composant polarisé - c'est à dire qu'il a un sens. La petite patte correspond au moins et doit donc être reliée à la masse, la patte la plus longue correspond au plus et doit être reliée à une sortie digitale.
 Entre la masse et la patte moins de la led on insère une résistance de 220 ohms afin de protéger la led d'une éventuelle surtension qui risquerait de la griller.
@@ -992,7 +992,7 @@ void loop() {
 
 Pour le vibreur la logique est exactement que pour la led, le montage est très similaire :
 
-<img src="set_vibrator_onoff/set_vibrator.png" width="480" height="360" /><br>
+<img src="code/set_vibrator_onoff/set_vibrator.png" width="480" height="360" /><br>
 
 Et le code sera aussi similaire ...
 
@@ -1045,7 +1045,7 @@ Nous avons vu que les entrées digitales permettait de mesurer des courants *HIG
 
 D'une manière générale tous les servomoteurs se branchent de le même façon :
 
-<img src="set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
+<img src="code/set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
 
 Le cable foncé est la masse (GND), le cable rouge est l'alimentation (5V), le dernier est généralement jaune ou orange on le relie à une sortie digitale d'une carte arduino, mais attention à une sortie PWM.
 
@@ -1180,7 +1180,7 @@ Nous allons utiliser directement des rubans de leds. Ces rubans présentent des 
 
 Ils peuvent être découpés à la longueur souhaités et ne nécessitent que trois cables pour les contrôller : deux pour l'alimentation et un pour la donnée. Le schéma de montage sera toujours le même.
 
-<img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
+<img src="code/set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
 En fonction du nombre de leds que vous voulez allumer mais aussi en fonction de la couleur ou de l'intensité, il vous faudra une puissance différente. Il peut parfois être nécessaire de faire appel à des alimentations externes - en dessous d'une dizaine de led par entrée une carte arduino devrait pouvoir alimenter sans recours à une source d'énergie externe. Une led consomera au maximum 60mA (allumée en blanc à l'intensité maximale). A des courants plus importants, il pourra être intéressant d'ajouter un condensateur en parallèle sur l'alimentation.
 
@@ -1370,7 +1370,7 @@ La page de documentation du fabricant du composant est disponnible ici : http://
 
 Le cablage est un cablage classique pour ce genre de périphérique.
 
-<img src="set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
+<img src="code/set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
 
 D'un point de vue logiciel il va vous falloir télécharger le bibliothèque **TM1637** /**Grove 4-digit display**.
 
@@ -1447,7 +1447,7 @@ Comment controller un servomoteur avec un potentiomètre ?
 
 Le montage est la réunion de deux montages déjà vu précédement : on branche un potentiomètre sur l'entrée analogique *A0*, et on branche un moteur sur la sortie digitale *D6*.
 
-<img src="map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
+<img src="code/map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
 
 Le code va aussi réunir deux bouts de code déjà existant, on va juste utiliser la fonction map pour faire le lien entre notre mesure de la valeur du potentiomètre et l'information que l'on va envoyer au servomoteur.
 
@@ -1486,7 +1486,7 @@ L'objectif ici va être de contrôller la vitesse et le sens de rotation d'un se
 
 De la même manière que précédement, ce montage est la combinaison du montage permettant de récupérer l'information d'un capteur de flexion et du montage permettant de controller un servomoteur à rotation continue.
 
-<img src="map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
+<img src="code/map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
 
 Le code va reprendre le code permettant de mesurer la valeur d'un capteur de flexion et va le combiner avec le code permettant de faire tourner un moteur à rotation continue en mappant les valeur provenant du capteur de flexion vers des valeurs utiles pour faire tourner un moteur à rotation continu.
 
@@ -1526,7 +1526,7 @@ Ici nous allons utiliser un capteur pour fixer la teinte de la lumière produite
 
 Le cablage comporte un capteur de force avec un résistance 47kOhms branché sur l'entrée analogique A0, et un strip de led branché sur la pin digitale D6.
 
-<img src="map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
+<img src="code/map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
 
 Comme d'habitude nous allons récupérer une valeur analogique comprise entre 0 et 1023 et nous allons transformer les valeurs obtenues en valeurs comprises entre 0 et 255 pour pouvoir controller la teinte de nos leds.
 
