@@ -60,6 +60,7 @@ Vous pourrez retrouver l'ensemble des explications ainsi que les code d'exemples
         * [Accelerometre](#Accelerometre)<br>
         * [Gyroscope](#Gyroscope)<br>
         * [Gesture](#Gesture)<br>
+        * [RFID](#Rfid)<br>
     
 * [Connecter des actuateurs et agir sur le monde](#Connecter-des-actuateurs-et-agir-sur-le-monde)<br>
 
@@ -75,6 +76,8 @@ Vous pourrez retrouver l'ensemble des explications ainsi que les code d'exemples
       * [Servomoteur classique](#Servomoteur-classique)<br>
       * [Servomoteur rotation continue](#Servomoteur-rotation-continue)<br>
       * [Servomoteur lineaire](#Servomoteur-lineaire)<br>
+      * [Servomoteur mouvement avec easing](#ServoEasing)<br>
+
 
   * [Allumer des leds neopixel](#Allumer-des-leds-neopixel)<br>
       * [RGB](#RGB)<br>
@@ -919,6 +922,126 @@ void loop() {
 ```
 [**home**](#Contenu)<br>
 
+
+#### Rfid
+Le capteur RFID est typiquement le type de capteur utilisé dans tous les contrôles d'accès par badge ou carte.
+
+Chaque carte possède un circuit passif qui stocke un identifiant donné. Il est possible d'écrire sur un carte, mais ici nous nous contenterons de réussir à lire cet identifiant.
+
+En faisant cela il devrai être assez facile de pouvoir déclencher des actions en fonction de la carte ou du badge qui est passé devant le lecteur RFID à la manière de ce qui est montré ci-dessous :
+
+<img src="assets/rfid.gif" width="480" height="270" /><br>
+
+Le schéma électrique est le suivant :
+
+<img src="code/read_rfid/read_rfid.PNG" width="480" height="270" /><br>
+
+L'ordre des broches correspond au modèle commercialisé par Joy-it, il peut varier si vous utilisez un autre modèle. 
+
+Pour mémo voici le nom des broches et leur correspondance sur la carte arduino :
+* VCC        -> 5V
+* RST        -> D9
+* GND        -> GND
+* MISO       -> D12
+* MOSI       -> D11
+* SCK        -> D13
+* SDA ou NSS -> D10
+
+Pour pouvoir téléverser le code il faudra installer une bibliothèque dédiée : *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques* et chercher **MFRC522** (by Github Community).
+
+Le code de test est le suivant : 
+
+```c
+#include "SPI.h"
+#include "MFRC522.h"
+/***
+ * VCC -> 5V
+ * RST -> D9
+ * GND -> GND
+ * MISO -> D12
+ * MOSI -> D11
+ * SCK -> D13
+ * SDA or NSS -> D10
+ */
+
+
+#define SS_PIN 10
+#define RST_PIN 9
+MFRC522 rfid(SS_PIN, RST_PIN);
+MFRC522::MIFARE_Key key;
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin();
+  rfid.PCD_Init();
+  Serial.println("I am waiting for card...");
+}
+
+void loop() {
+ 
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial())
+    return;
+  // Serial.print(F("PICC type: "));
+  MFRC522::PICC_Type piccType = rfid.PICC_GetType(rfid.uid.sak);
+  // Serial.println(rfid.PICC_GetTypeName(piccType));
+  // Check is the PICC of Classic MIFARE type
+  if (piccType != MFRC522::PICC_TYPE_MIFARE_MINI &&
+      piccType != MFRC522::PICC_TYPE_MIFARE_1K &&
+      piccType != MFRC522::PICC_TYPE_MIFARE_4K) {
+    Serial.println(F("Your tag is not of type MIFARE Classic."));
+    return;
+  }
+  String strID = "";
+  for (byte i = 0; i < 4; i++) {
+    strID +=
+      (rfid.uid.uidByte[i] < 0x10 ? "0" : "") +
+      String(rfid.uid.uidByte[i], HEX) +
+      (i != 3 ? ":" : "");
+  }
+
+  strID.toUpperCase();
+  Serial.println("");
+  Serial.print("Tap card key: ");
+  Serial.println(strID);
+  Serial.println("");
+  delay(1000);
+
+  if (strID.indexOf("C0:8F:C8:49") >= 0) {  //put your own tap card key;
+    
+    Serial.println("blue badge");
+    Serial.println("");
+  }
+  else if (strID.indexOf("8E:5B:CD:15") >= 0) {  //put your own tap card key;
+    //Serial.println("");
+    Serial.println("card");
+    Serial.println("");
+  }
+  else {
+    Serial.println("");
+    Serial.println("unknown");
+    Serial.println("");
+  }
+}
+
+```
+
+Plusieurs points important sont à relever :
+* lorsque l'on passe un badge ou une carte l'identifiant s'affiche dans le moniteur série. Il convient donc d'adapter le code pour que la série de condition fonctionne correctement avec vos badges.
+  ```c
+  if (strID.indexOf("C0:8F:C8:49") >= 0)
+  ```
+  "C0:8F:C8:49" est donc à remplacer par l'identifiant d'une de vos carte.
+
+* Au tout début du code il est fait appel à la fonction *return*
+  ```c
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial())
+      return;
+  ```
+  Cela a pour effet d'ignorer le reste du code si une nouvelle carte n'est pas présente devant le lecteur. Vous pouvez commenter le mot clé *return* si cela vous pose souci. Si vous le conservez et que votre projet utilise d'autres composants, veillez bien à placer le code des autres composants avant ces quelques lignes.
+
+
+[**home**](#Contenu)<br>
+
 ## Connecter des actuateurs et agir sur le monde
 Après avoir utilisé les commandes **digitalRead()** et **analogRead()** pour lire des courants sur les broches d'entrée d'une carte arduino, nous allons maintenant voir comment utiliser les fonction **digitalWrite()** et **analogWrite()** pour générer des courants sur les broches de sortie. A noter que les broches digitales peuvent être configurées en tant que sortie ou en tant qu'entrée à l'aide de la fonction [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/).
 
@@ -1173,7 +1296,7 @@ Vous pouvez essayer de changer les valeurs pour voir ce qu'il se passe.
 
 [**home**](#Contenu)<br>
 
-#### Servo Easing
+#### ServoEasing
 
 Il est possible d'utiliser une bibliothèque pour obtenir des mouvements plus complexes au notament gérer l'accélération du mouvement à l'aide de courbes de easing classique.
 
