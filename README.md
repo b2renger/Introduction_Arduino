@@ -60,6 +60,7 @@ You can also find all the code and explanation on this [github repo](https://git
     * [Accelerometer](#Accelerometer) <br>
     * [Gyroscope](#Gyroscope) <br>
     * [Gesture](#Gesture) <br>
+    * [RFID](#Rfid)<br>
     
 * [Connect actuators and enable devices](#Connect-actuators-and-activate-devices) <br>
 
@@ -75,6 +76,7 @@ You can also find all the code and explanation on this [github repo](https://git
     * [Classic sevomotor](#Classic-servomotor) <br>
     * [Continuous rotation](#Continuous-rotation-servomotor) <br>
     * [Linear Servomotor](#Linear-servomotor) <br>
+    * [Servo with easing](#ServoEasing)<br>
 
   * [Light up leds neopixel](#Light-up-leds-neopixel) <br>
     * [RGB](#RGB) <br>
@@ -157,7 +159,7 @@ Once the program written it must be **uploaded** to the board. Beforehand you mu
 
 To do this you have to go to the *Tools* menu and then select *Arduino / Genuino Uno* as the **board type** and choose the right board from the **Port** menu (of course at this stage you need your card to be connected to a USB port of your computer):
 
-<img src="assets/arduino_ide_selection_carte.png" width="900" height="640" /><br>
+<img src="assets/arduino_ide_selection_carte.png" width="900" height="480" /><br>
 
 Once done, you can **check** your program and **upload** it.
 
@@ -213,7 +215,7 @@ Example of use :
 
 The circuit to realize:
 
-<img src="read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
+<img src="code/read_from_tilt/read_from_tilt.png" width="480" height="360" /><br>
 
 Here we use a resistor of 10 kilo ohms, to protect our sensor and our card: this allows us to lower the current flowing before measuring it.
 
@@ -253,7 +255,7 @@ Here instead of opening the **serial monitor**, the result is displayed in the *
 
 The *PIR* is often accompanied by a small printed circuit and it is therefore not necessary to add resistance because it has already been done on the board accompanying the sensor.
 
-<img src="read_from_PIR/read_from_pir.png" width="480" height="360" /><br>
+<img src="code/read_from_PIR/read_from_pir.png" width="480" height="360" /><br>
 
 The code is identical to the previous code if we have also connected the * PIR * sensor to input 7:
 
@@ -276,7 +278,7 @@ The microswitch is in the same family as the switches or buttons. When we press 
 
 <img src="assets/read_from_microswitch.gif" width="480" height="270" /><br>
 
-<img src="read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
+<img src="code/read_from_microswitch/read_from_microswitch.png" width="480" height="360" /><br>
 
 Again the code is identical except that our component is connected to the digital input 2
 ```c
@@ -299,7 +301,7 @@ The buttons may appear at first glance as the simplest component to use, but thi
 
 Buttons are of different sizes and shapes, they can have 2, 3 or 4 legs but the principle is always the same: when you press the button, the circuit closes and thus the current can pass. By measuring this current on a digital pin one obtains either a 0 (open circuit = no current) or a 1 (closed circuit = the current passes). It is possible to obtain more complex behavior than this simple reading and to "recognize" double clicks, long presses, etc. by using a library.
 
-<img src="assets/differents_boutons.jpg" width="480" height="360" /><br>
+<img src="assets/differents_boutons.jpg" width="480" height="400" /><br>
 
 The arcade button has 3 pins, the small button at the bottom right has 4 and the button at the bottom left has 3 pins too (it is a capacitive button).
 
@@ -312,15 +314,15 @@ The electronic circuit is essentially the same for all the buttons: it is better
 
 ##### Le bouton capacitif
 
-<img src="read_from_button/read_from_button_grove.png" width="480" height="360" /><br>
+<img src="code/read_from_button/read_from_button_grove.png" width="480" height="360" /><br>
 
 ##### Le bouton "classique"
 
-<img src="read_from_button/read_from_button_classic.png" width="480" height="360" /><br>
+<img src="code/read_from_button/read_from_button_classic.png" width="480" height="360" /><br>
 
 ##### Le bouton d'arcade
 
-<img src="read_from_button/read_from_button_arcade.png" width="480" height="360" /><br>
+<img src="code/read_from_button/read_from_button_arcade.png" width="480" height="360" /><br>
 
 
 [**home**](#Contents)
@@ -417,7 +419,7 @@ The [*potentiometer*](https://en.wikipedia.org/wiki/Potentiometer) is a classic 
 
 The potentiometer has 3 legs: both ends are dedicated to its power supply (one connected to **GND** the other to **5V**, the central leg carries the signal that we want to read and will be connected to an **analog input**.
 
-<img src="read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
+<img src="code/read_from_potentiometer/read_from_pot.png" width="480" height="360" /><br>
 
 The code is very similar to the code of logic sensors except : that the analog pins are necessarily inputs and it is therefore not necessary to specify the use with **pinMode()**, and that we read on an analog input using **analogRead()** instead **digitaleRead()**:
 
@@ -445,7 +447,7 @@ There are a multitude of mics some have adjustment wheels to calibrate their sen
 
 We will use only 3 of the 4 pins of the connector: two for the power supply and the third for reading the analog data. The manufacturer's wiki tells us which connections are available on the spindle: http://wiki.seeedstudio.com/Grove-Sound_Sensor/
 
-<img src="read_from_grove_mic/read_from_grove_mic.png" width="480" height="360" /><br>
+<img src="code/read_from_grove_mic/read_from_grove_mic.png" width="480" height="360" /><br>
 
 ```c
 void setup() {
@@ -469,7 +471,7 @@ The [*photoresistor*](https://en.wikipedia.org/wiki/Photoresistor) varies its re
 
 To protect the current reading on our analog input we are going to a resistance of 10 kilo ohms. We find a circuit quite similar to that of a logical tilt sensor.
 
-<img src="read_from_photores/read_from_photores.png" width="480" height="360" /><br>
+<img src="code/read_from_photores/read_from_photores.png" width="480" height="360" /><br>
 
 We read the signal on the analog input A0: 
 
@@ -500,7 +502,7 @@ Here we will detect vibrations and measure their level.
 
 To protect our input, but also because compared to a resistance of 10kOhms it will give better readings, we will use a resistance of 100kOhms.
 
-<img src="read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
+<img src="code/read_from_piezo/read_from_piezo.png" width="480" height="360" /><br>
 
 The code remains the same as long as our sensor is on the same input.
 ```c
@@ -525,7 +527,7 @@ void loop() {
 
 We find the same type of diagram as for the sensor *tilt* or that for the *piezo* or the *photoresistance*. Here it is mounted with a resistance of 47 kOhms, but you can try to adjust this value to refine the precision.
 
-<img src="read_from_FSR/read_from_FSR.png" width="480" height="360" /><br>
+<img src="code/read_from_FSR/read_from_FSR.png" width="480" height="360" /><br>
 
 ```c
 void setup() {
@@ -549,7 +551,7 @@ The *flex sensor* will convert the curvature that it takes to a value between 0 
 
 Here it is mounted with a resistance of 47 kOhms, but you can try to adjust this value to refine the precision.
 
-<img src="read_from_flex/read_from_Flex.png" width="480" height="480" /><br>
+<img src="code/read_from_flex/read_from_Flex.png" width="480" height="480" /><br>
 
 ```c
 void setup() {
@@ -578,7 +580,7 @@ The infrared sensor will allow a system of lenses and trigonometric equations to
 
 <img src="assets/read_from_irdistance.gif" width="480" height="270" /><br>
 
-<img src="read_from_IRDistance/read_from_irdistance.png" width="480" height="360" /><br>
+<img src="code/read_from_IRDistance/read_from_irdistance.png" width="480" height="360" /><br>
 
 ```c
 void setup() {
@@ -612,7 +614,7 @@ The measuring principle of these two sensors is the same and the results obtaine
 
 The circuit looks like a classic circuit with grove components:
 
-<img src="read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="480" /><br>
+<img src="code/read_from_UltraSonic-Distance-grove/read_from_UltraSonic-Distance-grove.png" width="480" height="480" /><br>
 
 The code requires to install a library. You can access the arduino library manager by clicking on the menu: *Sketch* -> *Include Library* -> *Manage Libraries*. You must then look for and install the **Grove Ultrasonic ranger** library.
 
@@ -644,7 +646,7 @@ The hookup is a little different from what we have seen so far. Two legs will be
 
 The next two **trig** and **echo** at digital inputs 11 and 10 respectively.
 
-<img src="read_from_UltraSonic_Distance/read_from_ultrasonic_distance.png" width="480" height="360" /><br>
+<img src="code/read_from_UltraSonic_Distance/read_from_ultrasonic_distance.png" width="480" height="360" /><br>
 
 This is due to the way the sensor work. We will actually generate a current on the leg **trig** and measure a current on the leg **echo**: we will emit ultrasounds, listen to their echo and according to the time elapsed between the emission and the reception of the echo we can determine a distance (because we know the speed of the sound !).
 
@@ -738,7 +740,7 @@ The [*accelerometer*](https://en.wikipedia.org/wiki/Accelerometer) allows measur
 
 The circuit is quite simple:
 
-<img src="read_from_accelerometer/read_from_3axisAccelerometer.png" width="480" height="360" /><br>
+<img src="code/read_from_accelerometer/read_from_3axisAccelerometer.png" width="480" height="360" /><br>
 
 The code is quite complex, it uses the library *ADXL345* dedicated to this component, it will not be used with all accelerometers.
 
@@ -800,7 +802,7 @@ Its use is quite similar to the use of an accelerometer.
 
 <img src="assets/read_from_gyroscope.gif" width="480" height="270" /><br>
 
-<img src="read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
+<img src="code/read_from_gyroscope/read_from_3axisGyro.png" width="480" height="360" /><br>
 
 The manufacturer's documentation page provides us with information about its use in terms of code:http://wiki.seeedstudio.com/Grove-3-Axis_Digital_Gyro/    
 
@@ -861,7 +863,7 @@ The last sensor we will see is a *gesture sensor*. It will allow us to identify 
 
 This sensor consists of a series of photoresistors: when moving in front, the brightness received by each photoresistor changes and a software library allow us to recognize patterns of current measurement related to these gestures.
 
-<img src="read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
+<img src="code/read_from_gesture_sensor/read_from_gesture.png" width="480" height="360" /><br>
 
 According to the manufacturer's page: http://wiki.seeedstudio.com/Grove-Gesture_v1.0/
 use the library *paj7620* - *Gesture PAJ7620*
@@ -931,6 +933,126 @@ void loop() {
 [**home**](#Contents)
 
 
+#### Rfid
+
+The rfid reader is used for access control via a a swipe card for instance.
+
+Each card has a passiv electronic element storing a specific ID. It's possible to write or read a card, but in our scope we will only learn how to read the ID already stored in the card.
+
+Knowing how to do this it should be fairly easy to do some stuff depending on the card or sticker passed in front of the reader.
+
+<img src="assets/rfid.gif" width="480" height="270" /><br>
+
+You can find the schematics below :
+
+<img src="code/read_rfid/read_rfid.PNG" width="480" height="270" /><br>
+
+The pin are showed in the same fashion as the Joy-it model, if you have a reader from another brand, the order of pin may change.
+
+To be sure you can refer to this table :
+* VCC        -> 5V
+* RST        -> D9
+* GND        -> GND
+* MISO       -> D12
+* MOSI       -> D11
+* SCK        -> D13
+* SDA ou NSS -> D10
+
+To upload the code you'll need to install a library : *Sketch* -> *Include a library* -> *Install library* and look for **MFRC522** (by Github Community).
+
+The code is as follow, it may seem a bit complex but it actually boils down to a couple of if statement to deal with the IDs of each card.
+
+```c
+#include "SPI.h"
+#include "MFRC522.h"
+/***
+ * VCC -> 5V
+ * RST -> D9
+ * GND -> GND
+ * MISO -> D12
+ * MOSI -> D11
+ * SCK -> D13
+ * SDA or NSS -> D10
+ */
+
+
+#define SS_PIN 10
+#define RST_PIN 9
+MFRC522 rfid(SS_PIN, RST_PIN);
+MFRC522::MIFARE_Key key;
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin();
+  rfid.PCD_Init();
+  Serial.println("I am waiting for card...");
+}
+
+void loop() {
+ 
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial())
+    return;
+  // Serial.print(F("PICC type: "));
+  MFRC522::PICC_Type piccType = rfid.PICC_GetType(rfid.uid.sak);
+  // Serial.println(rfid.PICC_GetTypeName(piccType));
+  // Check is the PICC of Classic MIFARE type
+  if (piccType != MFRC522::PICC_TYPE_MIFARE_MINI &&
+      piccType != MFRC522::PICC_TYPE_MIFARE_1K &&
+      piccType != MFRC522::PICC_TYPE_MIFARE_4K) {
+    Serial.println(F("Your tag is not of type MIFARE Classic."));
+    return;
+  }
+  String strID = "";
+  for (byte i = 0; i < 4; i++) {
+    strID +=
+      (rfid.uid.uidByte[i] < 0x10 ? "0" : "") +
+      String(rfid.uid.uidByte[i], HEX) +
+      (i != 3 ? ":" : "");
+  }
+
+  strID.toUpperCase();
+  Serial.println("");
+  Serial.print("Tap card key: ");
+  Serial.println(strID);
+  Serial.println("");
+  delay(1000);
+
+  if (strID.indexOf("C0:8F:C8:49") >= 0) {  //put your own tap card key;
+    
+    Serial.println("blue badge");
+    Serial.println("");
+  }
+  else if (strID.indexOf("8E:5B:CD:15") >= 0) {  //put your own tap card key;
+    //Serial.println("");
+    Serial.println("card");
+    Serial.println("");
+  }
+  else {
+    Serial.println("");
+    Serial.println("unknown");
+    Serial.println("");
+  }
+}
+
+```
+You need to understand seveal things :
+* when you swip a card in front of the reader its id shows up in the serial monitor. You need to change the id in each if statement to match the set of card you have.
+  ```c
+  if (strID.indexOf("C0:8F:C8:49") >= 0)
+  ```
+  "C0:8F:C8:49" should be replaced with an id of the cards you have.
+
+* A the top of the loop there is a *return* function called :
+  ```c
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial())
+      return;
+  ```
+  This function if called stops the execution of all the code below it. So basically the if statement above means "do nothing if a card is not present in front of the reader".
+  You can comment those lines out if you want. I you keep them and your project uses other kind of sensors etc. be sure to put their code before this if statement.
+
+[**home**](#Contenu)<br>
+
+
 ## Connect actuators and activate devices
 After having used **digitalRead()** and **analogRead()** commands to read currents on the input pins of an arduino card, we will now see how to use **digitalWrite()** functions and **analogWrite()** to generate currents on the output pins. Note that the digital pins can be configured as an output or as input using the [**pinMode()**](https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/) function.
 
@@ -945,7 +1067,7 @@ Two interaction modes are possible with this type of actuator, one can:
 
 In both cases the circuit will be the same:
 
-<img src="set_led_blink/set_led.png" width="480" height="360" /><br>
+<img src="code/set_led_blink/set_led.png" width="480" height="360" /><br>
 
 It is worth knowing that the [led](https://en.wikipedia.org/wiki/Light-emitting_diode) is polarized - that means it should be plugged considering the current flow in the component. The small led corresponds to the 'minus' and must be connected to the ground, the longest leg corresponds to the 'plus' and must be connected to a digital output.
 Between the ground leg we use a resistance of 220 ohms to protect the led from a possible surge.
@@ -1004,7 +1126,7 @@ void loop() {
 
 For the vibrator the logic is exactly that for the led, the assembly is very similar:
 
-<img src="set_vibrator_onoff/set_vibrator.png" width="480" height="360" /><br>
+<img src="code/set_vibrator_onoff/set_vibrator.png" width="480" height="360" /><br>
 
 And the code will be similar ...
 
@@ -1056,7 +1178,7 @@ We have seen that digital inputs made it possible to measure currents *HIGH* or 
 
 In a general way all the servomotors connect in the same way :
 
-<img src="set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
+<img src="code/set_position_servo_classique/set_servo_position.png" width="480" height="360" /><br>
 
 The dark cable is the ground (GND), the red cable is the power supply (5V), the last is generally yellow or orange it is connected to a digital output of an arduino card, but beware of a **PWM** output.
 
@@ -1180,6 +1302,51 @@ You can try changing the values ​​to see what happens.
 
 [**home**](#Contents)
 
+#### ServoEasing
+
+Il est possible d'utiliser une bibliothèque pour obtenir des mouvements plus complexes au notament gérer l'accélération du mouvement à l'aide de courbes de easing classique.
+
+To move servos it is possible to create more complex motions and specifically deal with the acceleration using easings !
+
+<img src="assets/easing.gif" width="480" height="270" /><br>
+
+You can download the amazing **ServoEasing* library to do that. Examples that come with the library can be somewhat complex, so you'll probably want to refer to the example below.
+
+```c
+
+#include <Arduino.h>
+#include "ServoEasing.hpp"
+
+ServoEasing Servo1;
+void setup() {
+
+  pinMode(6, OUTPUT);
+  // put your setup code here, to run once:
+  Servo1.attach(6, 0); // on pin D6 , start position is 0
+  Servo1.setEasingType(EASE_CUBIC_IN_OUT);
+  Servo1.easeTo(180, 20); // move to 180 at 20 per second
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Servo1.setSpeed(80);
+  Servo1.setEasingType(EASE_BOUNCE_OUT);
+  Servo1.easeTo(0);
+
+  Servo1.setSpeed(20);
+   Servo1.setEasingType(EASE_ELASTIC_IN_OUT);
+  Servo1.easeTo(180);
+}
+
+```
+The library is documented following this [link](https://github.com/ArminJo/ServoEasing#usage)
+
+at this [page](https://easings.net/) you can find a cheatsheet of several easing functions. (always usefull !)
+
+
+[**home**](#Contenu)<br>
+
 
 ### Light up leds neopixel
 
@@ -1187,7 +1354,7 @@ We will directly use LED ribbons. These ribbons feature a series of RGB LEDs, ea
 
 They can be cut to the desired length and require only three cables to control them: two for the power supply and one for the data. The assembly scheme will always be the same.
 
-<img src="set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
+<img src="code/set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
 
 Depending on the number of leds you want to light but also depending on the color or intensity, you will need a certain amount of power. It may sometimes be necessary to use external power supplies - below a dozen of leds an arduino card should be able to power without needing an external power source. A led consumes at most 60mA (lit in white at the maximum intensity). At larger currents, it may be interesting to add a capacitor in parallel on the power supply.
 
@@ -1375,7 +1542,7 @@ The component manufacturer's documentation page is available here : http://wiki.
 
 Cabling is as follows :
 
-<img src="set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
+<img src="code/set_four_digit_display/set_four_digit_display.png" width="480" height="270" /><br>
 
 From a software point of view you will need to download the library **TM1637** /**Grove 4-digit display**.
 
@@ -1454,7 +1621,7 @@ How to control a servomotor with a potentiometer?
 
 The circuit is the meeting of two montages already seen before: one connects a potentiometer on the analog input *A0*, and one plugs a motor on the digital output *D6*.
 
-<img src="map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
+<img src="code/map_potentiometer_to_servo/map_potentiometer_to_servo.png" width="480" height="270" /><br>
 
 The code will also bring together two pieces of code already existing, we will just use the map function to link our measurement of the value of the potentiometer and the information that we will send to the servomotor.
 
@@ -1493,7 +1660,7 @@ The objective here is to control the speed and direction of rotation of a servom
 
 In the same way as previously, this circuit is the combination of the montage for recovering the information of a flex sensor and the assembly for controlling a  continuous rotation servomotor.
 
-<img src="map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
+<img src="code/map_flex_to_servo_continu/map_flex_to_servo_continu.png" width="480" height="560" /><br>
 
 The code will be composed of the code to measure the value of a bending sensor and combine it with the code to run a continuously rotating motor by mapping the values ​​from the bending sensor to useful values ​​to turn a continuous rotation motor.
 
@@ -1533,7 +1700,7 @@ Here we will use a sensor to fix the tint of light produced by a strip of leds r
 
 The wiring includes a force sensor with a 47kOhms resistor connected to the analog input A0, and a led strip connected to the digital pin D6.
 
-<img src="map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
+<img src="code/map_fsr_to_neopixels/map_fsr_to_neopixels.png" width="480" height="270" /><br>
 
 As usual we will recover an analog value between 0 and 1023 and we will transform the values ​​obtained in values ​​between 0 and 255 to be able to control the hue of our leds.
 
