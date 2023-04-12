@@ -1358,11 +1358,9 @@ Pour la partie logicielle deux options s'offrent à nous :
 
 Fast-led est beaucoup plus complète : elle permet notament de contrôller les leds soit en RGB soit en HSB, mais elle a l'inconvénient de contenir du code bas niveau (et particulièrement une gestion des timers) qui peut intéreférer avec d'autres bibliothèques (par exemple la bibliothèque pour utiliser des écrans 7 segments).
 
-nous allons utiliser la bibliothèque Fast-LED. Il faut donc l'installer via **le gestionnaire de bibliothèques** (Menu *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*).
+Nous allons privilégier la bibliothèque neopixel. Il faut donc l'installer via **le gestionnaire de bibliothèques** (Menu *Croquis* -> *Inclure une bibliothèque* -> *Gérer les bibliothèques*).
 
-Nous allons voir comment spécifier la couleur de chaque led soit avec une couleur RGB soit avec une couleur HSV.
-
-La bibliothèque fast-led nous offre une syntaxe permettant de définir le nombre de led dont on dispose, le type de led et la pin de contrôle utilisée.
+Nous allons voir comment spécifier la couleur de chaque led soit avec une couleur RGB.
 
 Ensuite on peut afficher des couleurs sur les leds en parcourant chaque led de notre ruban à l'aide d'une [**boucle for()**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
 
@@ -1375,6 +1373,57 @@ Ensuite on peut afficher des couleurs sur les leds en parcourant chaque led de n
 
 Le plus simple est d'adresser les leds une par une en précisant quel est l'index de la led dont on veut modifier la couleur.
 
+```c
+#include <Adafruit_NeoPixel.h>
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 9, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
+
+void setup() {
+  pixels.begin(); // This initializes the NeoPixel library.
+}
+
+void loop() {
+  pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // rouge
+  pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // vert
+  pixels.setPixelColor(2, pixels.Color(0, 0, 255));// bleu
+  pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // blanc
+  pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // noir
+  pixels.show(); // on actualise le ruban de led
+}
+````
+
+ou on peut "automatiser" en utilisant une boucle for :
+
+```c
+#include <Adafruit_NeoPixel.h>
+
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 9, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
+
+
+void setup() {
+  pixels.begin(); // This initializes the NeoPixel library.
+}
+
+void loop() {
+
+  for (int i = 0; i < NUMPIXELS; i++) {
+    pixels.setPixelColor(i, pixels.Color(255 , 0, 0)); // Bright red
+  }
+
+  pixels.show(); // This sends the updated pixel color to the hardware.
+}
+```
+
+Il existe une autre ressource plus exhaustive sur les leds et la création d'animations lumières ici :
+https://github.com/b2renger/arduino_led_animation
+
+
+il est aussi possible d'utiliser une la bibliothèque fast-led : 
 
 ```c
 // inclure la bibliothèque fast-led
@@ -1427,106 +1476,8 @@ void loop() {
 ```
 
 
-
-Il est aussi possible de faire la même chose avec la bibliothèque neopixel developpée par adafruit :
-
-en adressant chaque led individuellement : 
-
-```c
-#include <Adafruit_NeoPixel.h>
-// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
-// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
-// example for more information on possible values.
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 6, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
-
-void setup() {
-  pixels.begin(); // This initializes the NeoPixel library.
-}
-
-void loop() {
-  pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // rouge
-  pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // vert
-  pixels.setPixelColor(2, pixels.Color(0, 0, 255));// bleu
-  pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // blanc
-  pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // noir
-  pixels.show(); // on actualise le ruban de led
-}
-````
-
-ou en utilisant une boucle for :
-
-```c
-#include <Adafruit_NeoPixel.h>
-
-// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
-// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
-// example for more information on possible values.
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 6, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
-
-
-void setup() {
-  pixels.begin(); // This initializes the NeoPixel library.
-}
-
-void loop() {
-
-  for (int i = 0; i < NUMPIXELS; i++) {
-    pixels.setPixelColor(i, pixels.Color(255 , 0, 0)); // Bright red
-  }
-
-  pixels.show(); // This sends the updated pixel color to the hardware.
-}
-````
-
-
 [**home**](#Contenu)<br>
 
-#### HSB
-
-Le montage est le même : 
-<img src="assets/set_neopixels_hsb.gif" width="480" height="270" /><br>
-
-Le code est quasiment le même sauf que l'on appelle la fonction **CHSV()** de la bibliothèque Fast-led. Même si dans la plupart des logiciels la teinte est représentée par une valeur entre 0 et 360 et la saturation ainsi que le luminosité sont représentées par des valeurs comprises entre 0 et 100, ici chacune des trois valeurs doit être comprise entre 0 et 255.
-
-
-```c
-// inclure la bibliothèque fast-led
-#include <FastLED.h>
-#define NUM_LEDS 5 // définir le nombre de leds
-
-CRGBArray<NUM_LEDS> leds; // définir un tableau de données chaque entrée du tableau représentera une led.
-
-void setup() {
-  // on initialise notre strip de led sur la pin 9
-  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
-}
-
-void loop() {
-    
-  // Pour i allant de 0 à 5, on va éxecuter le code entre accolades, 
-  // à chaque fois on augmente la valeur de i de 1
-  for (int i = 0; i < NUM_LEDS; i++) {
-    // on change la valeur de la led 'i' du tableau nommé 'leds" en lui donnant une nouvelle valeur RGB
-    leds[i] = CHSV(255 - i *50, 255, 255);
-  }
-    FastLED.show();// on actualise le ruban de led
-}
-```
-
-on peut encore une fois appeler directement la fonction **CHSV()**
-```c
-void loop(){
-    leds[0] = CHSV(0, 255, 255); //rouge
-    leds[1] = CHSV(90, 255, 255); // vert
-    leds[2] = CHSV(180, 255, 255); // bleu
-    leds[3] = CHSV(255, 0, 255); // blanc
-    leds[0] = CHSV(0, 0, 0); // noir
-    FastLED.show(); // on actualise le ruban de led
-}
-
-```
-
-[**home**](#Contenu)<br>
 
 ### Utiliser un afficheur 7 segments
 
