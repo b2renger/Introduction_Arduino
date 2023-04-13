@@ -68,6 +68,10 @@ You can also find all the code and explanation on this [github repo](https://git
     * [Blink](#Led-blink) <br>
     * [Pulse](#Led-pulse) <br>
 
+  * [Light up leds neopixel](#Light-up-leds-neopixel) <br>
+    * [RGB](#RGB) <br>
+    * [HSB](#HSB) <br>
+
   * [Activate a vibrator](#Activate-a-vibrator) <br>
     * [Blink](#Vibrator-blink) <br>
     * [Pulse](#Vibrator-pulse) <br>
@@ -77,10 +81,6 @@ You can also find all the code and explanation on this [github repo](https://git
     * [Continuous rotation](#Continuous-rotation-servomotor) <br>
     * [Linear Servomotor](#Linear-servomotor) <br>
     * [Servo with easing](#ServoEasing)<br>
-
-  * [Light up leds neopixel](#Light-up-leds-neopixel) <br>
-    * [RGB](#RGB) <br>
-    * [HSB](#HSB) <br>
   
   * [Use a 7 segments display](#Use-a-7-segments-display) <br>
 
@@ -1122,6 +1122,145 @@ void loop() {
 
 [**home**](#Contents)
 
+
+
+### Light up leds neopixel
+
+We will directly use LED ribbons. These ribbons feature a series of RGB LEDs, each of which is individually controllable in color and intensity.
+
+They can be cut to the desired length and require only three cables to control them: two for the power supply and one for the data. The assembly scheme will always be the same.
+
+<img src="code/set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
+
+Depending on the number of leds you want to light but also depending on the color or intensity, you will need a certain amount of power. It may sometimes be necessary to use external power supplies - below a dozen of leds an arduino card should be able to power without needing an external power source. A led consumes at most 60mA (lit in white at the maximum intensity). At larger currents, it may be interesting to add a capacitor in parallel on the power supply.
+
+For the software part we will have two options : 
+- the fast-led lib
+- the neopixel lib
+
+The neopixel lib is the default one, it has barebones functionnality and will work most of the time. The fast-led one has more functionalities such as enabling to set the pixel color in HSB mode, but it has the drawback of sometimes clashing with other lib that uses advanced timing function (such as the ones used to drive 7 segment display)
+
+
+To use the neopixel or the Fast-LED one it must be installed via **the library manager** (Menu *Sketch* -> *Include a library* -> *Manage libraries*).
+
+We will see how to specify the color of each led either with a RGB color or with an HSV color.
+
+The fast-led library gives us a syntax to define the number of LEDs available, the type of led and the control pin used.
+
+Then we can display colors on the LEDs by scanning each led of our ribbon using a [**for() loop**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
+
+[**home**](#Contents)
+
+#### RGB
+
+
+
+<img src="assets/set_neopixels_rgb.gif" width="480" height="270" /><br>
+
+The most simple way for a beginner is to adress leds individually :
+
+```c
+#include <Adafruit_NeoPixel.h>
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 9, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
+
+void setup() {
+  pixels.begin(); // This initializes the NeoPixel library.
+}
+
+void loop() {
+  pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // red
+  pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // green
+  pixels.setPixelColor(2, pixels.Color(0, 0, 255));// blue
+  pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // white
+  pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // black
+  pixels.show(); // do display
+}
+````
+
+ou en utilisant une boucle for :
+
+```c
+#include <Adafruit_NeoPixel.h>
+
+// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
+// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
+// example for more information on possible values.
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 9, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
+
+
+void setup() {
+  pixels.begin(); // This initializes the NeoPixel library.
+}
+
+void loop() {
+
+  for (int i = 0; i < NUMPIXELS; i++) {
+    pixels.setPixelColor(i, pixels.Color(255 , 0, 0)); // Bright red
+  }
+
+  pixels.show(); // This sends the updated pixel color to the hardware.
+}
+````
+
+
+with the fast-led library :
+
+```c
+// include fast-led lib
+#include <FastLED.h>
+#define NUM_LEDS 5 // define the numb of leds
+
+CRGBArray<NUM_LEDS> leds; // define an array each entry will represent a led
+
+void setup() {
+  // intialize the leds on pin 9
+  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
+}
+
+void loop() {
+  leds[0] = CRGB(255, 0, 0); //red
+  leds[1] = CRGB(0, 255, 0); // green
+  leds[2] = CRGB(0, 0, 255); // blue
+  leds[3] = CRGB(255, 255, 255); // white
+  leds[4] = CRGB(0, 0, 0); // black
+  FastLED.show(); // do display the color w chose
+}
+```
+
+If you use a longer strip it might be more comfortable to address all leds using a for loop
+```c 
+// include fast-led lib
+#include <FastLED.h>
+#define NUM_LEDS 5 
+
+CRGBArray<NUM_LEDS> leds; 
+
+void setup() {
+  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
+}
+
+void loop() {
+
+  // for 'i' from 0 to NUM_LEDS (ie 5) do the code between brackets
+  // each time increment the value of 'i' by one.
+  for (int i = 0; i < NUM_LEDS; i++) {
+    // change the value of the led at index 'i' from the leds array by giving it a rgb value
+    leds[i] = CRGB(255, 0, 0);
+    // you can also try to create a gradiant
+    //int r = map(i, 0, NUM_LEDS, 0, 255);
+    // leds[i] = CRGB(r, 0, 0);
+  }
+  FastLED.show(); // do display !
+}
+```
+There is a more step by step guide about leds and animation here : https://github.com/b2renger/arduino_led_animation
+
+
+[**home**](#Contenu)<br>
+
 ### Activate a vibrator
 
 For the vibrator the logic is exactly that for the led, the assembly is very similar:
@@ -1348,142 +1487,6 @@ at this [page](https://easings.net/) you can find a cheatsheet of several easing
 [**home**](#Contenu)<br>
 
 
-### Light up leds neopixel
-
-We will directly use LED ribbons. These ribbons feature a series of RGB LEDs, each of which is individually controllable in color and intensity.
-
-They can be cut to the desired length and require only three cables to control them: two for the power supply and one for the data. The assembly scheme will always be the same.
-
-<img src="code/set_neopixel_rgb/set_neopixels.png" width="480" height="270" /><br>
-
-Depending on the number of leds you want to light but also depending on the color or intensity, you will need a certain amount of power. It may sometimes be necessary to use external power supplies - below a dozen of leds an arduino card should be able to power without needing an external power source. A led consumes at most 60mA (lit in white at the maximum intensity). At larger currents, it may be interesting to add a capacitor in parallel on the power supply.
-
-For the software part we will have two options : 
-- the fast-led lib
-- the neopixel lib
-
-The neopixel lib is the default one, it has barebones functionnality and will work most of the time. The fast-led one has more functionalities such as enabling to set the pixel color in HSB mode, but it has the drawback of sometimes clashing with other lib that uses advanced timing function (such as the ones used to drive 7 segment display)
-
-
-To use the neopixel or the Fast-LED one it must be installed via **the library manager** (Menu *Sketch* -> *Include a library* -> *Manage libraries*).
-
-We will see how to specify the color of each led either with a RGB color or with an HSV color.
-
-The fast-led library gives us a syntax to define the number of LEDs available, the type of led and the control pin used.
-
-Then we can display colors on the LEDs by scanning each led of our ribbon using a [**for() loop**](https://www.arduino.cc/reference/en/language/structure/control-structure/for/).
-
-[**home**](#Contents)
-
-#### RGB
-
-
-
-<img src="assets/set_neopixels_rgb.gif" width="480" height="270" /><br>
-
-The most simple way for a beginner is to adress leds individually :
-
-```c
-#include <Adafruit_NeoPixel.h>
-// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
-// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
-// example for more information on possible values.
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 9, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
-
-void setup() {
-  pixels.begin(); // This initializes the NeoPixel library.
-}
-
-void loop() {
-  pixels.setPixelColor(0, pixels.Color(255, 0, 0)); // red
-  pixels.setPixelColor(1, pixels.Color(0, 255, 0)); // green
-  pixels.setPixelColor(2, pixels.Color(0, 0, 255));// blue
-  pixels.setPixelColor(3, pixels.Color(255, 255, 255)); // white
-  pixels.setPixelColor(4, pixels.Color(0, 0, 0)); // black
-  pixels.show(); // do display
-}
-````
-
-ou en utilisant une boucle for :
-
-```c
-#include <Adafruit_NeoPixel.h>
-
-// When we setup the NeoPixel library, we tell it how many pixels, and which pin to use to send signals.
-// Note that for older NeoPixel strips you might need to change the third parameter--see the strandtest
-// example for more information on possible values.
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(7, 9, NEO_GRB + NEO_KHZ800); // 7 leds connected on pin 6
-
-
-void setup() {
-  pixels.begin(); // This initializes the NeoPixel library.
-}
-
-void loop() {
-
-  for (int i = 0; i < NUMPIXELS; i++) {
-    pixels.setPixelColor(i, pixels.Color(255 , 0, 0)); // Bright red
-  }
-
-  pixels.show(); // This sends the updated pixel color to the hardware.
-}
-````
-
-
-with the fast-led library :
-
-```c
-// include fast-led lib
-#include <FastLED.h>
-#define NUM_LEDS 5 // define the numb of leds
-
-CRGBArray<NUM_LEDS> leds; // define an array each entry will represent a led
-
-void setup() {
-  // intialize the leds on pin 9
-  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
-}
-
-void loop() {
-  leds[0] = CRGB(255, 0, 0); //red
-  leds[1] = CRGB(0, 255, 0); // green
-  leds[2] = CRGB(0, 0, 255); // blue
-  leds[3] = CRGB(255, 255, 255); // white
-  leds[4] = CRGB(0, 0, 0); // black
-  FastLED.show(); // do display the color w chose
-}
-```
-
-If you use a longer strip it might be more comfortable to address all leds using a for loop
-```c 
-// include fast-led lib
-#include <FastLED.h>
-#define NUM_LEDS 5 
-
-CRGBArray<NUM_LEDS> leds; 
-
-void setup() {
-  FastLED.addLeds<NEOPIXEL, 9>(leds, NUM_LEDS);
-}
-
-void loop() {
-
-  // for 'i' from 0 to NUM_LEDS (ie 5) do the code between brackets
-  // each time increment the value of 'i' by one.
-  for (int i = 0; i < NUM_LEDS; i++) {
-    // change the value of the led at index 'i' from the leds array by giving it a rgb value
-    leds[i] = CRGB(255, 0, 0);
-    // you can also try to create a gradiant
-    //int r = map(i, 0, NUM_LEDS, 0, 255);
-    // leds[i] = CRGB(r, 0, 0);
-  }
-  FastLED.show(); // do display !
-}
-```
-There is a more step by step guide about leds and animation here : https://github.com/b2renger/arduino_led_animation
-
-
-[**home**](#Contenu)<br>
 
 
 ### Use a 7 segments display
