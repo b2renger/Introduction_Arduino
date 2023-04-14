@@ -1321,6 +1321,14 @@ Le code est aussi le même on envoit une valeur à l'aide de la fonction [**.wri
 
 Les servos moteurs existe en une multitude de taille, de vitesse, et de puissance. En fonction de leur caractéristiques ils peuvent nécessiter plus ou moins d'énergie ou couter plus ou moins cher.
 
+Notez que le code ci-dessous utilise la fonction **delay**, ce qui bloque le fil d'éxecution du processeur de la carte et empêche la réalisation d'actions concomittantes par exemple:
+- faire tourner un autre moteur
+- appuyer sur un bouton
+- réaliser des animations de leds 
+- etc.
+
+Pour réaliser des actions plus complexes il faut se passer de la fonction *delay* et utiliser la fonction *millis()* ou des bibliothèques comme *virtual delay* ou *timer one*, voire des bibliothèques dédiées au moteurs (comme *servo easing* ci-dessous).
+
 [**home**](#Contenu)<br>
 
 #### Servomoteur classique
@@ -1482,6 +1490,73 @@ et à cette [page](https://easings.net/) qui référence les différents types d
 [**home**](#Contenu)<br>
 
 
+
+
+### Faire tourner un stepper
+
+Les moteurs pas à pas sont des moteurs très courants et présent dans beaucoup de dispositifs électromécaniques comme les imprimantes, imprimantes 3D, scanners, platines vyniles, machines outils etc.
+
+Ils présentent une bonne précision de vitesse ou de positionnement, ils sont silencieux, mais ne sont pas rapides, ils peuvent présenter un couple élevé et existent dans une variété de facteurs de formes et de caractéritiques mécaniques importante. 
+
+La connectique se fait avec a minima 5 fils et ils requièrent l'utilisation d'un driver ce qui rend leur intégration et l'implémentation logicielle un peu plus délicate que les servomoteurs. Leur performance dépend en grande partie du driver utilisé.
+
+Nous allons nous intéresser à cette référence : https://www.gotronic.fr/art-moteur-28byj-48-08-5-vcc-21213.htm
+C'est un petit stepper silencieux, et peu cher avec un driver très courant (ULN2003).
+
+Le moteur se branche directement au driver et le driver se connecte à la carte arduino à l'aide de deux cables pour l'alimentation et 4 cables pour la partie contrôle.
+
+
+```c
+/*
+ * Driver -> Arduino
+ * 
+ *  IN1   -> D8
+ *  IN2   -> D9
+ *  IN3   -> D10
+ *  IN4   -> D11
+ * 
+ *  GND   -> GND
+ *  VCC   -> 5V
+ */
+
+
+#include <Stepper.h> // stepper lib included with arduino IDE
+const float stepsPerRevolution = 2048;  // change this to fit the number of steps per revolution of your stepper
+const float degPerStep = 360 / stepsPerRevolution ; // for a stepper CX28BYJ48 step per revolution should be 64 eg 1 step == 5.625 deg
+Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11); // initialize the stepper library on pins 8 through 11 from in1 to in4
+
+int stepCount = 0;
+
+
+void setup() {
+ Serial.begin(9600);
+ Serial.println(degPerStep);
+}
+
+void loop() {
+
+  //For better control, keep the speed high and only go a few steps with each call to step().
+  myStepper.setSpeed(200 );
+  
+  Serial.println("going forward");
+  for (float i = 0 ; i < 90 ; i += degPerStep){
+    myStepper.step(1);
+  }
+
+  Serial.println("going backwards");
+  for (float i = 0 ; i < 90 ; i += degPerStep){
+    myStepper.step(-1);
+  }
+
+}
+
+```
+
+<img src="assets/stepper3.gif" width="480" height="640" /><br>
+
+
+
+[**home**](#Contenu)<br>
 
 ### Utiliser un afficheur 7 segments
 
