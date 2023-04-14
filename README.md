@@ -83,6 +83,9 @@ Vous pourrez retrouver l'ensemble des explications ainsi que les code d'exemples
       * [Servomoteur lineaire](#Servomoteur-lineaire)<br>
       * [Servomoteur mouvement avec easing](#ServoEasing)<br>
 
+ * [Faire tourner un servomoteur](#Faire-tourner-un-stepper)<br>
+      * [Un stepper](#Un-stepper)<br>
+      * [Deux steppers ou plus](#Deux-steppers-ou-plus)<br>
 
   * [Utiliser un afficheur 7 segments](#Utiliser-un-afficheur-7-segments)<br>
 	
@@ -1492,7 +1495,7 @@ et à cette [page](https://easings.net/) qui référence les différents types d
 
 
 
-### Faire tourner un stepper
+### Faire tourner un stepper 
 
 Les moteurs pas à pas sont des moteurs très courants et présent dans beaucoup de dispositifs électromécaniques comme les imprimantes, imprimantes 3D, scanners, platines vyniles, machines outils etc.
 
@@ -1503,6 +1506,7 @@ La connectique se fait avec a minima 5 fils et ils requièrent l'utilisation d'u
 Nous allons nous intéresser à cette référence : https://www.gotronic.fr/art-moteur-28byj-48-08-5-vcc-21213.htm
 C'est un petit stepper silencieux, et peu cher avec un driver très courant (ULN2003).
 
+#### **Un stepper**
 Le moteur se branche directement au driver et le driver se connecte à la carte arduino à l'aide de deux cables pour l'alimentation et 4 cables pour la partie contrôle.
 
 
@@ -1552,8 +1556,72 @@ void loop() {
 
 ```
 
-<img src="assets/stepper3.gif" width="480" height="640" /><br>
+<img src="assets/stepper3.gif" width="480" height="640" /><br><br>
 
+#### **Deux steppers ou plus**
+
+Pour faire tourner deux steppers simultanément sur une carte arduino nous allons utiliser la bibliothèque **AccelStepper** de  Mike McCauley, instalable via le gestionnaire de bibliothèque arduino.
+
+Note : cette bibliothèque peut aussi être utilisée avec un seul stepper et peut permettre de simpifier le code. Elle permet notament de gérer l'accéleration et dispose de fonction permettan de savoir si un mouvement est terminé.
+
+Il faut utiliser des wagos ou une breadboard pour connecter les 5V et GND en commun, et ensuite chaque pin "in*" des drivers peuvent se connecter directement à la carte arduino.
+
+Le code ci-dessous permet de donner une cible aléatoire à chacun des steppers et de changer de cible à la fin de l'éxecution du mouvement.
+
+```c
+/*
+ * Driver -> Arduino
+ * 
+ *  GND   -> GND
+ *  VCC   -> 5V
+ * 
+ * Driver1
+ *  IN1   -> D8
+ *  IN2   -> D9
+ *  IN3   -> D10
+ *  IN4   -> D11
+ * 
+ * Driver2
+ *  IN1   -> D2
+ *  IN2   -> D3
+ *  IN3   -> D4
+ *  IN4   -> D5
+ */
+
+#include <AccelStepper.h>
+
+// Define some steppers and the pins the will use
+AccelStepper stepper1(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
+AccelStepper stepper2(AccelStepper::FULL4WIRE, 2, 4, 3, 5);
+
+void setup(){
+
+  stepper1.setMaxSpeed(300.0);
+  stepper1.setAcceleration(100.0);
+  stepper1.moveTo(90);
+
+  stepper2.setMaxSpeed(300.0);
+  stepper2.setAcceleration(100.0);
+  stepper2.moveTo(180);
+}
+
+void loop(){
+
+  if (stepper1.distanceToGo() == 0) {
+    int dst = random(-360, 360);
+    stepper1.moveTo(dst);
+  }
+  if (stepper2.distanceToGo() == 0) {
+    int dst = random(-360, 360);
+    stepper2.moveTo(dst);
+  }
+
+  stepper1.run();
+  stepper2.run();
+}
+
+```
+<img src="assets/stepper6.gif" width="480" height="640" /><br><br>
 
 
 [**home**](#Contenu)<br>
