@@ -83,7 +83,7 @@ Vous pourrez retrouver l'ensemble des explications ainsi que les code d'exemples
       * [Servomoteur lineaire](#Servomoteur-lineaire)<br>
       * [Servomoteur mouvement avec easing](#ServoEasing)<br>
 
- * [Faire tourner un servomoteur](#Faire-tourner-un-stepper)<br>
+ * [Faire tourner un stepper](#Faire-tourner-un-stepper)<br>
       * [Un stepper](#Un-stepper)<br>
       * [Deux steppers ou plus](#Deux-steppers-ou-plus)<br>
 
