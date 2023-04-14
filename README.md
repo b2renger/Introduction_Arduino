@@ -81,6 +81,10 @@ You can also find all the code and explanation on this [github repo](https://git
     * [Continuous rotation](#Continuous-rotation-servomotor) <br>
     * [Linear Servomotor](#Linear-servomotor) <br>
     * [Servo with easing](#ServoEasing)<br>
+
+  * [Rotate a stepper](#Rotate-a-stepper)<br>
+      * [One stepper](#One-stepper)<br>
+      * [Two or more steppers](#Two-or-more-steppers)<br>
   
   * [Use a 7 segments display](#Use-a-7-segments-display) <br>
 
@@ -1482,6 +1486,138 @@ void loop() {
 The library is documented following this [link](https://github.com/ArminJo/ServoEasing#usage)
 
 at this [page](https://easings.net/) you can find a cheatsheet of several easing functions. (always usefull !)
+
+
+[**home**](#Contenu)<br>
+
+
+### Rotate a stepper 
+
+Stepper motors are used very often in many electro mecanic devices such as scanner, printers, 3D printer, turntables etc.
+
+They offer a good positional and speed precision but are not that fast. They can have a high torque but there is a wide range of technical specifications available.
+
+They connect with 5 wires and use a driver, so it might be a little harder to connect and code. Their performance depend a lot on the type of driver.
+
+We are using this model : https://www.gotronic.fr/art-moteur-28byj-48-08-5-vcc-21213.htm
+
+This is small and silent stepper, very affordable and with a very common driver(ULN2003).
+
+#### **One stepper**
+The stepper is connected directly to the driver, and the driver to the arduino board with 2 cables for the power and 4 for the control.
+
+```c
+/*
+ * Driver -> Arduino
+ * 
+ *  IN1   -> D8
+ *  IN2   -> D9
+ *  IN3   -> D10
+ *  IN4   -> D11
+ * 
+ *  GND   -> GND
+ *  VCC   -> 5V
+ */
+
+
+#include <Stepper.h> // stepper lib included with arduino IDE
+const float stepsPerRevolution = 2048;  // change this to fit the number of steps per revolution of your stepper
+const float degPerStep = 360 / stepsPerRevolution ; // for a stepper CX28BYJ48 step per revolution should be 64 eg 1 step == 5.625 deg
+Stepper myStepper(stepsPerRevolution, 8, 10, 9, 11); // initialize the stepper library on pins 8 through 11 from in1 to in4
+
+int stepCount = 0;
+
+
+void setup() {
+ Serial.begin(9600);
+ Serial.println(degPerStep);
+}
+
+void loop() {
+
+  //For better control, keep the speed high and only go a few steps with each call to step().
+  myStepper.setSpeed(200 );
+  
+  Serial.println("going forward");
+  for (float i = 0 ; i < 90 ; i += degPerStep){
+    myStepper.step(1);
+  }
+
+  Serial.println("going backwards");
+  for (float i = 0 ; i < 90 ; i += degPerStep){
+    myStepper.step(-1);
+  }
+
+}
+
+```
+
+<img src="assets/stepper3.gif" width="480" height="640" /><br><br>
+
+#### **Two or more steppers**
+
+To rotate two steppers simultaneously with one arduino board we need to use a lib. We are going to use the **AccelStepper** lib by Mike McCauley available through arduino lib manager.
+
+Note : this lib can also be used to control one stepper and can be a good fit if you need to easily control acceleration and / or have function to detect the end of a movement.
+
+You'll need to use wagos or a breadboard to connect the power and ground of each motor to the arduino. 
+
+The code below give a random target to each stepper, when they reached the previous target.
+
+```c
+/*
+ * Driver -> Arduino
+ * 
+ *  GND   -> GND
+ *  VCC   -> 5V
+ * 
+ * Driver1
+ *  IN1   -> D8
+ *  IN2   -> D9
+ *  IN3   -> D10
+ *  IN4   -> D11
+ * 
+ * Driver2
+ *  IN1   -> D2
+ *  IN2   -> D3
+ *  IN3   -> D4
+ *  IN4   -> D5
+ */
+
+#include <AccelStepper.h>
+
+// Define some steppers and the pins the will use
+AccelStepper stepper1(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
+AccelStepper stepper2(AccelStepper::FULL4WIRE, 2, 4, 3, 5);
+
+void setup(){
+
+  stepper1.setMaxSpeed(300.0);
+  stepper1.setAcceleration(100.0);
+  stepper1.moveTo(90);
+
+  stepper2.setMaxSpeed(300.0);
+  stepper2.setAcceleration(100.0);
+  stepper2.moveTo(180);
+}
+
+void loop(){
+
+  if (stepper1.distanceToGo() == 0) {
+    int dst = random(-360, 360);
+    stepper1.moveTo(dst);
+  }
+  if (stepper2.distanceToGo() == 0) {
+    int dst = random(-360, 360);
+    stepper2.moveTo(dst);
+  }
+
+  stepper1.run();
+  stepper2.run();
+}
+
+```
+<img src="assets/stepper6.gif" width="480" height="640" /><br><br>
 
 
 [**home**](#Contenu)<br>
