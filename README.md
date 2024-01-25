@@ -1681,6 +1681,16 @@ void loop(){
 Note that here we measure tens of milliseconds: the *delay(10)* makes the program pauses about ten milliseconds before looping.
 
 
+**Important notice**
+
+There are many libraries to drive seven segments displays but some may introduce delays that can limit their use in interaction scenari with buttons etc.
+
+Those two libraries are great :
+- https://github.com/Erriez/ErriezRobotDyn4DigitDisplay
+- https://github.com/bremme/arduino-tm1637
+
+
+
 [**home**](#Contents)
 
 
