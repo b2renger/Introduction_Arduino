@@ -83,7 +83,7 @@ Vous pourrez retrouver l'ensemble des explications ainsi que les code d'exemples
       * [Servomoteur lineaire](#Servomoteur-lineaire)<br>
       * [Servomoteur mouvement avec easing](#ServoEasing)<br>
 
- * [Faire tourner un stepper](#Faire-tourner-un-stepper)<br>
+  * [Faire tourner un stepper](#Faire-tourner-un-stepper)<br>
       * [Un stepper](#Un-stepper)<br>
       * [Deux steppers ou plus](#Deux-steppers-ou-plus)<br>
 
@@ -1680,6 +1680,15 @@ void loop(){
 }
 ```
 Remarquez bien qu'ici on mesure des dizaines de millisecondes : le *delay(10)* fait que le programme se met en pause une dizaine de millisecondes avant de boucler.
+
+**Note importante**
+
+Il existe de nombreuses bibliothèques pour afficher des chiffres sur un afficheur à 4 digits. Mais il faut faire attention à leurs proprétés et à leurs limites, notament l'utilisation des delais qui peuvent limiter l'utilisation d'autres composants avec ces afficheurs.
+
+Ces deux bibliothèques ont été testées :
+- https://github.com/Erriez/ErriezRobotDyn4DigitDisplay
+- https://github.com/bremme/arduino-tm1637
+
 
 
 [**home**](#Contenu)<br>
